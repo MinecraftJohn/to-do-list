@@ -1,0 +1,215 @@
+html[darkmode='0'] {
+    --background: #F8F9FC;
+    --background2: #F1F3F9;
+    --text: #1A1A1B;
+    --border: #E9EAED;
+    --transparent: rgba(26, 26, 27, 0.06);
+    --scrollbar: rgba(26, 26, 27, 0.12);
+}
+
+html[darkmode='1'] {
+    --background: #232733;
+    --background2: #1A2030;
+    --text: #fff;
+    --border: #20232E;
+    --transparent: rgba(248, 249, 252, 0.06);
+    --scrollbar: rgba(248, 249, 252, 0.12);
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--transparent);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text);
+}
+
+body {
+    height: 100vh;
+    background: var(--background);
+}
+
+button {
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#header {
+    width: 100%;
+    background: url(https://wallpaperaccess.com/full/2027653.jpg) center center/cover no-repeat;
+}
+
+#header_gradient {
+    background: linear-gradient(0deg, var(--background) 0%, rgba(255, 255, 255, 0) 50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px 0 128px;
+}
+
+#time {
+    font-size: 98px;
+    font-weight: 500;
+    color: #F8F9FC;
+    text-shadow: 4px 4px 12px rgba(26, 26, 27, 0.33);
+}
+
+#date {
+    font-size: 20px;
+    font-weight: 500;
+    color: #F8F9FC;
+    text-shadow: 4px 4px 12px rgba(26, 26, 27, 0.33);
+}
+
+#todo_section {
+    margin: -64px auto 0;
+    width: 1024px;
+    max-width: 95%;
+    height: calc(100vh - 314px);
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    box-shadow: 4px 4px 12px rgba(26, 26, 27, 0.16);
+}
+
+#todo_list_section {
+    width: 285px;
+    background: var(--background2);
+    border-right: 1px solid var(--border);
+    border-radius: 4px 0 0 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+#account_container {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    position: relative;
+    padding: 18px;
+}
+
+#account_profile {
+    background: #1a73e8;
+    width: 42px;
+    border-radius: 50%;
+}
+
+#greetings {
+    font-size: 11px;
+}
+
+#username {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.setting_edit_user_btn {
+    position: absolute;
+    top: 50%;
+    right: 18px;
+    transform: translateY(-50%);
+    border-radius: 4px;
+    padding: 6px;
+    cursor: pointer;
+    box-sizing: content-box;
+}
+
+.setting_edit_user_btn:hover {
+    background: var(--transparent);
+}
+
+.line_divider {
+    background: var(--border);
+    width: 100%;
+    height: 1px;
+}
+
+#list_container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+    padding: 18px;
+    overflow-y: scroll;
+}
+
+.list_container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 12px 6px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+}
+
+.list_container:hover {
+    background: var(--transparent);
+}
+
+.list_color {
+    position: absolute;
+    width: 4px;
+    height: calc(100% - 12px);
+    border-radius: 4px;
+    background: #1a73e8;
+    opacity: 0;
+    transition: all .2s;
+}
+
+.list_container:hover .list_color {
+    background: #1a73e8;
+    opacity: 1;
+}
+
+.list_active {
+    background: var(--transparent);
+}
+
+.list_active .list_color {
+    background: #1a73e8;
+    opacity: 1;
+}
+
+.list_name {
+    margin-left: 16px;
+}
+
+#list_footer_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+}
+
+#add_list_btn {
+    background: #1a73e8;
+    height: 32px;
+    padding: 0 22px;
+}
+
+#todo_task_section {
+    padding: 18px;
+}
