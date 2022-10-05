@@ -166,14 +166,6 @@
     padding: 18px;
 }
 
-.form_body {
-    padding: 64px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
-}
-
 #edit_user_account_profile {
     background: #1a73e8;
     width: 98px;
@@ -226,15 +218,6 @@
     border-bottom: 2px solid #1a73e8;
 }
 
-.form_footer {
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding: 18px;
-}
-
 #form_error {
     color: var(--error);
 }
@@ -243,4 +226,50 @@
     height: 32px;
     width: 100%;
     padding: 0 22px;
+}
+
+#about_project_footer {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#settings_footer {
+    align-items: flex-end;
+}
+
+#settings_save_btn {
+    height: 32px;
+    padding: 0 22px;
+}
+
+#background_image_preview {
+    background: url(https://wallpaperaccess.com/full/2027653.jpg) center center/cover no-repeat;
+    width: 100%;
+    height: 98px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 0 rgba(26, 26, 27, 0.33);
+}
+
+.settings_body {
+    padding: 18px;
+    gap: 32px;
+}
+
+.settings_block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+}
+
+.settings_block_container {
+    border-radius: 4px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.settings_block_container:hover {
+    background: var(--transparent);
 }

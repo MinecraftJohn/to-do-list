@@ -109,6 +109,33 @@ a:hover {
     padding: 18px;
 }
 
+.form_body {
+    padding: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.modal_body {
+    padding: 32px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    width: 464px;
+    max-width: 100%;
+}
+
+.form_footer {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 18px;
+}
+
 .close_btn {
     border-radius: 4px;
     padding: 2px;
@@ -118,4 +145,35 @@ a:hover {
 .close_btn:hover {
     background: var(--error);
     fill: #fff;
+}
+
+.a_btn {
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.a_btn:hover {
+    background: var(--transparent);
+}
+
+.toggle_switch {
+    background: #1a73e8;
+    width: 38px;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.toggle_switch input {
+    display: none;
+}
+
+.toggle_switch div {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    /* border: 1px solid rgba(0, 0, 0, 0.0578); */
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.0578);
 }
