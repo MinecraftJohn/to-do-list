@@ -6,6 +6,7 @@ html[darkmode='0'] {
     --transparent: rgba(26, 26, 27, 0.06);
     --scrollbar: rgba(26, 26, 27, 0.12);
     --error: #fe3159;
+    --switch: rgba(35, 39, 51, 0.33);
 }
 
 html[darkmode='1'] {
@@ -16,6 +17,7 @@ html[darkmode='1'] {
     --transparent: rgba(248, 249, 252, 0.06);
     --scrollbar: rgba(248, 249, 252, 0.12);
     --error: #fe3159;
+    --switch: rgba(248, 249, 252, 0.06);
 }
 
 ::-webkit-scrollbar {
@@ -67,10 +69,13 @@ input {
 
 a {
     color: #1a73e8;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 a:hover {
-    text-decoration: none;
+    background: var(--transparent);
 }
 
 .header_time {
@@ -99,6 +104,11 @@ a:hover {
     max-width: 95%;
     opacity: 0;
     transition: all .2s;
+}
+
+#modal_container {
+    transform: translate(-50%, -50%);
+    opacity: 1;
 }
 
 .modal_header {
@@ -147,33 +157,38 @@ a:hover {
     fill: #fff;
 }
 
-.a_btn {
-    border-radius: 4px;
-    cursor: pointer;
+.switch_outline {
+    position: relative;
 }
 
-.a_btn:hover {
-    background: var(--transparent);
-}
-
-.toggle_switch {
-    background: #1a73e8;
-    width: 38px;
-    height: 20px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.toggle_switch input {
+.switch_input {
     display: none;
 }
 
-.toggle_switch div {
+.switch_base {
+    background: var(--switch);
+    border-radius: 10px;
+    width: 38px;
+    height: 20px;
+    transition: all .2s;
+}
+
+.switch_thumb {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     background: #fff;
-    /* border: 1px solid rgba(0, 0, 0, 0.0578); */
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.0578);
+    box-shadow: 0 0 0 1px rgba(35, 39, 51, 0.0578);
+    transition: all .2s;
+    position: absolute;
+    top: 4px;
+    left: 5px;
+}
+
+.switch_input:checked~.switch_base {
+    background: #1a73e8;
+}
+
+.switch_input:checked~.switch_thumb {
+    left: 21px;
 }
