@@ -26,7 +26,11 @@ function clock() {
         dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    headerTime.innerHTML = hours12Format[hours] + ":" + minutes;
+    if (localStorage.getItem("24hour") == 1) {
+        headerTime.innerHTML = hours + ":" + minutes;
+    } else {
+        headerTime.innerHTML = hours12Format[hours] + ":" + minutes;
+    }
     headerDate.innerHTML = dayArray[day] + ", " + monthArray[month] + " " + date;
     if (hours >= 6 && hours <= 11) {
         greetings.innerHTML = "Good morning,";
@@ -47,6 +51,7 @@ if (localStorage.getItem("profile") != null) {
     accountPicture.src = "data:image/png;base64," + localStorage.getItem("profile");
 } else {
     accountPicture.src = "assets/img/default-user-profile.png";
+    accountPicture.style.mixBlendMode = "difference";
 }
 if (localStorage.getItem("darkmode") != null) {
     pageHtml[0].setAttribute("darkmode", localStorage.getItem("darkmode"));
@@ -86,11 +91,10 @@ editUserBtn[0].onclick = () => {
             </footer>
         </form>
     `;
-    document.getElementsByClassName("close_btn")[0].onclick = function() {
+    document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("edit_user_section").remove();
     };
-    var form = document.getElementById("edit_user_form"),
-        profileImg = document.getElementById("edit_user_account_picture"),
+    var profileImg = document.getElementById("edit_user_account_picture"),
         input = document.getElementById("change_username"),
         saveBtn = document.getElementById("edit_user_save_btn"),
         errorMsg = document.getElementById("form_error"),
@@ -116,7 +120,7 @@ editUserBtn[0].onclick = () => {
             fileReader.readAsDataURL(profile.files[0]);
         };
     };
-    saveBtn.onclick = function(e) {
+    saveBtn.onclick = (e) => {
         if (input.value.match(/([A-ZÑ][a-z-ñ.]+)$/)) {
             localStorage.setItem("username", input.value);
             const base64String = fileReader.result
@@ -153,9 +157,9 @@ settings.onclick = () => {
                 </div>
                 <div class="settings_block">
                     <p>Accent color</p>
-                    <div id="accent_colors">
-                        <div class="ac_colors" style="background:#ea3c78"></div>
-                        <div class="ac_colors" style="background:var(--error)"></div>
+                    <div id="accent_colors" picked>
+                        <div class="ac_colors" style="background:#ea3c78" onclick='pickColors("#ea3c78")'></div>
+                        <div class="ac_colors" style="background:#fe3159"></div>
                         <div class="ac_colors" style="background:#e1462d"></div>
                         <div class="ac_colors" style="background:#f0ca33"></div>
                         <div class="ac_colors" style="background:#23b296"></div>
@@ -189,12 +193,44 @@ settings.onclick = () => {
             </footer>
         </form>
     `;
-    document.getElementsByClassName("close_btn")[0].onclick = function() {
+    document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("settings_section").remove();
     };
     setTimeout(function() {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
     }, 0);
+    var darkmodeInput = document.getElementById("darkmode"),
+    accentColors = document.getElementById("accent_colors"),
+    acColors = document.getElementsByClassName("ac_colors"),
+    twoforhourInput = document.getElementById("24hour");
+    function pickColors(data) {
+        accentColors.setAttribute("picked", data);
+    }
+    // acColors[0].onclick = pickColors("#ea3c78");
+    // acColors[1].onclick = pickColors("#fe3159");
+    // acColors[2].onclick = pickColors("#e1462d");
+    // acColors[3].onclick = pickColors("#f0ca33");
+    // acColors[4].onclick = pickColors("#23b296");
+    // acColors[5].onclick = pickColors("#1a73e8");
+    // acColors[6].onclick = pickColors("#6700b7");
+    if (localStorage.getItem("24hour") == 1) {
+        twoforhourInput.setAttribute("checked", "");
+    }
+    if (localStorage.getItem("darkmode") == 0) {
+        darkmodeInput.removeAttribute("checked");
+    }
+    document.getElementById("settings_save_btn").onclick = () => {
+        if (twoforhourInput.checked) {
+            localStorage.setItem("24hour", 1);
+        } else {
+            localStorage.setItem("24hour", 0);
+        }
+        if (darkmodeInput.checked) {
+            localStorage.setItem("darkmode", 1);
+        } else {
+            localStorage.setItem("darkmode", 0);
+        }
+    }
 };
 
 // ############################################
@@ -226,7 +262,7 @@ aboutProject.onclick = () => {
             </footer>
         </div>
     `;
-    document.getElementsByClassName("close_btn")[0].onclick = function() {
+    document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("about_project_section").remove();
     };
     setTimeout(function() {

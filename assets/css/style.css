@@ -1,6 +1,6 @@
 #header {
     width: 100%;
-    background: url(https://wallpaperaccess.com/full/2027653.jpg) center center/cover no-repeat;
+    background: url(https://wallpaperaccess.com/full/2027653.jpg) center center/cover no-repeat, var(--background2);
 }
 
 #header_gradient {
@@ -56,15 +56,15 @@
     height: 42px;
     border-radius: 50%;
     overflow: hidden;
+    display: grid;
+    place-content: center;
 }
 
 #account_picture {
-    height: 100%;
-    width: auto;
+    height: 42px;
     -webkit-user-select: none;
     -webkit-user-drag: none;
     user-select: none;
-    mix-blend-mode: difference;
 }
 
 #greetings {
@@ -169,17 +169,19 @@
 }
 
 #edit_user_account_profile {
-    background: #1a73e8;
+    background: var(--background2);
+    border: var(--border) 1px solid;
     width: 98px;
     height: 98px;
     border-radius: 50%;
     position: relative;
     overflow: hidden;
+    display: grid;
+    place-content: center;
 }
 
 #edit_user_account_picture {
-    height: 100%;
-    width: auto;
+    height: 98px;
 }
 
 #change_picture_btn {
