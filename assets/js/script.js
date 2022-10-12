@@ -53,9 +53,14 @@ if (localStorage.getItem("profile") != null) {
     accountPicture.src = "assets/img/default-user-profile.png";
     accountPicture.style.mixBlendMode = "difference";
 }
-if (localStorage.getItem("darkmode") != null) {
-    pageHtml[0].setAttribute("darkmode", localStorage.getItem("darkmode"));
+
+function checkThemeMode() {
+    if (localStorage.getItem("darkmode") != null) {
+        pageHtml[0].setAttribute("darkmode", localStorage.getItem("darkmode"));
+    }
 }
+document.documentElement.style.setProperty("--accentColor", localStorage.getItem("accentColor"));
+checkThemeMode();
 
 // ############################################
 // #        Event Listeners Section           #
@@ -157,8 +162,8 @@ settings.onclick = () => {
                 </div>
                 <div class="settings_block">
                     <p>Accent color</p>
-                    <div id="accent_colors" picked>
-                        <div class="ac_colors" style="background:#ea3c78" onclick='pickColors("#ea3c78")'></div>
+                    <div id="accent_colors">
+                        <div class="ac_colors" style="background:#ea3c78"></div>
                         <div class="ac_colors" style="background:#fe3159"></div>
                         <div class="ac_colors" style="background:#e1462d"></div>
                         <div class="ac_colors" style="background:#f0ca33"></div>
@@ -166,7 +171,10 @@ settings.onclick = () => {
                         <div class="ac_colors" style="background:#1a73e8"></div>
                         <div class="ac_colors" style="background:#6700b7"></div>
                     </div>
-                    <a>Custom color</a>
+                    <div>
+                        <label for="accent_picker" class="modal_input_label">Custom color</label>
+                        <input type="color" id="accent_picker" value="#1a73e8">
+                    </div>
                 </div>
                 <div class="settings_block">
                     <div class="settings_block settings_block_container">
@@ -200,26 +208,97 @@ settings.onclick = () => {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
     }, 0);
     var darkmodeInput = document.getElementById("darkmode"),
-    accentColors = document.getElementById("accent_colors"),
-    acColors = document.getElementsByClassName("ac_colors"),
-    twoforhourInput = document.getElementById("24hour");
-    function pickColors(data) {
-        accentColors.setAttribute("picked", data);
+        accentPicker = document.getElementById("accent_picker"),
+        acColors = document.getElementsByClassName("ac_colors"),
+        twoforhourInput = document.getElementById("24hour"),
+        lsAcColor = localStorage.getItem("accentColor");
+
+    function attPicked(i) {
+        accentPicker.setAttribute("value", i);
     }
-    // acColors[0].onclick = pickColors("#ea3c78");
-    // acColors[1].onclick = pickColors("#fe3159");
-    // acColors[2].onclick = pickColors("#e1462d");
-    // acColors[3].onclick = pickColors("#f0ca33");
-    // acColors[4].onclick = pickColors("#23b296");
-    // acColors[5].onclick = pickColors("#1a73e8");
-    // acColors[6].onclick = pickColors("#6700b7");
+
+    function acActive() {
+        acColors[0].classList.remove("ac_colors_active");
+        acColors[1].classList.remove("ac_colors_active");
+        acColors[2].classList.remove("ac_colors_active");
+        acColors[3].classList.remove("ac_colors_active");
+        acColors[4].classList.remove("ac_colors_active");
+        acColors[5].classList.remove("ac_colors_active");
+        acColors[6].classList.remove("ac_colors_active");
+    }
+    if (lsAcColor == "#ea3c78") {
+        attPicked("#ea3c78");
+        acColors[0].classList.add("ac_colors_active");
+    } else if (lsAcColor == "#fe3159") {
+        attPicked("#fe3159");
+        acColors[1].classList.add("ac_colors_active");
+    } else if (lsAcColor == "#e1462d") {
+        attPicked("#e1462d");
+        acColors[2].classList.add("ac_colors_active");
+    } else if (lsAcColor == "#f0ca33") {
+        attPicked("#f0ca33");
+        acColors[3].classList.add("ac_colors_active");
+    } else if (lsAcColor == "#23b296") {
+        attPicked("#23b296");
+        acColors[4].classList.add("ac_colors_active");
+    } else if (lsAcColor == "#1a73e8" || lsAcColor == null) {
+        attPicked("#1a73e8");
+        acColors[5].classList.add("ac_colors_active");
+    } else if (lsAcColor == "#6700b7") {
+        attPicked("#6700b7");
+        acColors[6].classList.add("ac_colors_active");
+    }
+    accentPicker.setAttribute("value", localStorage.getItem("accentColor"));
+    accentPicker.oninput = (e) => {
+        acActive();
+        accentPicker.setAttribute("value", e.target.value);
+    }
+
     if (localStorage.getItem("24hour") == 1) {
         twoforhourInput.setAttribute("checked", "");
     }
     if (localStorage.getItem("darkmode") == 0) {
         darkmodeInput.removeAttribute("checked");
     }
-    document.getElementById("settings_save_btn").onclick = () => {
+    acColors[0].onclick = () => {
+        attPicked("#ea3c78");
+        acActive();
+        acColors[0].classList.add("ac_colors_active");
+    };
+    acColors[1].onclick = () => {
+        attPicked("#fe3159");
+        acActive();
+        acColors[1].classList.add("ac_colors_active");
+    };
+    acColors[2].onclick = () => {
+        attPicked("#e1462d");
+        acActive();
+        acColors[2].classList.add("ac_colors_active");
+    };
+    acColors[3].onclick = () => {
+        attPicked("#f0ca33");
+        acActive();
+        acColors[3].classList.add("ac_colors_active");
+    };
+    acColors[4].onclick = () => {
+        attPicked("#23b296");
+        acActive();
+        acColors[4].classList.add("ac_colors_active");
+    };
+    acColors[5].onclick = () => {
+        attPicked("#1a73e8");
+        acActive();
+        acColors[5].classList.add("ac_colors_active");
+    };
+    acColors[6].onclick = () => {
+        attPicked("#6700b7");
+        acActive();
+        acColors[6].classList.add("ac_colors_active");
+    };
+    document.getElementById("settings_save_btn").onclick = (e) => {
+        e.preventDefault();
+        localStorage.setItem("accentColor", accentPicker.getAttribute("value"));
+        document.documentElement.style.setProperty("--accentColor", accentPicker.getAttribute("value"));
         if (twoforhourInput.checked) {
             localStorage.setItem("24hour", 1);
         } else {
@@ -230,6 +309,8 @@ settings.onclick = () => {
         } else {
             localStorage.setItem("darkmode", 0);
         }
+        checkThemeMode();
+        document.getElementById("settings_section").remove();
     }
 };
 
@@ -257,7 +338,7 @@ aboutProject.onclick = () => {
             </div>
             <div class="line_dividerX"></div>
             <footer class="form_footer" id="about_project_footer">
-                <p>Last updated 10/8/2022</p>
+                <p>Last updated 10/12/2022</p>
                 <a href="https://github.com/MinecraftJohn/to-do-list" target="_blank" rel="noopener noreferrer">Visit Github for more info.</a>
             </footer>
         </div>

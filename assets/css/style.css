@@ -120,7 +120,7 @@
     width: 4px;
     height: calc(100% - 12px);
     border-radius: 4px;
-    background: #1a73e8;
+    background: var(--accentColor);
     opacity: 0;
     transition: all .2s;
 }
@@ -219,7 +219,7 @@
 }
 
 #change_username:focus {
-    border-bottom: 2px solid #1a73e8;
+    border-bottom: 2px solid var(--accentColor);
 }
 
 #form_error {
@@ -281,6 +281,7 @@
 
 #accent_colors {
     display: flex;
+    flex-wrap: wrap;
     gap: 1px;
 }
 
@@ -298,4 +299,9 @@
 
 .ac_colors_active {
     border: 1px solid var(--text);
+}
+
+#accent_picker {
+    height: 0;
+    visibility: hidden;
 }
