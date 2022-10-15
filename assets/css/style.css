@@ -1,6 +1,7 @@
 #header {
     width: 100%;
     background: url(https://wallpaperaccess.com/full/2027653.jpg) center center/cover no-repeat, var(--background2);
+    /* background: url(https://wallpaperaccess.com/full/2027653.jpg) center center/cover no-repeat, var(--background2); */
 }
 
 #header_gradient {
@@ -247,7 +248,7 @@
 }
 
 #background_image_preview {
-    background: url(https://wallpaperaccess.com/full/2027653.jpg) center center/cover no-repeat;
+    background: url(https://wallpaperaccess.com/full/2027653.jpg) center center/cover no-repeat, var(--background2);
     width: 100%;
     height: 98px;
     border-radius: 4px;
@@ -279,13 +280,19 @@
     background: var(--transparent);
 }
 
-#accent_colors {
+#block_container {
     display: flex;
     flex-wrap: wrap;
     gap: 1px;
 }
 
-.ac_colors {
+.img_block {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.block {
     border: 1px solid var(--border);
     border-radius: 4px;
     width: 42px;
@@ -293,7 +300,7 @@
     transition: all .2s;
 }
 
-.ac_colors:hover {
+.block:hover {
     border: 1px solid var(--text);
 }
 

@@ -113,6 +113,7 @@ editUserBtn[0].onclick = () => {
         profileImg.src = "data:image/png;base64," + localStorage.getItem("profile");
     } else {
         profileImg.src = "assets/img/default-user-profile.png";
+        profileImg.style.mixBlendMode = "difference";
     }
     if (localStorage.getItem("username") != null) {
         input.value = localStorage.getItem("username");
@@ -156,20 +157,29 @@ settings.onclick = () => {
             </header>
             <div class="line_dividerX"></div>
             <div class="modal_body settings_body">
-                <div class="settings_block">
                     <div id="background_image_preview"></div>
-                    <a>Change background image</a>
+                <div class="settings_block">
+                    <p>Background</p>
+                    <div id="block_container">
+                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/2027653.jpg)"></div>
+                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/218253.jpg)"></div>
+                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/1779187.jpg)"></div>
+                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/218232.jpg)"></div>
+                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/218300.jpg)"></div>
+                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/7037.jpg)"></div>
+                    </div>
+                    <a>Choose image from internet</a>
                 </div>
                 <div class="settings_block">
                     <p>Accent color</p>
-                    <div id="accent_colors">
-                        <div class="ac_colors" style="background:#ea3c78"></div>
-                        <div class="ac_colors" style="background:#fe3159"></div>
-                        <div class="ac_colors" style="background:#e1462d"></div>
-                        <div class="ac_colors" style="background:#f0ca33"></div>
-                        <div class="ac_colors" style="background:#23b296"></div>
-                        <div class="ac_colors" style="background:#1a73e8"></div>
-                        <div class="ac_colors" style="background:#6700b7"></div>
+                    <div id="block_container">
+                        <div class="block ac_colors" style="background:#ea3c78"></div>
+                        <div class="block ac_colors" style="background:#fe8d18"></div>
+                        <div class="block ac_colors" style="background:#ffba25"></div>
+                        <div class="block ac_colors" style="background:#177d1f"></div>
+                        <div class="block ac_colors" style="background:#1a73e8"></div>
+                        <div class="block ac_colors" style="background:#b040bf"></div>
+                        <div class="block ac_colors ac_colors_active" style="display: none"></div>
                     </div>
                     <div>
                         <label for="accent_picker" class="modal_input_label">Custom color</label>
@@ -195,10 +205,6 @@ settings.onclick = () => {
                     </div>
                 </div>
             </div>
-            <div class="line_dividerX"></div>
-            <footer class="form_footer" id="settings_footer">
-                <button id="settings_save_btn">Save changes</button>
-            </footer>
         </form>
     `;
     document.getElementsByClassName("close_btn")[0].onclick = () => {
@@ -210,7 +216,7 @@ settings.onclick = () => {
     var darkmodeInput = document.getElementById("darkmode"),
         accentPicker = document.getElementById("accent_picker"),
         acColors = document.getElementsByClassName("ac_colors"),
-        twoforhourInput = document.getElementById("24hour"),
+        hourFormatInput = document.getElementById("24hour"),
         lsAcColor = localStorage.getItem("accentColor");
 
     function attPicked(i) {
@@ -224,94 +230,80 @@ settings.onclick = () => {
         acColors[3].classList.remove("ac_colors_active");
         acColors[4].classList.remove("ac_colors_active");
         acColors[5].classList.remove("ac_colors_active");
-        acColors[6].classList.remove("ac_colors_active");
-    }
-    if (lsAcColor == "#ea3c78") {
-        attPicked("#ea3c78");
-        acColors[0].classList.add("ac_colors_active");
-    } else if (lsAcColor == "#fe3159") {
-        attPicked("#fe3159");
-        acColors[1].classList.add("ac_colors_active");
-    } else if (lsAcColor == "#e1462d") {
-        attPicked("#e1462d");
-        acColors[2].classList.add("ac_colors_active");
-    } else if (lsAcColor == "#f0ca33") {
-        attPicked("#f0ca33");
-        acColors[3].classList.add("ac_colors_active");
-    } else if (lsAcColor == "#23b296") {
-        attPicked("#23b296");
-        acColors[4].classList.add("ac_colors_active");
-    } else if (lsAcColor == "#1a73e8" || lsAcColor == null) {
-        attPicked("#1a73e8");
-        acColors[5].classList.add("ac_colors_active");
-    } else if (lsAcColor == "#6700b7") {
-        attPicked("#6700b7");
-        acColors[6].classList.add("ac_colors_active");
-    }
-    accentPicker.setAttribute("value", localStorage.getItem("accentColor"));
-    accentPicker.oninput = (e) => {
-        acActive();
-        accentPicker.setAttribute("value", e.target.value);
+        acColors[6].style.display = "none";
     }
 
+    function changeAccentColor(a, b) {
+        attPicked(a);
+        acActive();
+        acColors[b].classList.add("ac_colors_active");
+        document.documentElement.style.setProperty("--accentColor", accentPicker.getAttribute("value"));
+        localStorage.setItem("accentColor", accentPicker.getAttribute("value"));
+    }
+    // ##########################
+    // #      Loaded Data       #
+    // ##########################
     if (localStorage.getItem("24hour") == 1) {
-        twoforhourInput.setAttribute("checked", "");
+        hourFormatInput.setAttribute("checked", "");
     }
     if (localStorage.getItem("darkmode") == 0) {
         darkmodeInput.removeAttribute("checked");
     }
-    acColors[0].onclick = () => {
+    if (lsAcColor == "#ea3c78") {
         attPicked("#ea3c78");
-        acActive();
         acColors[0].classList.add("ac_colors_active");
-    };
-    acColors[1].onclick = () => {
-        attPicked("#fe3159");
-        acActive();
+    } else if (lsAcColor == "#fe8d18") {
+        attPicked("#fe8d18");
         acColors[1].classList.add("ac_colors_active");
-    };
-    acColors[2].onclick = () => {
-        attPicked("#e1462d");
-        acActive();
+    } else if (lsAcColor == "#ffba25") {
+        attPicked("#ffba25");
         acColors[2].classList.add("ac_colors_active");
-    };
-    acColors[3].onclick = () => {
-        attPicked("#f0ca33");
-        acActive();
+    } else if (lsAcColor == "#177d1f") {
+        attPicked("#177d1f");
         acColors[3].classList.add("ac_colors_active");
-    };
-    acColors[4].onclick = () => {
-        attPicked("#23b296");
-        acActive();
-        acColors[4].classList.add("ac_colors_active");
-    };
-    acColors[5].onclick = () => {
+    } else if (lsAcColor == "#1a73e8" || lsAcColor == null) {
         attPicked("#1a73e8");
-        acActive();
+        acColors[4].classList.add("ac_colors_active");
+    } else if (lsAcColor == "#b040bf") {
+        attPicked("#b040bf");
         acColors[5].classList.add("ac_colors_active");
-    };
-    acColors[6].onclick = () => {
-        attPicked("#6700b7");
+    } else {
+        attPicked(lsAcColor);
+        acColors[6].style.display = "block";
+        acColors[6].style.background = lsAcColor;
+    }
+    // ##########################
+    // #   Settings Auto Save   #
+    // ##########################
+    accentPicker.oninput = (e) => {
         acActive();
-        acColors[6].classList.add("ac_colors_active");
-    };
-    document.getElementById("settings_save_btn").onclick = (e) => {
-        e.preventDefault();
-        localStorage.setItem("accentColor", accentPicker.getAttribute("value"));
+        attPicked(e.target.value);
+        acColors[6].style.display = "block";
+        acColors[6].style.background = e.target.value;
         document.documentElement.style.setProperty("--accentColor", accentPicker.getAttribute("value"));
-        if (twoforhourInput.checked) {
+        localStorage.setItem("accentColor", accentPicker.getAttribute("value"));
+    }
+    acColors[0].onclick = () => { changeAccentColor("#ea3c78", 0) };
+    acColors[1].onclick = () => { changeAccentColor("#fe8d18", 1) };
+    acColors[2].onclick = () => { changeAccentColor("#ffba25", 2) };
+    acColors[3].onclick = () => { changeAccentColor("#177d1f", 3) };
+    acColors[4].onclick = () => { changeAccentColor("#1a73e8", 4) };
+    acColors[5].onclick = () => { changeAccentColor("#b040bf", 5) };
+    hourFormatInput.onclick = () => {
+        if (hourFormatInput.checked) {
             localStorage.setItem("24hour", 1);
         } else {
             localStorage.setItem("24hour", 0);
         }
+    };
+    darkmodeInput.onclick = () => {
         if (darkmodeInput.checked) {
             localStorage.setItem("darkmode", 1);
         } else {
             localStorage.setItem("darkmode", 0);
         }
         checkThemeMode();
-        document.getElementById("settings_section").remove();
-    }
+    };
 };
 
 // ############################################
@@ -333,12 +325,12 @@ aboutProject.onclick = () => {
                 <svg width="213" height="37" id="logo" viewBox="0 0 213 37" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
                 <p>This project can list all you want to do for today based on what you save on it. Your to do list can be categorize and won't lost the data when you reload your browser. It is best to combine with a browser extension new tab changer.
                     <br><br>
-                    <span style="color:var(--error)">Clearing this site local storage or browser's data will also delete all to-do-list saved data.</span>
+                    <span style="color:var(--accentColor)">Clearing this site local storage or browser's data will also delete all to-do-list saved data.</span>
                 </p>
             </div>
             <div class="line_dividerX"></div>
             <footer class="form_footer" id="about_project_footer">
-                <p>Last updated 10/12/2022</p>
+                <p>Last updated 10/14/2022</p>
                 <a href="https://github.com/MinecraftJohn/to-do-list" target="_blank" rel="noopener noreferrer">Visit Github for more info.</a>
             </footer>
         </div>
