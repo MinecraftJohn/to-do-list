@@ -1,7 +1,8 @@
 // ############################################
 // #           Variables Section              #
 // ############################################
-var headerTime = document.getElementById("time"),
+var pageHeader = document.getElementById("header"),
+    headerTime = document.getElementById("time"),
     headerDate = document.getElementById("date"),
     greetings = document.getElementById("greetings"),
     accountPicture = document.getElementById("account_picture"),
@@ -12,20 +13,28 @@ var headerTime = document.getElementById("time"),
     settings = document.getElementById("settings"),
     aboutProject = document.getElementById("about_project");
 
+var time = new Date(),
+    hours = time.getHours(),
+    minutes = String(time.getMinutes()).padStart(2, "0"),
+    day = time.getDay(),
+    month = time.getMonth(),
+    date = time.getDate(),
+    hours12Format = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
 // ############################################
 // #            Startup Section               #
 // ############################################
+function bgImage(elmnt) {
+    if (localStorage.getItem("backgroundImage") == null) {
+        elmnt.style.backgroundImage = "url(https://wallpaperaccess.com/full/2027653.jpg)";
+    } else {
+        elmnt.style.backgroundImage = localStorage.getItem("backgroundImage");
+    }
+}
+bgImage(pageHeader);
 function clock() {
-    var time = new Date(),
-        hours = time.getHours(),
-        minutes = String(time.getMinutes()).padStart(2, "0"),
-        day = time.getDay(),
-        month = time.getMonth(),
-        date = time.getDate(),
-        hours12Format = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-        dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
     if (localStorage.getItem("24hour") == 1) {
         headerTime.innerHTML = hours + ":" + minutes;
     } else {
@@ -157,7 +166,10 @@ settings.onclick = () => {
             </header>
             <div class="line_dividerX"></div>
             <div class="modal_body settings_body">
-                    <div id="background_image_preview"></div>
+                    <div id="background_image_preview">
+                        <h1 id="setting_time" class="time_stats" style="font-size: 32px">00:00</h1>
+                        <h3 id="setting_date" class="time_stats">Day, Month 00</h3>
+                    </div>
                 <div class="settings_block">
                     <p>Background</p>
                     <div id="block_container">
@@ -167,6 +179,7 @@ settings.onclick = () => {
                         <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/218232.jpg)"></div>
                         <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/218300.jpg)"></div>
                         <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/7037.jpg)"></div>
+                        <div class="block img_block block_active" style="display: none"></div>
                     </div>
                     <a>Choose image from internet</a>
                 </div>
@@ -179,7 +192,7 @@ settings.onclick = () => {
                         <div class="block ac_colors" style="background:#177d1f"></div>
                         <div class="block ac_colors" style="background:#1a73e8"></div>
                         <div class="block ac_colors" style="background:#b040bf"></div>
-                        <div class="block ac_colors ac_colors_active" style="display: none"></div>
+                        <div class="block ac_colors block_active" style="display: none"></div>
                     </div>
                     <div>
                         <label for="accent_picker" class="modal_input_label">Custom color</label>
@@ -213,36 +226,63 @@ settings.onclick = () => {
     setTimeout(function() {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
     }, 0);
-    var darkmodeInput = document.getElementById("darkmode"),
+    // ######################################
+    // #      Variables and Functions       #
+    // ######################################
+    var bgImagePreview = document.getElementById("background_image_preview"),
+        previewTime = document.getElementById("setting_time"),
+        previewDate = document.getElementById("setting_date"),
+        lsBGImage = localStorage.getItem("backgroundImage"),
+        imgBlock = document.getElementsByClassName("img_block"),
+        darkmodeInput = document.getElementById("darkmode"),
         accentPicker = document.getElementById("accent_picker"),
         acColors = document.getElementsByClassName("ac_colors"),
         hourFormatInput = document.getElementById("24hour"),
         lsAcColor = localStorage.getItem("accentColor");
 
+    function clock() {
+        if (localStorage.getItem("24hour") == 1) {
+            previewTime.innerHTML = hours + ":" + minutes;
+        } else {
+            previewTime.innerHTML = hours12Format[hours] + ":" + minutes;
+        }
+        previewDate.innerHTML = dayArray[day] + ", " + monthArray[month] + " " + date;
+    }
+    function changeBGImage(a, b) {
+        blockActive(imgBlock);
+        imgBlock[a].classList.add("block_active");
+        localStorage.setItem("backgroundImage", b);
+    }
     function attPicked(i) {
         accentPicker.setAttribute("value", i);
     }
 
-    function acActive() {
-        acColors[0].classList.remove("ac_colors_active");
-        acColors[1].classList.remove("ac_colors_active");
-        acColors[2].classList.remove("ac_colors_active");
-        acColors[3].classList.remove("ac_colors_active");
-        acColors[4].classList.remove("ac_colors_active");
-        acColors[5].classList.remove("ac_colors_active");
-        acColors[6].style.display = "none";
+    function blockActive(a) {
+        a[0].classList.remove("block_active");
+        a[1].classList.remove("block_active");
+        a[2].classList.remove("block_active");
+        a[3].classList.remove("block_active");
+        a[4].classList.remove("block_active");
+        a[5].classList.remove("block_active");
+        a[6].style.display = "none";
     }
 
     function changeAccentColor(a, b) {
         attPicked(a);
-        acActive();
-        acColors[b].classList.add("ac_colors_active");
+        blockActive(acColors);
+        acColors[b].classList.add("block_active");
         document.documentElement.style.setProperty("--accentColor", accentPicker.getAttribute("value"));
         localStorage.setItem("accentColor", accentPicker.getAttribute("value"));
     }
     // ##########################
     // #      Loaded Data       #
     // ##########################
+    bgImage(bgImagePreview);
+    if (lsBGImage == null || lsBGImage == "https://wallpaperaccess.com/full/2027653.jpg") {
+        imgBlock[0].classList.add("block_active");
+    }
+    clock();
+    setInterval(clock, 1000);
     if (localStorage.getItem("24hour") == 1) {
         hourFormatInput.setAttribute("checked", "");
     }
@@ -251,22 +291,22 @@ settings.onclick = () => {
     }
     if (lsAcColor == "#ea3c78") {
         attPicked("#ea3c78");
-        acColors[0].classList.add("ac_colors_active");
+        acColors[0].classList.add("block_active");
     } else if (lsAcColor == "#fe8d18") {
         attPicked("#fe8d18");
-        acColors[1].classList.add("ac_colors_active");
+        acColors[1].classList.add("block_active");
     } else if (lsAcColor == "#ffba25") {
         attPicked("#ffba25");
-        acColors[2].classList.add("ac_colors_active");
+        acColors[2].classList.add("block_active");
     } else if (lsAcColor == "#177d1f") {
         attPicked("#177d1f");
-        acColors[3].classList.add("ac_colors_active");
+        acColors[3].classList.add("block_active");
     } else if (lsAcColor == "#1a73e8" || lsAcColor == null) {
         attPicked("#1a73e8");
-        acColors[4].classList.add("ac_colors_active");
+        acColors[4].classList.add("block_active");
     } else if (lsAcColor == "#b040bf") {
         attPicked("#b040bf");
-        acColors[5].classList.add("ac_colors_active");
+        acColors[5].classList.add("block_active");
     } else {
         attPicked(lsAcColor);
         acColors[6].style.display = "block";
@@ -275,8 +315,14 @@ settings.onclick = () => {
     // ##########################
     // #   Settings Auto Save   #
     // ##########################
+    imgBlock[0].onclick = () => { changeBGImage(0, "https://wallpaperaccess.com/full/2027653.jpg") };
+    imgBlock[1].onclick = () => { changeBGImage(1, "https://wallpaperaccess.com/full/218253.jpg") };
+    imgBlock[2].onclick = () => { changeBGImage(2, "https://wallpaperaccess.com/full/1779187.jpg") };
+    imgBlock[3].onclick = () => { changeBGImage(3, "https://wallpaperaccess.com/full/218232.jpg") };
+    imgBlock[4].onclick = () => { changeBGImage(4, "https://wallpaperaccess.com/full/218300.jpg") };
+    imgBlock[5].onclick = () => { changeBGImage(5, "https://wallpaperaccess.com/full/7037.jpg") };
     accentPicker.oninput = (e) => {
-        acActive();
+        blockActive(acColors);
         attPicked(e.target.value);
         acColors[6].style.display = "block";
         acColors[6].style.background = e.target.value;

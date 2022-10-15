@@ -84,7 +84,7 @@ a:hover {
     background: var(--transparent);
 }
 
-.header_time {
+.time_stats {
     font-weight: 500;
     color: #fff;
     text-shadow: 2px 2px 0 rgba(26, 26, 27, 0.33);
