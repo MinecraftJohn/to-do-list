@@ -30,10 +30,9 @@ function bgImage(elmnt) {
     if (localStorage.getItem("backgroundImage") == null) {
         elmnt.style.backgroundImage = "url(https://wallpaperaccess.com/full/2027653.jpg)";
     } else {
-        elmnt.style.backgroundImage = localStorage.getItem("backgroundImage");
+        elmnt.style.backgroundImage = "url(" + localStorage.getItem("backgroundImage") + ")";
     }
 }
-bgImage(pageHeader);
 function clock() {
     if (localStorage.getItem("24hour") == 1) {
         headerTime.innerHTML = hours + ":" + minutes;
@@ -49,6 +48,7 @@ function clock() {
         greetings.innerHTML = "Good evening,";
     }
 }
+bgImage(pageHeader);
 clock();
 setInterval(clock, 1000);
 if (localStorage.getItem("username") != null) {
@@ -90,7 +90,7 @@ editUserBtn[0].onclick = () => {
             <div class="line_dividerX"></div>
             <div class="form_body">
                 <div id="edit_user_account_profile">
-                    <img id="edit_user_account_picture" src="" alt="User Profile">
+                    <img id="edit_user_account_picture" alt="User Profile">
                     <div id="change_picture_btn">
                         <label for="profile">Change</label>
                         <input type="file" id="profile" accept=".png, .jpg, .jpeg"/>
@@ -222,6 +222,7 @@ settings.onclick = () => {
     `;
     document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("settings_section").remove();
+        bgImage(pageHeader);
     };
     setTimeout(function() {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
@@ -280,6 +281,16 @@ settings.onclick = () => {
     bgImage(bgImagePreview);
     if (lsBGImage == null || lsBGImage == "https://wallpaperaccess.com/full/2027653.jpg") {
         imgBlock[0].classList.add("block_active");
+    } else if (lsBGImage == "https://wallpaperaccess.com/full/218253.jpg") {
+        imgBlock[1].classList.add("block_active");
+    } else if (lsBGImage == "https://wallpaperaccess.com/full/1779187.jpg") {
+        imgBlock[2].classList.add("block_active");
+    } else if (lsBGImage == "https://wallpaperaccess.com/full/218232.jpg") {
+        imgBlock[3].classList.add("block_active");
+    } else if (lsBGImage == "https://wallpaperaccess.com/full/218300.jpg") {
+        imgBlock[4].classList.add("block_active");
+    } else if (lsBGImage == "https://wallpaperaccess.com/full/7037.jpg") {
+        imgBlock[5].classList.add("block_active");
     }
     clock();
     setInterval(clock, 1000);
@@ -315,12 +326,30 @@ settings.onclick = () => {
     // ##########################
     // #   Settings Auto Save   #
     // ##########################
-    imgBlock[0].onclick = () => { changeBGImage(0, "https://wallpaperaccess.com/full/2027653.jpg") };
-    imgBlock[1].onclick = () => { changeBGImage(1, "https://wallpaperaccess.com/full/218253.jpg") };
-    imgBlock[2].onclick = () => { changeBGImage(2, "https://wallpaperaccess.com/full/1779187.jpg") };
-    imgBlock[3].onclick = () => { changeBGImage(3, "https://wallpaperaccess.com/full/218232.jpg") };
-    imgBlock[4].onclick = () => { changeBGImage(4, "https://wallpaperaccess.com/full/218300.jpg") };
-    imgBlock[5].onclick = () => { changeBGImage(5, "https://wallpaperaccess.com/full/7037.jpg") };
+    imgBlock[0].onclick = () => {
+        changeBGImage(0, "https://wallpaperaccess.com/full/2027653.jpg");
+        bgImage(bgImagePreview);
+    };
+    imgBlock[1].onclick = () => {
+        changeBGImage(1, "https://wallpaperaccess.com/full/218253.jpg");
+        bgImage(bgImagePreview);
+    };
+    imgBlock[2].onclick = () => {
+        changeBGImage(2, "https://wallpaperaccess.com/full/1779187.jpg");
+        bgImage(bgImagePreview);
+    };
+    imgBlock[3].onclick = () => {
+        changeBGImage(3, "https://wallpaperaccess.com/full/218232.jpg");
+        bgImage(bgImagePreview);
+    };
+    imgBlock[4].onclick = () => {
+        changeBGImage(4, "https://wallpaperaccess.com/full/218300.jpg");
+        bgImage(bgImagePreview);
+    };
+    imgBlock[5].onclick = () => {
+        changeBGImage(5, "https://wallpaperaccess.com/full/7037.jpg");
+        bgImage(bgImagePreview);
+    };
     accentPicker.oninput = (e) => {
         blockActive(acColors);
         attPicked(e.target.value);
