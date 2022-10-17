@@ -5,35 +5,44 @@ var pageHeader = document.getElementById("header"),
     headerTime = document.getElementById("time"),
     headerDate = document.getElementById("date"),
     greetings = document.getElementById("greetings"),
+    accountProfile = document.getElementById("account_profile"),
     accountPicture = document.getElementById("account_picture"),
     username = document.getElementById("username"),
     pageBody = document.getElementsByTagName("body"),
     pageHtml = document.getElementsByTagName("html"),
     editUserBtn = document.getElementsByClassName("setting_edit_user_btn"),
     settings = document.getElementById("settings"),
-    aboutProject = document.getElementById("about_project");
-
-var time = new Date(),
-    hours = time.getHours(),
-    minutes = String(time.getMinutes()).padStart(2, "0"),
-    day = time.getDay(),
-    month = time.getMonth(),
-    date = time.getDate(),
-    hours12Format = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-    dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    aboutProject = document.getElementById("about_project"),
+    wallpaper = ["https://wallpaperaccess.com/full/1779187.jpg",
+        "https://wallpaperaccess.com/full/2027653.jpg",
+        "https://wallpaperaccess.com/full/1779176.jpg",
+        "https://wallpaperaccess.com/full/218253.jpg",
+        "https://wallpaperaccess.com/full/148421.jpg",
+        "https://wallpaperaccess.com/full/53106.jpg"
+    ],
+    lsProfile = localStorage.getItem("profile");
 
 // ############################################
 // #            Startup Section               #
 // ############################################
 function bgImage(elmnt) {
     if (localStorage.getItem("backgroundImage") == null) {
-        elmnt.style.backgroundImage = "url(https://wallpaperaccess.com/full/2027653.jpg)";
+        elmnt.style.backgroundImage = "url(" + wallpaper[0] + ")";
     } else {
         elmnt.style.backgroundImage = "url(" + localStorage.getItem("backgroundImage") + ")";
     }
 }
+
 function clock() {
+    var time = new Date(),
+        hours = time.getHours(),
+        minutes = String(time.getMinutes()).padStart(2, "0"),
+        day = time.getDay(),
+        month = time.getMonth(),
+        date = time.getDate(),
+        hours12Format = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     if (localStorage.getItem("24hour") == 1) {
         headerTime.innerHTML = hours + ":" + minutes;
     } else {
@@ -56,11 +65,18 @@ if (localStorage.getItem("username") != null) {
 } else {
     username.innerHTML = "Account Name";
 }
-if (localStorage.getItem("profile") != null) {
-    accountPicture.src = "data:image/png;base64," + localStorage.getItem("profile");
+
+function defaultProfilePicture(elmnt, n) {
+    elmnt.innerHTML = `
+    <svg height="` + n + `" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M163.786 104.571C163.786 124.434 147.44 140.643 127.143 140.643C106.846 140.643 90.5 124.434 90.5 104.571C90.5 84.7089 106.846 68.5 127.143 68.5C147.44 68.5 163.786 84.7089 163.786 104.571Z" stroke="currentColor" stroke-width="9"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M175.137 192.15C174.831 166.14 153.651 145.15 127.569 145.15C101.486 145.15 80.3067 166.14 80.0005 192.15H71C71.3066 161.17 96.5158 136.15 127.569 136.15C158.621 136.15 183.831 161.17 184.137 192.15H175.137Z" fill="currentColor"/>
+    </svg>`;
+}
+if (lsProfile != null) {
+    accountProfile.innerHTML = '<img id="account_picture" src="data:image/png;base64,' + lsProfile + '" alt="User Profile">';
 } else {
-    accountPicture.src = "assets/img/default-user-profile.png";
-    accountPicture.style.mixBlendMode = "difference";
+    defaultProfilePicture(accountProfile, 42);
 }
 
 function checkThemeMode() {
@@ -100,7 +116,7 @@ editUserBtn[0].onclick = () => {
             </div>
             <div class="line_dividerX"></div>
             <footer class="form_footer">
-                <p id="form_error"></p>
+                <p id="form_error" style="display: none"></p>
                 <button id="edit_user_save_btn">Save</button>
             </footer>
         </form>
@@ -108,7 +124,8 @@ editUserBtn[0].onclick = () => {
     document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("edit_user_section").remove();
     };
-    var profileImg = document.getElementById("edit_user_account_picture"),
+    var userProfile = document.getElementById("edit_user_account_profile"),
+        profileImg = document.getElementById("edit_user_account_picture"),
         input = document.getElementById("change_username"),
         saveBtn = document.getElementById("edit_user_save_btn"),
         errorMsg = document.getElementById("form_error"),
@@ -117,12 +134,14 @@ editUserBtn[0].onclick = () => {
     setTimeout(function() {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
     }, 0);
-    errorMsg.style.display = "none";
-    if (localStorage.getItem("profile") != null) {
-        profileImg.src = "data:image/png;base64," + localStorage.getItem("profile");
+
+    function defaultProfilePictureEdit() {
+        defaultProfilePicture(userProfile, 98);
+    }
+    if (lsProfile != null) {
+        // profileImg.src = "data:image/png;base64," + lsProfile;
     } else {
-        profileImg.src = "assets/img/default-user-profile.png";
-        profileImg.style.mixBlendMode = "difference";
+        defaultProfilePictureEdit();
     }
     if (localStorage.getItem("username") != null) {
         input.value = localStorage.getItem("username");
@@ -152,7 +171,8 @@ editUserBtn[0].onclick = () => {
 
 // #########################################
 settings.onclick = () => {
-    var settingsSection = document.createElement("div");
+    var settingsSection = document.createElement("div"),
+        color = ["#ea3c78", "#fe8d18", "#ffba25", "#177d1f", "#1a73e8", "#b040bf"];
     pageBody[0].appendChild(settingsSection);
     settingsSection.setAttribute("id", "settings_section");
     settingsSection.setAttribute("class", "modal_bg");
@@ -173,12 +193,12 @@ settings.onclick = () => {
                 <div class="settings_block">
                     <p>Background</p>
                     <div id="block_container">
-                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/2027653.jpg)"></div>
-                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/218253.jpg)"></div>
-                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/1779187.jpg)"></div>
-                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/218232.jpg)"></div>
-                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/218300.jpg)"></div>
-                        <div class="block img_block" style="background-image:url(https://wallpaperaccess.com/full/7037.jpg)"></div>
+                        <div class="block img_block" style="background-image:url(` + wallpaper[0] + `)"></div>
+                        <div class="block img_block" style="background-image:url(` + wallpaper[1] + `)"></div>
+                        <div class="block img_block" style="background-image:url(` + wallpaper[2] + `)"></div>
+                        <div class="block img_block" style="background-image:url(` + wallpaper[3] + `)"></div>
+                        <div class="block img_block" style="background-image:url(` + wallpaper[4] + `)"></div>
+                        <div class="block img_block" style="background-image:url(` + wallpaper[5] + `)"></div>
                         <div class="block img_block block_active" style="display: none"></div>
                     </div>
                     <a>Choose image from internet</a>
@@ -186,12 +206,12 @@ settings.onclick = () => {
                 <div class="settings_block">
                     <p>Accent color</p>
                     <div id="block_container">
-                        <div class="block ac_colors" style="background:#ea3c78"></div>
-                        <div class="block ac_colors" style="background:#fe8d18"></div>
-                        <div class="block ac_colors" style="background:#ffba25"></div>
-                        <div class="block ac_colors" style="background:#177d1f"></div>
-                        <div class="block ac_colors" style="background:#1a73e8"></div>
-                        <div class="block ac_colors" style="background:#b040bf"></div>
+                        <div class="block ac_colors" style="background:` + color[0] + `"></div>
+                        <div class="block ac_colors" style="background:` + color[1] + `"></div>
+                        <div class="block ac_colors" style="background:` + color[2] + `"></div>
+                        <div class="block ac_colors" style="background:` + color[3] + `"></div>
+                        <div class="block ac_colors" style="background:` + color[4] + `"></div>
+                        <div class="block ac_colors" style="background:` + color[5] + `"></div>
                         <div class="block ac_colors block_active" style="display: none"></div>
                     </div>
                     <div>
@@ -242,6 +262,15 @@ settings.onclick = () => {
         lsAcColor = localStorage.getItem("accentColor");
 
     function clock() {
+        var time = new Date(),
+            hours = time.getHours(),
+            minutes = String(time.getMinutes()).padStart(2, "0"),
+            day = time.getDay(),
+            month = time.getMonth(),
+            date = time.getDate(),
+            hours12Format = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+            dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         if (localStorage.getItem("24hour") == 1) {
             previewTime.innerHTML = hours + ":" + minutes;
         } else {
@@ -249,11 +278,13 @@ settings.onclick = () => {
         }
         previewDate.innerHTML = dayArray[day] + ", " + monthArray[month] + " " + date;
     }
+
     function changeBGImage(a, b) {
         blockActive(imgBlock);
         imgBlock[a].classList.add("block_active");
         localStorage.setItem("backgroundImage", b);
     }
+
     function attPicked(i) {
         accentPicker.setAttribute("value", i);
     }
@@ -279,17 +310,17 @@ settings.onclick = () => {
     // #      Loaded Data       #
     // ##########################
     bgImage(bgImagePreview);
-    if (lsBGImage == null || lsBGImage == "https://wallpaperaccess.com/full/2027653.jpg") {
+    if (lsBGImage == null || lsBGImage == wallpaper[0]) {
         imgBlock[0].classList.add("block_active");
-    } else if (lsBGImage == "https://wallpaperaccess.com/full/218253.jpg") {
+    } else if (lsBGImage == wallpaper[1]) {
         imgBlock[1].classList.add("block_active");
-    } else if (lsBGImage == "https://wallpaperaccess.com/full/1779187.jpg") {
+    } else if (lsBGImage == wallpaper[2]) {
         imgBlock[2].classList.add("block_active");
-    } else if (lsBGImage == "https://wallpaperaccess.com/full/218232.jpg") {
+    } else if (lsBGImage == wallpaper[3]) {
         imgBlock[3].classList.add("block_active");
-    } else if (lsBGImage == "https://wallpaperaccess.com/full/218300.jpg") {
+    } else if (lsBGImage == wallpaper[4]) {
         imgBlock[4].classList.add("block_active");
-    } else if (lsBGImage == "https://wallpaperaccess.com/full/7037.jpg") {
+    } else if (lsBGImage == wallpaper[5]) {
         imgBlock[5].classList.add("block_active");
     }
     clock();
@@ -300,23 +331,23 @@ settings.onclick = () => {
     if (localStorage.getItem("darkmode") == 0) {
         darkmodeInput.removeAttribute("checked");
     }
-    if (lsAcColor == "#ea3c78") {
-        attPicked("#ea3c78");
+    if (lsAcColor == color[0]) {
+        attPicked(color[0]);
         acColors[0].classList.add("block_active");
-    } else if (lsAcColor == "#fe8d18") {
-        attPicked("#fe8d18");
+    } else if (lsAcColor == color[1]) {
+        attPicked(color[1]);
         acColors[1].classList.add("block_active");
-    } else if (lsAcColor == "#ffba25") {
-        attPicked("#ffba25");
+    } else if (lsAcColor == color[2]) {
+        attPicked(color[2]);
         acColors[2].classList.add("block_active");
-    } else if (lsAcColor == "#177d1f") {
-        attPicked("#177d1f");
+    } else if (lsAcColor == color[3]) {
+        attPicked(color[3]);
         acColors[3].classList.add("block_active");
-    } else if (lsAcColor == "#1a73e8" || lsAcColor == null) {
-        attPicked("#1a73e8");
+    } else if (lsAcColor == color[4] || lsAcColor == null) {
+        attPicked(color[4]);
         acColors[4].classList.add("block_active");
-    } else if (lsAcColor == "#b040bf") {
-        attPicked("#b040bf");
+    } else if (lsAcColor == color[5]) {
+        attPicked(color[5]);
         acColors[5].classList.add("block_active");
     } else {
         attPicked(lsAcColor);
@@ -327,27 +358,27 @@ settings.onclick = () => {
     // #   Settings Auto Save   #
     // ##########################
     imgBlock[0].onclick = () => {
-        changeBGImage(0, "https://wallpaperaccess.com/full/2027653.jpg");
+        changeBGImage(0, wallpaper[0]);
         bgImage(bgImagePreview);
     };
     imgBlock[1].onclick = () => {
-        changeBGImage(1, "https://wallpaperaccess.com/full/218253.jpg");
+        changeBGImage(1, wallpaper[1]);
         bgImage(bgImagePreview);
     };
     imgBlock[2].onclick = () => {
-        changeBGImage(2, "https://wallpaperaccess.com/full/1779187.jpg");
+        changeBGImage(2, wallpaper[2]);
         bgImage(bgImagePreview);
     };
     imgBlock[3].onclick = () => {
-        changeBGImage(3, "https://wallpaperaccess.com/full/218232.jpg");
+        changeBGImage(3, wallpaper[3]);
         bgImage(bgImagePreview);
     };
     imgBlock[4].onclick = () => {
-        changeBGImage(4, "https://wallpaperaccess.com/full/218300.jpg");
+        changeBGImage(4, wallpaper[4]);
         bgImage(bgImagePreview);
     };
     imgBlock[5].onclick = () => {
-        changeBGImage(5, "https://wallpaperaccess.com/full/7037.jpg");
+        changeBGImage(5, wallpaper[5]);
         bgImage(bgImagePreview);
     };
     accentPicker.oninput = (e) => {
@@ -358,12 +389,12 @@ settings.onclick = () => {
         document.documentElement.style.setProperty("--accentColor", accentPicker.getAttribute("value"));
         localStorage.setItem("accentColor", accentPicker.getAttribute("value"));
     }
-    acColors[0].onclick = () => { changeAccentColor("#ea3c78", 0) };
-    acColors[1].onclick = () => { changeAccentColor("#fe8d18", 1) };
-    acColors[2].onclick = () => { changeAccentColor("#ffba25", 2) };
-    acColors[3].onclick = () => { changeAccentColor("#177d1f", 3) };
-    acColors[4].onclick = () => { changeAccentColor("#1a73e8", 4) };
-    acColors[5].onclick = () => { changeAccentColor("#b040bf", 5) };
+    acColors[0].onclick = () => { changeAccentColor(color[0], 0) };
+    acColors[1].onclick = () => { changeAccentColor(color[1], 1) };
+    acColors[2].onclick = () => { changeAccentColor(color[2], 2) };
+    acColors[3].onclick = () => { changeAccentColor(color[3], 3) };
+    acColors[4].onclick = () => { changeAccentColor(color[4], 4) };
+    acColors[5].onclick = () => { changeAccentColor(color[5], 5) };
     hourFormatInput.onclick = () => {
         if (hourFormatInput.checked) {
             localStorage.setItem("24hour", 1);

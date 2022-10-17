@@ -199,7 +199,7 @@
 #change_picture_btn label {
     display: grid;
     place-content: center;
-    background: rgba(35, 39, 51, 0.8);
+    background: rgba(35, 39, 51, 0.5);
     color: #fff;
     cursor: pointer;
     width: 98px;
@@ -218,7 +218,7 @@
 
 #change_username {
     text-align: center;
-    padding: 5px;
+    padding: 6px 16px;
     border-bottom: 2px solid var(--scrollbar);
 }
 
