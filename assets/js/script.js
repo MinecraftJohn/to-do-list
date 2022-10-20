@@ -20,6 +20,7 @@ var pageHeader = document.getElementById("header"),
         "https://wallpaperaccess.com/full/148421.jpg",
         "https://wallpaperaccess.com/full/53106.jpg"
     ],
+    lsUsername = localStorage.getItem("username"),
     lsProfile = localStorage.getItem("profile");
 
 // ############################################
@@ -60,23 +61,23 @@ function clock() {
 bgImage(pageHeader);
 clock();
 setInterval(clock, 1000);
-if (localStorage.getItem("username") != null) {
-    username.innerHTML = localStorage.getItem("username");
+if (lsUsername != null) {
+    username.innerHTML = lsUsername;
 } else {
     username.innerHTML = "Account Name";
 }
 
-function defaultProfilePicture(elmnt, n) {
+function defaultProfilePicture(elmnt, n, more) {
     elmnt.innerHTML = `
     <svg height="` + n + `" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M163.786 104.571C163.786 124.434 147.44 140.643 127.143 140.643C106.846 140.643 90.5 124.434 90.5 104.571C90.5 84.7089 106.846 68.5 127.143 68.5C147.44 68.5 163.786 84.7089 163.786 104.571Z" stroke="currentColor" stroke-width="9"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M175.137 192.15C174.831 166.14 153.651 145.15 127.569 145.15C101.486 145.15 80.3067 166.14 80.0005 192.15H71C71.3066 161.17 96.5158 136.15 127.569 136.15C158.621 136.15 183.831 161.17 184.137 192.15H175.137Z" fill="currentColor"/>
-    </svg>`;
+    </svg>` + more;
 }
 if (lsProfile != null) {
     accountProfile.innerHTML = '<img id="account_picture" src="data:image/png;base64,' + lsProfile + '" alt="User Profile">';
 } else {
-    defaultProfilePicture(accountProfile, 42);
+    defaultProfilePicture(accountProfile, 42, "");
 }
 
 function checkThemeMode() {
@@ -91,7 +92,9 @@ checkThemeMode();
 // #        Event Listeners Section           #
 // ############################################
 editUserBtn[0].onclick = () => {
-    var editUserSection = document.createElement("div");
+    var editUserSection = document.createElement("div"),
+        fileInputDOM = `<div id="change_picture_btn"><label for="profile">Change</label></div>`,
+        profileImgDOM = `<img id="edit_user_account_picture" alt="User Profile" src="data:image/png;base64,` + lsProfile + `">` + fileInputDOM;
     pageBody[0].appendChild(editUserSection);
     editUserSection.setAttribute("id", "edit_user_section");
     editUserSection.setAttribute("class", "modal_bg");
@@ -105,13 +108,8 @@ editUserBtn[0].onclick = () => {
             </header>
             <div class="line_dividerX"></div>
             <div class="form_body">
-                <div id="edit_user_account_profile">
-                    <img id="edit_user_account_picture" alt="User Profile">
-                    <div id="change_picture_btn">
-                        <label for="profile">Change</label>
-                        <input type="file" id="profile" accept=".png, .jpg, .jpeg"/>
-                    </div>
-                </div>
+                <div id="edit_user_account_profile"></div>
+                <input type="file" id="profile" accept=".png, .jpg, .jpeg" style="display: none"/>
                 <input type="text" id="change_username" placeholder="Enter a name">
             </div>
             <div class="line_dividerX"></div>
@@ -124,31 +122,26 @@ editUserBtn[0].onclick = () => {
     document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("edit_user_section").remove();
     };
+    setTimeout(() => {
+        document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
+    }, 0);
     var userProfile = document.getElementById("edit_user_account_profile"),
-        profileImg = document.getElementById("edit_user_account_picture"),
         input = document.getElementById("change_username"),
         saveBtn = document.getElementById("edit_user_save_btn"),
         errorMsg = document.getElementById("form_error"),
-        profile = document.getElementById("profile"),
         fileReader = new FileReader();
-    setTimeout(function() {
-        document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
-    }, 0);
-
-    function defaultProfilePictureEdit() {
-        defaultProfilePicture(userProfile, 98);
-    }
     if (lsProfile != null) {
-        // profileImg.src = "data:image/png;base64," + lsProfile;
+        userProfile.innerHTML = profileImgDOM;
     } else {
-        defaultProfilePictureEdit();
+        defaultProfilePicture(userProfile, 98, fileInputDOM);
     }
-    if (localStorage.getItem("username") != null) {
-        input.value = localStorage.getItem("username");
+    if (lsUsername != null) {
+        input.value = lsUsername;
     }
-    profile.onchange = function() {
+    document.getElementById("profile").onchange = () => {
+        userProfile.innerHTML = profileImgDOM;
         fileReader.onload = function() {
-            profileImg.src = fileReader.result;
+            document.getElementById("edit_user_account_picture").src = fileReader.result;
         };
         if (profile.files[0]) {
             fileReader.readAsDataURL(profile.files[0]);
@@ -244,7 +237,7 @@ settings.onclick = () => {
         document.getElementById("settings_section").remove();
         bgImage(pageHeader);
     };
-    setTimeout(function() {
+    setTimeout(() => {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
     }, 0);
     // ######################################
@@ -436,7 +429,7 @@ aboutProject.onclick = () => {
             </div>
             <div class="line_dividerX"></div>
             <footer class="form_footer" id="about_project_footer">
-                <p>Last updated 10/14/2022</p>
+                <p>Last updated 10/20/2022</p>
                 <a href="https://github.com/MinecraftJohn/to-do-list" target="_blank" rel="noopener noreferrer">Visit Github for more info.</a>
             </footer>
         </div>
@@ -444,7 +437,7 @@ aboutProject.onclick = () => {
     document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("about_project_section").remove();
     };
-    setTimeout(function() {
+    setTimeout(() => {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
     }, 0);
 
