@@ -3,6 +3,7 @@ html[darkmode='0'] {
     --background: #F8F9FC;
     --background2: #F1F3F9;
     --text: #1A1A1B;
+    --textTransparent: rgba(26, 26, 27, 0.42);
     --border: #E9EAED;
     --transparent: rgba(26, 26, 27, 0.06);
     --scrollbar: rgba(26, 26, 27, 0.12);
@@ -15,6 +16,7 @@ html[darkmode='1'] {
     --background: #232733;
     --background2: #1A2030;
     --text: #fff;
+    --textTransparent: rgba(255, 255, 255, 0.20);
     --border: #20232E;
     --transparent: rgba(248, 249, 252, 0.06);
     --scrollbar: rgba(248, 249, 252, 0.12);
@@ -64,6 +66,17 @@ button {
 
 button:hover {
     filter: brightness(.9);
+}
+
+.svg_btns {
+    box-sizing: content-box;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.svg_btns:hover {
+    cursor: pointer;
+    background: var(--transparent);
 }
 
 input {

@@ -129,6 +129,7 @@ editUserBtn[0].onclick = () => {
         input = document.getElementById("change_username"),
         saveBtn = document.getElementById("edit_user_save_btn"),
         errorMsg = document.getElementById("form_error"),
+        profile = document.getElementById("profile"),
         fileReader = new FileReader();
     if (lsProfile != null) {
         userProfile.innerHTML = profileImgDOM;
@@ -138,7 +139,7 @@ editUserBtn[0].onclick = () => {
     if (lsUsername != null) {
         input.value = lsUsername;
     }
-    document.getElementById("profile").onchange = () => {
+    profile.onchange = () => {
         userProfile.innerHTML = profileImgDOM;
         fileReader.onload = function() {
             document.getElementById("edit_user_account_picture").src = fileReader.result;
