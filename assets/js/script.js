@@ -21,7 +21,9 @@ var pageHeader = document.getElementById("header"),
         "https://wallpaperaccess.com/full/53106.jpg"
     ],
     lsUsername = localStorage.getItem("username"),
-    lsProfile = localStorage.getItem("profile");
+    lsProfile = localStorage.getItem("profile"),
+    addListBtn = document.getElementById("add_list_btn"),
+    todoTaskSection = document.getElementById("todo_task_section");
 
 // ############################################
 // #            Startup Section               #
@@ -460,3 +462,12 @@ aboutProject.onclick = () => {
         dynamicLogo("url(#paint0_linear_179_2)");
     }
 };
+
+// ############################################
+// #          Create To-Do Section            #
+// ############################################
+function createToDo() {
+    todoTaskSection.innerHTML = "test"
+    localStorage.setItem("todos", JSON.stringify([...JSON.parse(localStorage.getItem("todos") || "[]"), { todoTaskSection: todoTaskSection.value, completed: false }]));
+}
+addListBtn.onclick = createToDo;
