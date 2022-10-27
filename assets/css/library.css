@@ -146,6 +146,13 @@ a:hover {
     gap: 32px;
 }
 
+.form_body_list {
+    padding: 18px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
 .modal_body {
     padding: 32px 18px;
     display: flex;

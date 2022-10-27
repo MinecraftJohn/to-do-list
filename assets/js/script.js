@@ -117,10 +117,9 @@ editUserBtn[0].onclick = () => {
             <div class="line_dividerX"></div>
             <footer class="form_footer">
                 <p id="form_error" style="display: none"></p>
-                <button id="edit_user_save_btn">Save</button>
+                <button id="save_btn">Save</button>
             </footer>
-        </form>
-    `;
+        </form>`;
     document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("edit_user_section").remove();
     };
@@ -129,7 +128,7 @@ editUserBtn[0].onclick = () => {
     }, 0);
     var userProfile = document.getElementById("edit_user_account_profile"),
         input = document.getElementById("change_username"),
-        saveBtn = document.getElementById("edit_user_save_btn"),
+        saveBtn = document.getElementById("save_btn"),
         errorMsg = document.getElementById("form_error"),
         profile = document.getElementById("profile"),
         fileReader = new FileReader();
@@ -466,8 +465,82 @@ aboutProject.onclick = () => {
 // ############################################
 // #          Create To-Do Section            #
 // ############################################
+var checkboxItemList = '<input type="checkbox" name="itemlist" style="display: none">',
+    checkSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+<path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+<path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z"/>
+</svg>`;
+
+function aaaaa(q) {
+    q.innerHTML = checkboxItemList + checkSVG;
+    q.setAttribute("onclick", w)
+}
+
 function createToDo() {
-    todoTaskSection.innerHTML = "test"
-    localStorage.setItem("todos", JSON.stringify([...JSON.parse(localStorage.getItem("todos") || "[]"), { todoTaskSection: todoTaskSection.value, completed: false }]));
+    var createToDoSection = document.createElement("div");
+    pageBody[0].appendChild(createToDoSection);
+    createToDoSection.setAttribute("id", "create_todo_section");
+    createToDoSection.setAttribute("class", "modal_bg");
+    createToDoSection.innerHTML = `
+    <form class="modal_container">
+        <header class="modal_header">
+            <b>New list</b>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+        </header>
+        <div class="line_dividerX"></div>
+        <div class="form_body_list">
+            <input type="text" id="name_list" style="text-align: left" placeholder="Enter a name">
+            <button id="save_btn">Done</button>
+        </div>
+    </form>`;
+    document.getElementsByClassName("close_btn")[0].onclick = () => {
+        document.getElementById("create_todo_section").remove();
+    };
+    setTimeout(() => {
+        document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
+    }, 0);
+    document.getElementById("save_btn").onclick = (e) => {
+        e.preventDefault();
+        if (localStorage.getItem("todos") == null) {
+            localStorage.setItem("todos", JSON.stringify([...JSON.parse(localStorage.getItem("todos") || "[]"), { task: "testing", completed: false }]));
+        } else {
+            var asdasd = Array.from(JSON.parse(localStorage.getItem("todos")));
+            console.log(asdasd[3]);
+        }
+    };
+    // var testinggg = JSON.stringify([...JSON.parse(localStorage.getItem("todos"))]);
+    // console.log(asdasd)
+    // console.log(testinggg)
+    // if (localStorage.getItem("todos") == null) {
+    //     localStorage.setItem("todos", "[]");
+    //     todoTaskSection.innerHTML = `
+    //     <div id="task_header_container">
+    //         <input type="text" id="task_header_title" value="My list 1">
+    //         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="svg_btns" viewBox="0 0 16 16">
+    //             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+    //         </svg>
+    //     </div>
+    //     <div id="tasks_container">
+    //         <p class="item_list">
+    //             <label class="item_check" onclick="aaaaa(this)">
+    //                 <input type="checkbox" name="itemlist" style="display: none">
+    //                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    //                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+    //                 </svg>
+    //             </label>
+    //             <input type="text" class="item_name" value="Visual Studio Code">
+    //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="item_delete_icon" viewBox="0 0 16 16">
+    //                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+    //             </svg>
+    //         </p>
+    //         <p class="item_list add_item_btn">
+    //         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    //             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+    //         </svg>   
+    //         List item</p>
+    //     </div>`;
+    // }
 }
 addListBtn.onclick = createToDo;

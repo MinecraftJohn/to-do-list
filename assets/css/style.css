@@ -178,10 +178,57 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 32px;
 }
 
 #task_header_title {
     font-size: 16px;
+    font-weight: bold;
+    line-height: 32px;
+    width: calc(100% - 32px);
+    margin-left: -8px;
+    padding: 0 8px;
+    background: none;
+    pointer-events: none;
+}
+
+#tasks_container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.item_list {
+    border-radius: 4px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.item_list:hover {
+    background: var(--transparent);
+}
+
+.item_check {
+    display: flex;
+}
+
+.item_name {
+    background: none;
+    width: 100%;
+}
+
+.item_delete_icon {
+    opacity: 0;
+}
+
+.item_list:hover .item_delete_icon {
+    opacity: 1;
+}
+
+.add_item_btn {
+    cursor: pointer;
 }
 
 #edit_user_account_profile {
@@ -242,7 +289,7 @@
     color: var(--error);
 }
 
-#edit_user_save_btn {
+#save_btn {
     height: 32px;
     width: 100%;
     padding: 0 22px;
