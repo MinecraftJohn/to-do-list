@@ -86,6 +86,16 @@ input {
     border-radius: 4px;
 }
 
+.input_text {
+    text-align: center;
+    padding: 6px 16px;
+    border-bottom: 2px solid var(--scrollbar);
+}
+
+.input_text:focus {
+    border-bottom: 2px solid var(--accentColor);
+}
+
 a {
     color: var(--accentColor);
     border-radius: 4px;

@@ -1,37 +1,111 @@
-/* ######################################
+/* #############################################################
 #
-#  Font name: Segoe UI
-#  Owner: Microsoft
-#  Link: https://github.com/microsoft/fluentui/blob/32aed1a91b19ac1beb161a7a2ab43e78b51f53d1/packages/react-theme/.storybook/preview-head.html
+#  Font name: Segoe UI Variable
+#  Owner: Microsoft Corporation
+#  Link: https://learn.microsoft.com/en-us/windows/apps/design/downloads/#fonts
 #
-###################################### */
+################################################################ */
 
 @font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Light'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff2) format('woff2'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff) format('woff'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.ttf) format('truetype');
-    font-weight: 100;
+    font-family: "Segoe UI Variable Display";
+    src: url(../fonts/Segoe-UI-Variable-Static-Display-Light.ttf);
+    font-weight: 300;
 }
 
 @font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Semilight'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2) format('woff2'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff) format('woff'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.ttf) format('truetype');
-    font-weight: 200;
+    font-family: "Segoe UI Variable Display";
+    src: url(../fonts/Segoe-UI-Variable-Static-Display-Semilight.ttf);
+    font-weight: 350;
 }
 
 @font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2) format('woff2'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff) format('woff'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.ttf) format('truetype');
+    font-family: "Segoe UI Variable Display";
+    src: url(../fonts/Segoe-UI-Variable-Static-Display.ttf);
     font-weight: 400;
 }
 
 @font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Semibold'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2) format('woff2'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff) format('woff'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.ttf) format('truetype');
+    font-family: "Segoe UI Variable Display";
+    src: url(../fonts/Segoe-UI-Variable-Static-Display-Semibold.ttf);
     font-weight: 600;
 }
 
 @font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Bold'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2) format('woff2'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff) format('woff'), url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.ttf) format('truetype');
+    font-family: "Segoe UI Variable Display";
+    src: url(../fonts/Segoe-UI-Variable-Static-Display-Bold.ttf);
     font-weight: 700;
+}
+
+
+/* ################################################################ */
+
+@font-face {
+    font-family: "Segoe UI Variable Small";
+    src: url(../fonts/Segoe-UI-Variable-Static-Small-Light.ttf);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "Segoe UI Variable Small";
+    src: url(../fonts/Segoe-UI-Variable-Static-Small-Semilight.ttf);
+    font-weight: 350;
+}
+
+@font-face {
+    font-family: "Segoe UI Variable Small";
+    src: url(../fonts/Segoe-UI-Variable-Static-Small.ttf);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Segoe UI Variable Small";
+    src: url(../fonts/Segoe-UI-Variable-Static-Small-Semibold.ttf);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Segoe UI Variable Small";
+    src: url(../fonts/Segoe-UI-Variable-Static-Small-Bold.ttf);
+    font-weight: 700;
+}
+
+
+/* ################################################################ */
+
+@font-face {
+    font-family: "Segoe UI Variable Text";
+    src: url(../fonts/Segoe-UI-Variable-Static-Text-Light.ttf);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "Segoe UI Variable Text";
+    src: url(../fonts/Segoe-UI-Variable-Static-Text-Semilight.ttf);
+    font-weight: 350;
+}
+
+@font-face {
+    font-family: "Segoe UI Variable Text";
+    src: url(../fonts/Segoe-UI-Variable-Static-Text.ttf);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Segoe UI Variable Text";
+    src: url(../fonts/Segoe-UI-Variable-Static-Text-Semibold.ttf);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Segoe UI Variable Text";
+    src: url(../fonts/Segoe-UI-Variable-Static-Text-Bold.ttf);
+    font-weight: 700;
+}
+
+
+/* ################################################################ */
+
+@font-face {
+    font-family: "Segoe Fluent Icons";
+    src: url(../fonts/Segoe-Fluent-Icons.ttf);
 }

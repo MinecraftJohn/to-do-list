@@ -112,7 +112,7 @@ editUserBtn[0].onclick = () => {
             <div class="form_body">
                 <div id="edit_user_account_profile"></div>
                 <input type="file" id="profile" accept=".png, .jpg, .jpeg" style="display: none"/>
-                <input type="text" id="change_username" placeholder="Enter a name">
+                <input type="text" class="input_text" id="change_username" placeholder="Enter a name">
             </div>
             <div class="line_dividerX"></div>
             <footer class="form_footer">
@@ -484,14 +484,14 @@ function createToDo() {
     createToDoSection.innerHTML = `
     <form class="modal_container">
         <header class="modal_header">
-            <b>New list</b>
+            <b>Add list</b>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">
                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
             </svg>
         </header>
         <div class="line_dividerX"></div>
         <div class="form_body_list">
-            <input type="text" id="name_list" style="text-align: left" placeholder="Enter a name">
+            <input type="text" id="name_list" class="input_text" placeholder="Enter a name">
             <button id="save_btn">Done</button>
         </div>
     </form>`;

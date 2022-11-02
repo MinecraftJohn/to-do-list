@@ -275,16 +275,6 @@
     opacity: 1;
 }
 
-#change_username {
-    text-align: center;
-    padding: 6px 16px;
-    border-bottom: 2px solid var(--scrollbar);
-}
-
-#change_username:focus {
-    border-bottom: 2px solid var(--accentColor);
-}
-
 #form_error {
     color: var(--error);
 }
@@ -381,4 +371,7 @@
 #accent_picker {
     height: 0;
     visibility: hidden;
+}
+#name_list {
+    text-align: left;
 }
