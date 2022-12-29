@@ -1,5 +1,6 @@
-html[darkmode='0'] {
+html[darkmode='false'] {
     --accentColor: #1a73e8;
+    --accentText: #fff;
     --background: #F8F9FC;
     --background2: #F1F3F9;
     --text: #1A1A1B;
@@ -11,8 +12,10 @@ html[darkmode='0'] {
     --switch: rgba(35, 39, 51, 0.33);
 }
 
-html[darkmode='1'] {
+html[darkmode='true'],
+:root {
     --accentColor: #1a73e8;
+    --accentText: #fff;
     --background: #232733;
     --background2: #1A2030;
     --text: #fff;
@@ -59,13 +62,13 @@ body {
 button {
     background: var(--accentColor);
     border: none;
-    color: #fff;
+    color: var(--accentText);
     border-radius: 4px;
     cursor: pointer;
 }
 
 button:hover {
-    filter: brightness(.9);
+    filter: brightness(.86);
 }
 
 .svg_btns {
@@ -213,7 +216,7 @@ a:hover {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--accentText);
     box-shadow: 0 0 0 1px rgba(35, 39, 51, 0.0578);
     transition: all .2s;
     position: absolute;

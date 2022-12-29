@@ -46,7 +46,7 @@ function clock() {
         hours12Format = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
         dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    if (localStorage.getItem("24hour") == 1) {
+    if (JSON.parse(localStorage.getItem("24hour")) === true) {
         headerTime.innerHTML = hours + ":" + minutes;
     } else {
         headerTime.innerHTML = hours12Format[hours] + ":" + minutes;
@@ -86,10 +86,10 @@ function checkThemeMode() {
     if (localStorage.getItem("darkmode") != null) {
         pageHtml[0].setAttribute("darkmode", localStorage.getItem("darkmode"));
     }
+    document.documentElement.style.setProperty("--accentColor", localStorage.getItem("accentColor"));
+    document.documentElement.style.setProperty("--accentText", localStorage.getItem("accentText"));
 }
-document.documentElement.style.setProperty("--accentColor", localStorage.getItem("accentColor"));
 checkThemeMode();
-
 // ############################################
 // #        Event Listeners Section           #
 // ############################################
@@ -101,7 +101,7 @@ editUserBtn[0].onclick = () => {
     editUserSection.setAttribute("id", "edit_user_section");
     editUserSection.setAttribute("class", "modal_bg");
     editUserSection.innerHTML = `
-        <form class="modal_container">
+        <form class="modal_container" autocomplete="off">
             <header class="modal_header">
                 <b>Edit profile</b>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">
@@ -150,8 +150,9 @@ editUserBtn[0].onclick = () => {
         };
     };
     saveBtn.onclick = (e) => {
-        if (input.value.match(/([A-ZÑ][a-z-ñ.]+)$/)) {
-            localStorage.setItem("username", input.value);
+        const inputValue = input.value.trim().toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+        if (inputValue.match(/^[a-zA-ZÑñ]+(?: [a-zA-ZÑñ-]+)*$/)) {
+            localStorage.setItem("username", inputValue);
             const base64String = fileReader.result
                 .replace('data:', '')
                 .replace(/^.+,/, '');
@@ -159,9 +160,10 @@ editUserBtn[0].onclick = () => {
         } else {
             e.preventDefault();
             errorMsg.style.display = "block";
-            errorMsg.innerHTML = "Please capital the first letter.";
+            errorMsg.innerHTML = "Numbers are not allowed.";
         }
     };
+
 };
 
 // #########################################
@@ -196,7 +198,10 @@ settings.onclick = () => {
                         <div class="block img_block" style="background-image:url(` + wallpaper[5] + `)"></div>
                         <div class="block img_block block_active" style="display: none"></div>
                     </div>
-                    <a>Choose image from internet</a>
+                    <div class="img_internet_form">
+                        <input type="text" placeholder="Enter a link" class="img_internet_input" />
+                        <button class="img_internet_save_btn">Change</button>
+                    </div>
                 </div>
                 <div class="settings_block">
                     <p>Accent color</p>
@@ -266,7 +271,7 @@ settings.onclick = () => {
             hours12Format = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
             dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        if (localStorage.getItem("24hour") == 1) {
+        if (JSON.parse(localStorage.getItem("24hour")) === true) {
             previewTime.innerHTML = hours + ":" + minutes;
         } else {
             previewTime.innerHTML = hours12Format[hours] + ":" + minutes;
@@ -301,6 +306,14 @@ settings.onclick = () => {
         document.documentElement.style.setProperty("--accentColor", accentPicker.getAttribute("value"));
         localStorage.setItem("accentColor", accentPicker.getAttribute("value"));
     }
+
+    function checkAccentColor(color) {
+        const r = parseInt(color.slice(1, 3), 16);
+        const g = parseInt(color.slice(3, 5), 16);
+        const b = parseInt(color.slice(5, 7), 16);
+        const luminance = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
+        return luminance >= 128;
+    }
     // ##########################
     // #      Loaded Data       #
     // ##########################
@@ -320,10 +333,10 @@ settings.onclick = () => {
     }
     clock();
     setInterval(clock, 1000);
-    if (localStorage.getItem("24hour") == 1) {
+    if (JSON.parse(localStorage.getItem("24hour")) === true) {
         hourFormatInput.setAttribute("checked", "");
     }
-    if (localStorage.getItem("darkmode") == 0) {
+    if (JSON.parse(localStorage.getItem("darkmode")) === false) {
         darkmodeInput.removeAttribute("checked");
     }
     if (lsAcColor == color[0]) {
@@ -383,6 +396,14 @@ settings.onclick = () => {
         acColors[6].style.background = e.target.value;
         document.documentElement.style.setProperty("--accentColor", accentPicker.getAttribute("value"));
         localStorage.setItem("accentColor", accentPicker.getAttribute("value"));
+        if (checkAccentColor(localStorage.getItem("accentColor"))) {
+            // acColors[6].style.color = 'black';
+            document.documentElement.style.setProperty("--accentText", "#1A1A1B");
+            localStorage.setItem("accentText", "#1A1A1B");
+        } else {
+            document.documentElement.style.setProperty("--accentText", "#ffffff");
+            localStorage.setItem("accentText", "#ffffff");
+        }
     }
     acColors[0].onclick = () => { changeAccentColor(color[0], 0) };
     acColors[1].onclick = () => { changeAccentColor(color[1], 1) };
@@ -392,16 +413,16 @@ settings.onclick = () => {
     acColors[5].onclick = () => { changeAccentColor(color[5], 5) };
     hourFormatInput.onclick = () => {
         if (hourFormatInput.checked) {
-            localStorage.setItem("24hour", 1);
+            localStorage.setItem("24hour", true);
         } else {
-            localStorage.setItem("24hour", 0);
+            localStorage.setItem("24hour", false);
         }
     };
     darkmodeInput.onclick = () => {
         if (darkmodeInput.checked) {
-            localStorage.setItem("darkmode", 1);
+            localStorage.setItem("darkmode", true);
         } else {
-            localStorage.setItem("darkmode", 0);
+            localStorage.setItem("darkmode", false);
         }
         checkThemeMode();
     };
@@ -424,18 +445,30 @@ aboutProject.onclick = () => {
             <div class="line_dividerX"></div>
             <div class="modal_body">
                 <svg width="213" height="37" id="logo" viewBox="0 0 213 37" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
-                <p>This project can list all you want to do for today based on what you save on it. Your to do list can be categorize and won't lost the data when you reload your browser. It is best to combine with a browser extension new tab changer.
+                <p>This project allows you to create a customizable to-do list that is organized into categories. The list is saved in your browser's local storage, so it won't be lost when you reload the page.
                     <br><br>
-                    <span style="color:var(--accentColor)">Clearing this site local storage or browser's data will also delete all to-do-list saved data.</span>
+                    However, clearing your browser's data will also delete the saved to-do list. To make the most of this project, it is recommended to use it with a browser extension that changes the new tab page.
                 </p>
             </div>
             <div class="line_dividerX"></div>
             <footer class="form_footer" id="about_project_footer">
-                <p>Last updated 10/20/2022</p>
+                <p id="last_update"></p>
                 <a href="https://github.com/MinecraftJohn/to-do-list" target="_blank" rel="noopener noreferrer">Visit Github for more info.</a>
             </footer>
         </div>
     `;
+    fetch("https://api.github.com/repos/MinecraftJohn/to-do-list/commits?branch=main")
+        .then((response) => response.json())
+        .then((commits) => {
+            const latestCommit = commits[0];
+            const date = new Date(latestCommit.commit.author.date);
+            const formattedDate = date.toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+            });
+            document.querySelector("#last_update").innerHTML = formattedDate;
+        });
     document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("about_project_section").remove();
     };
@@ -455,7 +488,7 @@ aboutProject.onclick = () => {
                 </linearGradient>
                 </defs>`;
     }
-    if (pageHtml[0].getAttribute("darkmode") == 1) {
+    if (JSON.parse(pageHtml[0].getAttribute("darkmode")) === true) {
         dynamicLogo("var(--text)");
     } else {
         dynamicLogo("url(#paint0_linear_179_2)");
@@ -473,7 +506,7 @@ var checkboxItemList = '<input type="checkbox" name="itemlist" style="display: n
 
 function aaaaa(q) {
     q.innerHTML = checkboxItemList + checkSVG;
-    q.setAttribute("onclick", w)
+    q.setAttribute("onclick", w);
 }
 
 function createToDo() {
@@ -482,7 +515,7 @@ function createToDo() {
     createToDoSection.setAttribute("id", "create_todo_section");
     createToDoSection.setAttribute("class", "modal_bg");
     createToDoSection.innerHTML = `
-    <form class="modal_container">
+    <form class="modal_container" autocomplete="off">
         <header class="modal_header">
             <b>Add list</b>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">

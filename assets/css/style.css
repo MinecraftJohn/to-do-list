@@ -372,6 +372,25 @@
     height: 0;
     visibility: hidden;
 }
+
 #name_list {
     text-align: left;
+}
+
+.img_internet_form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.img_internet_input {
+    text-align: left;
+    padding: 6px 12px;
+    width: 100%;
+}
+
+.img_internet_save_btn {
+    height: 32px;
+    padding: 0 22px;
 }
