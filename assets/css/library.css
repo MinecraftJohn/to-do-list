@@ -71,6 +71,10 @@ button:hover {
     filter: brightness(.86);
 }
 
+button:active {
+    filter: brightness(.66);
+}
+
 .svg_btns {
     box-sizing: content-box;
     padding: 8px;
@@ -164,6 +168,10 @@ a:hover {
     display: flex;
     flex-direction: row;
     gap: 8px;
+}
+
+.form_error {
+    color: var(--error);
 }
 
 .modal_body {

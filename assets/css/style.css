@@ -275,10 +275,6 @@
     opacity: 1;
 }
 
-#form_error {
-    color: var(--error);
-}
-
 #save_btn {
     height: 32px;
     width: 100%;
@@ -347,6 +343,7 @@
 }
 
 .img_block {
+    background-color: var(--background2);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -384,13 +381,13 @@
     gap: 8px;
 }
 
-.img_internet_input {
+#img_internet_input {
     text-align: left;
     padding: 6px 12px;
     width: 100%;
 }
 
-.img_internet_save_btn {
+#img_internet_save_btn {
     height: 32px;
     padding: 0 22px;
 }

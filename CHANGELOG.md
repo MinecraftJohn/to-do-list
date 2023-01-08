@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file. Dates are d
 
 
 ### v1.1.12
-> MONTH DAY, 2023
+> January DAY, 2023
 - Improved the name validation on the edit account form. It now supports first names only, the dash character ("-"), automatically removes unwanted whitespace, and automatically capitalizes the first letter of each word.
 - Disabled autocomplete on the edit account name input.
 - Changed the "Choose image from internet" button in the settings modal to a mini form.
@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file. Dates are d
 - Added a feature where the text color on an accent color element changes based on the luminance of the element.
 - Changed the data being saved in localStorage from a number (0 or 1) to a boolean (true or false).
 - Added a Github API-based feature that displays the last updated date on the about project modal. It will automatically update the date based on the last commit on my To Do Github repository in a `Month dd, yyyy` format.
+- Added a fallback color to the background image blocks in the settings modal in case they fail to load.
+- Added an active state effect to buttons.
 
 ### v1.1.11
 > November 2, 2022

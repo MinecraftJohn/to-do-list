@@ -116,7 +116,7 @@ editUserBtn[0].onclick = () => {
             </div>
             <div class="line_dividerX"></div>
             <footer class="form_footer">
-                <p id="form_error" style="display: none"></p>
+                <p class="form_error" style="display: none"></p>
                 <button id="save_btn">Save</button>
             </footer>
         </form>`;
@@ -129,7 +129,7 @@ editUserBtn[0].onclick = () => {
     var userProfile = document.getElementById("edit_user_account_profile"),
         input = document.getElementById("change_username"),
         saveBtn = document.getElementById("save_btn"),
-        errorMsg = document.getElementById("form_error"),
+        errorMsg = document.getElementsByClassName("form_error"),
         profile = document.getElementById("profile"),
         fileReader = new FileReader();
     if (lsProfile != null) {
@@ -159,8 +159,8 @@ editUserBtn[0].onclick = () => {
             localStorage.setItem("profile", base64String);
         } else {
             e.preventDefault();
-            errorMsg.style.display = "block";
-            errorMsg.innerHTML = "Numbers are not allowed.";
+            errorMsg[0].style.display = "block";
+            errorMsg[0].innerHTML = "Numbers are not allowed.";
         }
     };
 
@@ -174,7 +174,7 @@ settings.onclick = () => {
     settingsSection.setAttribute("id", "settings_section");
     settingsSection.setAttribute("class", "modal_bg");
     settingsSection.innerHTML = `
-        <form class="modal_container">
+        <form class="modal_container" autocomplete="off">
             <header class="modal_header">
                 <b>Settings</b>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">
@@ -183,10 +183,10 @@ settings.onclick = () => {
             </header>
             <div class="line_dividerX"></div>
             <div class="modal_body settings_body">
-                    <div id="background_image_preview">
-                        <h1 id="setting_time" class="time_stats" style="font-size: 32px">00:00</h1>
-                        <h3 id="setting_date" class="time_stats">Day, Month 00</h3>
-                    </div>
+                <div id="background_image_preview">
+                    <h1 id="setting_time" class="time_stats" style="font-size: 32px">00:00</h1>
+                    <h3 id="setting_date" class="time_stats">Day, Month 00</h3>
+                </div>
                 <div class="settings_block">
                     <p>Background</p>
                     <div id="block_container">
@@ -199,9 +199,10 @@ settings.onclick = () => {
                         <div class="block img_block block_active" style="display: none"></div>
                     </div>
                     <div class="img_internet_form">
-                        <input type="text" placeholder="Enter a link" class="img_internet_input" />
-                        <button class="img_internet_save_btn">Change</button>
+                        <input type="text" placeholder="Enter a link" id="img_internet_input" />
+                        <button id="img_internet_save_btn" variant-state="disabled">Change</button>
                     </div>
+                    <p class="form_error" style="display: none">Please enter a valid image URL.</p>
                 </div>
                 <div class="settings_block">
                     <p>Accent color</p>
@@ -259,7 +260,10 @@ settings.onclick = () => {
         accentPicker = document.getElementById("accent_picker"),
         acColors = document.getElementsByClassName("ac_colors"),
         hourFormatInput = document.getElementById("24hour"),
-        lsAcColor = localStorage.getItem("accentColor");
+        lsAcColor = localStorage.getItem("accentColor"),
+        enterLink = document.getElementById("img_internet_input"),
+        enterLinkBtn = document.getElementById("img_internet_save_btn"),
+        errorMsg = document.getElementsByClassName("form_error");
 
     function clock() {
         var time = new Date(),
@@ -330,6 +334,8 @@ settings.onclick = () => {
         imgBlock[4].classList.add("block_active");
     } else if (lsBGImage == wallpaper[5]) {
         imgBlock[5].classList.add("block_active");
+    } else {
+        imgBlock[6].setAttribute("style", "background-image:url(" + lsBGImage + ")");
     }
     clock();
     setInterval(clock, 1000);
@@ -389,6 +395,20 @@ settings.onclick = () => {
         changeBGImage(5, wallpaper[5]);
         bgImage(bgImagePreview);
     };
+    enterLink.oninput = () => {
+        console.log(123)
+    };
+    enterLinkBtn.onclick = (e) => {
+        e.preventDefault();
+        if (!enterLink.value.match(/https:\/\/.+\.(png|jpg|jpeg|gif|webp|svg)$/)) {
+            errorMsg[0].removeAttribute("style");
+        } else {
+            changeBGImage(6, enterLink.value);
+            bgImage(bgImagePreview);
+            imgBlock[6].setAttribute("style", "background-image:url(" + enterLink.value + ")");
+            errorMsg[0].setAttribute("style", "display: none");
+        };
+    };
     accentPicker.oninput = (e) => {
         blockActive(acColors);
         attPicked(e.target.value);
@@ -397,7 +417,6 @@ settings.onclick = () => {
         document.documentElement.style.setProperty("--accentColor", accentPicker.getAttribute("value"));
         localStorage.setItem("accentColor", accentPicker.getAttribute("value"));
         if (checkAccentColor(localStorage.getItem("accentColor"))) {
-            // acColors[6].style.color = 'black';
             document.documentElement.style.setProperty("--accentText", "#1A1A1B");
             localStorage.setItem("accentText", "#1A1A1B");
         } else {
