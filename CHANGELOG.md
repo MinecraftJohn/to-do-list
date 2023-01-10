@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file. Dates are d
 - Added a Github API-based feature that displays the last updated date on the about project modal. It will automatically update the date based on the last commit on my To Do Github repository in a `Month dd, yyyy` format.
 - Added a fallback color to the background image blocks in the settings modal in case they fail to load.
 - Added an active state effect to buttons.
+- Added a response status message on custom image url from settings modal.
 
 ### v1.1.11
 > November 2, 2022

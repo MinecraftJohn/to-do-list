@@ -391,3 +391,9 @@
     height: 32px;
     padding: 0 22px;
 }
+
+.add_list_body {
+    align-items: flex-start;
+    padding: 18px;
+    gap: 8px;
+}
