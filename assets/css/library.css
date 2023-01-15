@@ -10,6 +10,7 @@ html[darkmode='false'] {
     --transparent: rgba(26, 26, 27, 0.06);
     --scrollbar: rgba(26, 26, 27, 0.12);
     --error: #fe3159;
+    --success: #4CAF50;
     --switch: rgba(35, 39, 51, 0.33);
 }
 
@@ -26,6 +27,7 @@ html[darkmode='true'],
     --transparent: rgba(248, 249, 252, 0.06);
     --scrollbar: rgba(248, 249, 252, 0.12);
     --error: #fe3159;
+    --success: #00C851;
     --switch: rgba(248, 249, 252, 0.06);
 }
 
@@ -63,6 +65,8 @@ body {
 
 button {
     background: var(--accentColor);
+    height: 32px;
+    padding: 0 22px;
     border: none;
     color: var(--accentText);
     border-radius: 4px;

@@ -153,11 +153,6 @@
     display: flex;
 }
 
-#add_list_btn {
-    height: 32px;
-    padding: 0 22px;
-}
-
 #todo_task_section {
     padding: 18px;
     width: 100%;
@@ -276,9 +271,7 @@
 }
 
 #save_btn {
-    height: 32px;
     width: 100%;
-    padding: 0 22px;
 }
 
 #about_project_footer {
@@ -288,11 +281,6 @@
 
 #settings_footer {
     align-items: flex-end;
-}
-
-#settings_save_btn {
-    height: 32px;
-    padding: 0 22px;
 }
 
 #background_image_preview {
@@ -372,6 +360,8 @@
 
 #name_list {
     text-align: left;
+    width: 232px;
+    flex-shrink: 0;
 }
 
 .img_internet_form {
@@ -385,11 +375,6 @@
     text-align: left;
     padding: 6px 12px;
     width: 100%;
-}
-
-#img_internet_save_btn {
-    height: 32px;
-    padding: 0 22px;
 }
 
 .add_list_body {

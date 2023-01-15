@@ -12,8 +12,10 @@ All notable changes to this project will be documented in this file. Dates are d
 - Changed the data being saved in localStorage from a number (0 or 1) to a boolean (true or false).
 - Added a Github API-based feature that displays the last updated date on the about project modal. It will automatically update the date based on the last commit on my To Do Github repository in a `Month dd, yyyy` format.
 - Added a fallback color to the background image blocks in the settings modal in case they fail to load.
-- Added an active state effect to buttons.
-- Added a response status message on custom image url from settings modal.
+- Added an active/disable state effect to buttons.
+- Added a response status message on custom image url from settings modal and add list modal.
+- Improved add list modal.
+- List container now display the list of to do.
 
 ### v1.1.11
 > November 2, 2022

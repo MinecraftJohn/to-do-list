@@ -23,7 +23,8 @@ var pageHeader = document.getElementById("header"),
     lsUsername = localStorage.getItem("username"),
     lsProfile = localStorage.getItem("profile"),
     addListBtn = document.getElementById("add_list_btn"),
-    todoTaskSection = document.getElementById("todo_task_section");
+    todoTaskSection = document.getElementById("todo_task_section"),
+    listContainer = document.getElementById("list_container");
 
 // ############################################
 // #            Startup Section               #
@@ -90,6 +91,20 @@ function checkThemeMode() {
     document.documentElement.style.setProperty("--accentText", localStorage.getItem("accentText"));
 }
 checkThemeMode();
+const hasTodo = Object.keys(localStorage).some(key => key.startsWith("$"));
+if (hasTodo) {
+    listContainer.innerHTML = "";
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key.startsWith("$")) {
+            listContainer.innerHTML += `
+            <div class="list_container">
+                <div class="list_color"></div>
+                <p class="list_name">` + key.substring(1) + `</p>
+            </div>`;
+        }
+    }
+}
 // ############################################
 // #        Event Listeners Section           #
 // ############################################
@@ -528,73 +543,59 @@ aboutProject.onclick = () => {
 // ############################################
 // #          Create To-Do Section            #
 // ############################################
-addListBtn.onclick = () => {
+function createTodo() {
     var createToDoSection = document.createElement("div");
     pageBody[0].appendChild(createToDoSection);
     createToDoSection.setAttribute("id", "create_todo_section");
     createToDoSection.setAttribute("class", "modal_bg");
     createToDoSection.innerHTML = `
-    <form class="modal_container" autocomplete="off">
-        <header class="modal_header">
-            <b>Add list</b>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
-        </header>
-        <div class="line_dividerX"></div>
-        <div class="form_body add_list_body">
-            <div class="input_section">
-                <input type="text" id="name_list" class="input_text" placeholder="Enter a name">
-                <button id="save_btn">Done</button>
+        <form class="modal_container" autocomplete="off">
+            <header class="modal_header">
+                <b>Add list</b>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+            </header>
+            <div class="line_dividerX"></div>
+            <div class="form_body add_list_body">
+                <div class="input_section">
+                    <input type="text" id="name_list" class="input_text" placeholder="Enter a name">
+                    <button id="save_btn" variant-state="disabled">Save</button>
+                </div>
+                    <p class="form_error" style="display: none">The name you entered already exists.</p>
             </div>
-                <p class="form_error" style="display: block">ad</p>
-        </div>
-    </form>`;
+        </form>`;
     document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("create_todo_section").remove();
     };
     setTimeout(() => {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
     }, 0);
-    document.getElementById("save_btn").onclick = (e) => {
-        e.preventDefault();
-        if (localStorage.getItem("todos") == null) {
-            localStorage.setItem("todos", JSON.stringify([...JSON.parse(localStorage.getItem("todos") || "[]"), { task: "testing", completed: false }]));
+    var inputField = document.getElementById("name_list"),
+        saveBtn = document.getElementById("save_btn");
+    inputField.oninput = () => {
+        if (inputField.value == "" || inputField.value.match(/\s/)) {
+            saveBtn.setAttribute("variant-state", "disabled");
         } else {
-            var asdasd = Array.from(JSON.parse(localStorage.getItem("todos")));
-            console.log(asdasd[3]);
+            saveBtn.removeAttribute("variant-state");
         }
     };
-    // var testinggg = JSON.stringify([...JSON.parse(localStorage.getItem("todos"))]);
-    // console.log(asdasd)
-    // console.log(testinggg)
-    // if (localStorage.getItem("todos") == null) {
-    //     localStorage.setItem("todos", "[]");
-    //     todoTaskSection.innerHTML = `
-    //     <div id="task_header_container">
-    //         <input type="text" id="task_header_title" value="My list 1">
-    //         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="svg_btns" viewBox="0 0 16 16">
-    //             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-    //         </svg>
-    //     </div>
-    //     <div id="tasks_container">
-    //         <p class="item_list">
-    //             <label class="item_check" onclick="aaaaa(this)">
-    //                 <input type="checkbox" name="itemlist" style="display: none">
-    //                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-    //                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-    //                 </svg>
-    //             </label>
-    //             <input type="text" class="item_name" value="Visual Studio Code">
-    //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="item_delete_icon" viewBox="0 0 16 16">
-    //                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-    //             </svg>
-    //         </p>
-    //         <p class="item_list add_item_btn">
-    //         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-    //             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-    //         </svg>   
-    //         List item</p>
-    //     </div>`;
-    // }
+    saveBtn.onclick = (e) => {
+        e.preventDefault();
+        var todos = "$" + inputField.value,
+            errorMsg = document.getElementsByClassName("form_error");
+        if (localStorage.getItem(todos) == null) {
+            localStorage.setItem(todos, "");
+            errorMsg[0].setAttribute("style", "display: block; color: var(--success)");
+            errorMsg[0].innerHTML = "Successfully added!";
+            saveBtn.setAttribute("variant-state", "disabled");
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        } else {
+            errorMsg[0].setAttribute("style", "display: block");
+        }
+    };
 }
+addListBtn.onclick = createTodo;
+document.getElementById("add_list_btn2").onclick = createTodo;
