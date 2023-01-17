@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file. Dates are d
 - Added a response status message on custom image url from settings modal and add list modal.
 - Improved add list modal.
 - List container now display the list of to do.
+- Added a `todo-selected` localStorage to save the last active selected todo list.
 
 ### v1.1.11
 > November 2, 2022

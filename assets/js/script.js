@@ -91,17 +91,23 @@ function checkThemeMode() {
     document.documentElement.style.setProperty("--accentText", localStorage.getItem("accentText"));
 }
 checkThemeMode();
-const hasTodo = Object.keys(localStorage).some(key => key.startsWith("$"));
-if (hasTodo) {
+if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
     listContainer.innerHTML = "";
     for (var i = 0; i < localStorage.length; i++) {
         var key = localStorage.key(i);
-        if (key.startsWith("$")) {
-            listContainer.innerHTML += `
-            <div class="list_container">
-                <div class="list_color"></div>
-                <p class="list_name">` + key.substring(1) + `</p>
-            </div>`;
+        if (key.startsWith("#")) {
+            if (localStorage.getItem("todo-selected") == key) {
+                listContainer.innerHTML += `
+                <div class="list_container list_active">
+                    <div class="list_color"></div>
+                    <p class="list_name">` + key.substring(1) + `</p>
+                </div>`;
+            } else {
+                listContainer.innerHTML += `
+                <div class="list_container">
+                    <p class="list_name">` + key.substring(1) + `</p>
+                </div>`;
+            }
         }
     }
 }
@@ -333,6 +339,15 @@ settings.onclick = () => {
         const luminance = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
         return luminance >= 128;
     }
+    function setAccentText() {
+        if (checkAccentColor(localStorage.getItem("accentColor"))) {
+            document.documentElement.style.setProperty("--accentText", "#1A1A1B");
+            localStorage.setItem("accentText", "#1A1A1B");
+        } else {
+            document.documentElement.style.setProperty("--accentText", "#ffffff");
+            localStorage.setItem("accentText", "#ffffff");
+        }
+    }
     // ##########################
     // #      Loaded Data       #
     // ##########################
@@ -429,8 +444,7 @@ settings.onclick = () => {
                 errorMsg[0].removeAttribute("style");
                 errorMsg[0].innerHTML = "Your request was unsuccessful, try again later.";
             }
-        }).catch((error) => {
-        //There was an error when trying to fetch the image, the image may not exist
+        }).catch(() => {
             errorMsg[0].removeAttribute("style");
             errorMsg[0].innerHTML = "Please enter a valid image URL.";
         });
@@ -442,20 +456,32 @@ settings.onclick = () => {
         acColors[6].style.background = e.target.value;
         document.documentElement.style.setProperty("--accentColor", accentPicker.getAttribute("value"));
         localStorage.setItem("accentColor", accentPicker.getAttribute("value"));
-        if (checkAccentColor(localStorage.getItem("accentColor"))) {
-            document.documentElement.style.setProperty("--accentText", "#1A1A1B");
-            localStorage.setItem("accentText", "#1A1A1B");
-        } else {
-            document.documentElement.style.setProperty("--accentText", "#ffffff");
-            localStorage.setItem("accentText", "#ffffff");
-        }
+        setAccentText();
     }
-    acColors[0].onclick = () => { changeAccentColor(color[0], 0) };
-    acColors[1].onclick = () => { changeAccentColor(color[1], 1) };
-    acColors[2].onclick = () => { changeAccentColor(color[2], 2) };
-    acColors[3].onclick = () => { changeAccentColor(color[3], 3) };
-    acColors[4].onclick = () => { changeAccentColor(color[4], 4) };
-    acColors[5].onclick = () => { changeAccentColor(color[5], 5) };
+    acColors[0].onclick = () => {
+        changeAccentColor(color[0], 0);
+        setAccentText();
+    };
+    acColors[1].onclick = () => {
+        changeAccentColor(color[1], 1);
+        setAccentText();
+    };
+    acColors[2].onclick = () => {
+        changeAccentColor(color[2], 2);
+        setAccentText();
+    };
+    acColors[3].onclick = () => {
+        changeAccentColor(color[3], 3);
+        setAccentText();
+    };
+    acColors[4].onclick = () => {
+        changeAccentColor(color[4], 4);
+        setAccentText();
+    };
+    acColors[5].onclick = () => {
+        changeAccentColor(color[5], 5);
+        setAccentText();
+    };
     hourFormatInput.onclick = () => {
         if (hourFormatInput.checked) {
             localStorage.setItem("24hour", true);
@@ -582,18 +608,22 @@ function createTodo() {
     };
     saveBtn.onclick = (e) => {
         e.preventDefault();
-        var todos = "$" + inputField.value,
-            errorMsg = document.getElementsByClassName("form_error");
+        if (localStorage.getItem("todo-last-id") == null) {
+            localStorage.setItem("todo-last-id", 0);
+        }
+        localStorage.setItem("todo-last-id", parseInt(localStorage.getItem("todo-last-id")) + 1);
+        const padStartLastId = localStorage.getItem("todo-last-id").toString().padStart(4, '0'),
+              todos = "#" + padStartLastId + inputField.value;
+
         if (localStorage.getItem(todos) == null) {
             localStorage.setItem(todos, "");
-            errorMsg[0].setAttribute("style", "display: block; color: var(--success)");
-            errorMsg[0].innerHTML = "Successfully added!";
             saveBtn.setAttribute("variant-state", "disabled");
+            localStorage.setItem("todo-selected", todos);
             setTimeout(() => {
                 location.reload();
-            }, 1000);
+            }, 400);
         } else {
-            errorMsg[0].setAttribute("style", "display: block");
+            document.getElementsByClassName("form_error")[0].setAttribute("style", "display: block");
         }
     };
 }
