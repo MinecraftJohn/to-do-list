@@ -23,6 +23,7 @@ var pageHeader = document.getElementById("header"),
     lsUsername = localStorage.getItem("username"),
     lsProfile = localStorage.getItem("profile"),
     addListBtn = document.getElementById("add_list_btn"),
+    addListBtn2 = document.getElementById("add_list_btn2"),
     todoTaskSection = document.getElementById("todo_task_section"),
     listContainer = document.getElementById("list_container");
 
@@ -93,19 +94,21 @@ function checkThemeMode() {
 checkThemeMode();
 if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
     listContainer.innerHTML = "";
-    for (var i = 0; i < localStorage.length; i++) {
-        var key = localStorage.key(i);
+    var keys = Object.keys(localStorage);
+    keys.sort();
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
         if (key.startsWith("#")) {
             if (localStorage.getItem("todo-selected") == key) {
                 listContainer.innerHTML += `
                 <div class="list_container list_active">
                     <div class="list_color"></div>
-                    <p class="list_name">` + key.substring(1) + `</p>
+                    <p class="list_name">` + key.substring(5) + `</p>
                 </div>`;
             } else {
                 listContainer.innerHTML += `
                 <div class="list_container">
-                    <p class="list_name">` + key.substring(1) + `</p>
+                    <p class="list_name">` + key.substring(5) + `</p>
                 </div>`;
             }
         }
@@ -130,11 +133,11 @@ editUserBtn[0].onclick = () => {
                 </svg>
             </header>
             <div class="line_dividerX"></div>
-            <div class="form_body">
+            <main class="form_body">
                 <div id="edit_user_account_profile"></div>
                 <input type="file" id="profile" accept=".png, .jpg, .jpeg" style="display: none"/>
                 <input type="text" class="input_text" id="change_username" placeholder="Enter a name">
-            </div>
+            </main>
             <div class="line_dividerX"></div>
             <footer class="form_footer">
                 <p class="form_error" style="display: none"></p>
@@ -203,7 +206,7 @@ settings.onclick = () => {
                 </svg>
             </header>
             <div class="line_dividerX"></div>
-            <div class="modal_body settings_body">
+            <main class="modal_body settings_body">
                 <div id="background_image_preview">
                     <h1 id="setting_time" class="time_stats" style="font-size: 32px">00:00</h1>
                     <h3 id="setting_date" class="time_stats">Day, Month 00</h3>
@@ -259,7 +262,7 @@ settings.onclick = () => {
                         </label>
                     </div>
                 </div>
-            </div>
+            </main>
         </form>
     `;
     document.getElementsByClassName("close_btn")[0].onclick = () => {
@@ -514,13 +517,13 @@ aboutProject.onclick = () => {
                 </svg>
             </header>
             <div class="line_dividerX"></div>
-            <div class="modal_body">
+            <main class="modal_body">
                 <svg width="213" height="37" id="logo" viewBox="0 0 213 37" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
                 <p>This project allows you to create a customizable to-do list that is organized into categories. The list is saved in your browser's local storage, so it won't be lost when you reload the page.
                     <br><br>
                     However, clearing your browser's data will also delete the saved to-do list. To make the most of this project, it is recommended to use it with a browser extension that changes the new tab page.
                 </p>
-            </div>
+            </main>
             <div class="line_dividerX"></div>
             <footer class="form_footer" id="about_project_footer">
                 <p id="last_update"></p>
@@ -570,6 +573,8 @@ aboutProject.onclick = () => {
 // #          Create To-Do Section            #
 // ############################################
 function createTodo() {
+    addListBtn.setAttribute("disabled", "");
+    addListBtn2.setAttribute("disabled", "");
     var createToDoSection = document.createElement("div");
     pageBody[0].appendChild(createToDoSection);
     createToDoSection.setAttribute("id", "create_todo_section");
@@ -583,49 +588,57 @@ function createTodo() {
                 </svg>
             </header>
             <div class="line_dividerX"></div>
-            <div class="form_body add_list_body">
+            <main class="form_body add_list_body">
                 <div class="input_section">
                     <input type="text" id="name_list" class="input_text" placeholder="Enter a name">
-                    <button id="save_btn" variant-state="disabled">Save</button>
+                    <button id="save_btn" disabled>Save</button>
                 </div>
                     <p class="form_error" style="display: none">The name you entered already exists.</p>
-            </div>
+            </main>
         </form>`;
     document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("create_todo_section").remove();
+        addListBtn.removeAttribute("disabled");
+        addListBtn2.removeAttribute("disabled");
     };
     setTimeout(() => {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
     }, 0);
     var inputField = document.getElementById("name_list"),
         saveBtn = document.getElementById("save_btn");
-    inputField.oninput = () => {
-        if (inputField.value == "" || inputField.value.match(/\s/)) {
-            saveBtn.setAttribute("variant-state", "disabled");
-        } else {
-            saveBtn.removeAttribute("variant-state");
-        }
-    };
-    saveBtn.onclick = (e) => {
+    function saveAddList(e) {
         e.preventDefault();
         if (localStorage.getItem("todo-last-id") == null) {
             localStorage.setItem("todo-last-id", 0);
         }
         localStorage.setItem("todo-last-id", parseInt(localStorage.getItem("todo-last-id")) + 1);
         const padStartLastId = localStorage.getItem("todo-last-id").toString().padStart(4, '0'),
-              todos = "#" + padStartLastId + inputField.value;
+              todos = "#" + padStartLastId + inputField.value.trim();
 
         if (localStorage.getItem(todos) == null) {
             localStorage.setItem(todos, "");
-            saveBtn.setAttribute("variant-state", "disabled");
+            saveBtn.setAttribute("disabled", "");
             localStorage.setItem("todo-selected", todos);
-            setTimeout(() => {
-                location.reload();
-            }, 400);
+            location.reload();
         } else {
             document.getElementsByClassName("form_error")[0].setAttribute("style", "display: block");
         }
+    }
+    inputField.oninput = () => {
+        if (inputField.value == "" || inputField.value.match(/^\s*$/)) {
+            saveBtn.setAttribute("disabled", "");
+            function prvntDefault(e) {
+                if (e.keyCode === 13) {
+                    //e.preventDefault();
+                    console.log(1)
+                }
+            }
+            inputField.addEventListener("keydown", prvntDefault);
+        } else {
+            saveBtn.removeAttribute("disabled");
+        }
     };
+    saveBtn.onclick = saveAddList;
 }
 addListBtn.onclick = createTodo;
-document.getElementById("add_list_btn2").onclick = createTodo;
+addListBtn2.onclick = createTodo;

@@ -81,7 +81,7 @@ button:active {
     filter: brightness(.66);
 }
 
-button[variant-state='disabled'] {
+button[disabled] {
     background: var(--accentDisabled);
     pointer-events: none;
     user-select: none;
