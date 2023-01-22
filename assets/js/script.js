@@ -24,7 +24,7 @@ var pageHeader = document.getElementById("header"),
     lsProfile = localStorage.getItem("profile"),
     addListBtn = document.getElementById("add_list_btn"),
     addListBtn2 = document.getElementById("add_list_btn2"),
-    todoTaskSection = document.getElementById("todo_task_section"),
+    todoTaskSection = document.getElementById("todo_section"),
     listContainer = document.getElementById("list_container");
 
 // ############################################
@@ -94,12 +94,13 @@ function checkThemeMode() {
 checkThemeMode();
 if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
     listContainer.innerHTML = "";
-    var keys = Object.keys(localStorage);
+    var keys = Object.keys(localStorage),
+        todoSelected = localStorage.getItem("list-selected");
     keys.sort();
     for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
         if (key.startsWith("#")) {
-            if (localStorage.getItem("todo-selected") == key) {
+            if (todoSelected == key) {
                 listContainer.innerHTML += `
                 <div class="list_container list_active">
                     <div class="list_color"></div>
@@ -112,6 +113,37 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
                 </div>`;
             }
         }
+    }
+    todoTaskSection.innerHTML = `
+        <section class="todo_header_container">
+            <h1 class="todo_header_title">` + todoSelected.substring(5) + `</h1>
+            <div class="list_footer_group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="svg_btns" viewBox="0 0 16 16">
+                    <title>Sort A-Z</title>
+                    <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
+                    <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="svg_btns" viewBox="0 0 16 16">
+                    <title>Options</title>
+                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                </svg>
+            </div>
+        </section>
+        <div class="line_dividerX"></div>
+    `;
+    if (localStorage.getItem(todoSelected) == "") {
+        todoTaskSection.innerHTML += `
+            <section id="todo_section">
+                <p class="empty_data_hint">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--textTransparent)" viewBox="0 0 16 16">
+                        <path d="M4.98 4a.5.5 0 0 0-.39.188L1.54 8H6a.5.5 0 0 1 .5.5 1.5 1.5 0 1 0 3 0A.5.5 0 0 1 10 8h4.46l-3.05-3.812A.5.5 0 0 0 11.02 4H4.98zm9.954 5H10.45a2.5 2.5 0 0 1-4.9 0H1.066l.32 2.562a.5.5 0 0 0 .497.438h12.234a.5.5 0 0 0 .496-.438L14.933 9zM3.809 3.563A1.5 1.5 0 0 1 4.981 3h6.038a1.5 1.5 0 0 1 1.172.563l3.7 4.625a.5.5 0 0 1 .105.374l-.39 3.124A1.5 1.5 0 0 1 14.117 13H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .106-.374l3.7-4.625z"/>
+                    </svg> No data found in local storage.
+                    <button id="">Add a to-do</button>
+                </p>
+            </section>
+        `;
+    } else {
+        console.log(123)
     }
 }
 // ############################################
@@ -577,7 +609,7 @@ function createTodo() {
     addListBtn2.setAttribute("disabled", "");
     var createToDoSection = document.createElement("div");
     pageBody[0].appendChild(createToDoSection);
-    createToDoSection.setAttribute("id", "create_todo_section");
+    createToDoSection.setAttribute("id", "create_list_section");
     createToDoSection.setAttribute("class", "modal_bg");
     createToDoSection.innerHTML = `
         <form class="modal_container" autocomplete="off">
@@ -597,7 +629,7 @@ function createTodo() {
             </main>
         </form>`;
     document.getElementsByClassName("close_btn")[0].onclick = () => {
-        document.getElementById("create_todo_section").remove();
+        document.getElementById("create_list_section").remove();
         addListBtn.removeAttribute("disabled");
         addListBtn2.removeAttribute("disabled");
     };
@@ -608,32 +640,25 @@ function createTodo() {
         saveBtn = document.getElementById("save_btn");
     function saveAddList(e) {
         e.preventDefault();
-        if (localStorage.getItem("todo-last-id") == null) {
-            localStorage.setItem("todo-last-id", 0);
+        if (localStorage.getItem("list-last-id") == null) {
+            localStorage.setItem("list-last-id", 0);
         }
-        localStorage.setItem("todo-last-id", parseInt(localStorage.getItem("todo-last-id")) + 1);
-        const padStartLastId = localStorage.getItem("todo-last-id").toString().padStart(4, '0'),
-              todos = "#" + padStartLastId + inputField.value.trim();
+        localStorage.setItem("list-last-id", parseInt(localStorage.getItem("list-last-id")) + 1);
+        const padStartLastId = localStorage.getItem("list-last-id").toString().padStart(4, '0'),
+              todos = "#" + padStartLastId + inputField.value.trim().replace(/^\S/, (c) => c.toUpperCase());
 
         if (localStorage.getItem(todos) == null) {
             localStorage.setItem(todos, "");
             saveBtn.setAttribute("disabled", "");
-            localStorage.setItem("todo-selected", todos);
+            localStorage.setItem("list-selected", todos);
             location.reload();
         } else {
             document.getElementsByClassName("form_error")[0].setAttribute("style", "display: block");
         }
     }
     inputField.oninput = () => {
-        if (inputField.value == "" || inputField.value.match(/^\s*$/)) {
+        if (inputField.value == "" || inputField.value.match(/^\s*$/) || inputField.value.length > 32) {
             saveBtn.setAttribute("disabled", "");
-            function prvntDefault(e) {
-                if (e.keyCode === 13) {
-                    //e.preventDefault();
-                    console.log(1)
-                }
-            }
-            inputField.addEventListener("keydown", prvntDefault);
         } else {
             saveBtn.removeAttribute("disabled");
         }

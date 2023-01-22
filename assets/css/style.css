@@ -23,7 +23,7 @@
     font-size: 20px;
 }
 
-#todo_section {
+#main_container {
     margin: -64px auto 0;
     width: 1024px;
     max-width: 95%;
@@ -35,7 +35,7 @@
     box-shadow: 4px 4px 12px rgba(26, 26, 27, 0.16);
 }
 
-#todo_list_section {
+#list_section {
     width: 285px;
     background: var(--background2);
     border-right: 1px solid var(--border);
@@ -76,7 +76,12 @@
     font-size: 11px;
 }
 
+#account_container:hover .setting_edit_user_btn {
+    display: block;
+}
+
 .setting_edit_user_btn {
+    display: none;
     position: absolute;
     top: 50%;
     right: 18px;
@@ -153,9 +158,9 @@
     display: flex;
 }
 
-#todo_task_section {
-    padding: 18px;
+#todo_section {
     width: 100%;
+    height: calc(100% - 78px);
 }
 
 .empty_data_hint {
@@ -381,4 +386,17 @@
     align-items: flex-start;
     padding: 18px;
     gap: 8px;
+}
+
+.todo_header_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    min-height: 78px;
+}
+
+.todo_header_title {
+    font-size: 20px;
+    font-weight: normal;
 }
