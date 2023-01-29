@@ -160,7 +160,7 @@
 
 #todo_section {
     width: 100%;
-    height: calc(100% - 78px);
+    height: calc(100% - 40px);
 }
 
 .empty_data_hint {

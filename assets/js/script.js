@@ -25,7 +25,9 @@ var pageHeader = document.getElementById("header"),
     addListBtn = document.getElementById("add_list_btn"),
     addListBtn2 = document.getElementById("add_list_btn2"),
     todoTaskSection = document.getElementById("todo_section"),
-    listContainer = document.getElementById("list_container");
+    listContainer = document.getElementById("list_container"),
+    listName = document.getElementsByClassName("list_name"),
+    listsContainer = document.getElementsByClassName("list_container");
 
 // ############################################
 // #            Startup Section               #
@@ -102,13 +104,13 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
         if (key.startsWith("#")) {
             if (todoSelected == key) {
                 listContainer.innerHTML += `
-                <div class="list_container list_active">
+                <div class="list_container list_active" id="` + key.substring(0, 5) + `">
                     <div class="list_color"></div>
                     <p class="list_name">` + key.substring(5) + `</p>
                 </div>`;
             } else {
                 listContainer.innerHTML += `
-                <div class="list_container">
+                <div class="list_container" id="` + key.substring(0, 5) + `">
                     <p class="list_name">` + key.substring(5) + `</p>
                 </div>`;
             }
@@ -144,6 +146,13 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
         `;
     } else {
         console.log(123)
+    }
+}
+for (let i = 0; i < listsContainer.length; i++) {
+    const list = listsContainer[i];
+    list.onclick = () => {
+        localStorage.setItem("list-selected", listsContainer[i].getAttribute("id") + listName[i].innerText);
+        location.reload();
     }
 }
 // ############################################
