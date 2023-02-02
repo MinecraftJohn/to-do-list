@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. Dates are d
 > January DAY, 2023
 - Improved the name validation on the edit account form. It now supports first names only, the dash character ("-"), automatically removes unwanted whitespace, and automatically capitalizes the first letter of each word.
 - Disabled autocomplete on the edit account name input.
+- Changed to autofocus list and todo input.
 - Changed the "Choose image from internet" button in the settings modal to a mini form.
 - Modified some grammar in the about project modal.
 - Added a feature where the text color on an accent color element changes based on the luminance of the element.
@@ -15,7 +16,7 @@ All notable changes to this project will be documented in this file. Dates are d
 - Added an active/disable state effect to buttons.
 - Added a response status message on custom image url from settings modal and add list modal.
 - Improved add list modal.
-- List container now display the list of to do.
+- List container now displays the list.
 - Added a `todo-selected` localStorage to save the last active selected todo list.
 
 ### v1.1.11

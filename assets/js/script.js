@@ -631,10 +631,10 @@ function createTodo() {
             <div class="line_dividerX"></div>
             <main class="form_body add_list_body">
                 <div class="input_section">
-                    <input type="text" id="name_list" class="input_text" placeholder="Enter a name">
+                    <input type="text" id="name_list" class="input_text" placeholder="Enter a name" autofocus>
                     <button id="save_btn" disabled>Save</button>
                 </div>
-                    <p class="form_error" style="display: none">The name you entered already exists.</p>
+                    <p class="form_error" style="display: none">There is an error creating your list.</p>
             </main>
         </form>`;
     document.getElementsByClassName("close_btn")[0].onclick = () => {
