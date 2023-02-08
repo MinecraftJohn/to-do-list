@@ -132,38 +132,40 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
             </div>
         </section>
         <div class="line_dividerX"></div>
+        <button id="add_task_btn"><i>&#xe710;</i>Add a task</button>
     `;
+    document.getElementById("add_task_btn").onclick = createTodo;
     if (localStorage.getItem(todoSelected) == "[]") {
-        todoTaskSection.innerHTML += `
-            <section id="todo_section">
-                <p class="empty_data_hint">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--textTransparent)" viewBox="0 0 16 16">
-                        <path d="M4.98 4a.5.5 0 0 0-.39.188L1.54 8H6a.5.5 0 0 1 .5.5 1.5 1.5 0 1 0 3 0A.5.5 0 0 1 10 8h4.46l-3.05-3.812A.5.5 0 0 0 11.02 4H4.98zm9.954 5H10.45a2.5 2.5 0 0 1-4.9 0H1.066l.32 2.562a.5.5 0 0 0 .497.438h12.234a.5.5 0 0 0 .496-.438L14.933 9zM3.809 3.563A1.5 1.5 0 0 1 4.981 3h6.038a1.5 1.5 0 0 1 1.172.563l3.7 4.625a.5.5 0 0 1 .105.374l-.39 3.124A1.5 1.5 0 0 1 14.117 13H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .106-.374l3.7-4.625z"/>
-                    </svg> No data found in local storage.
-                    <button id="add_todo_btn">Add a to-do</button>
-                </p>
-            </section>
-        `;
-        document.getElementById("add_todo_btn").onclick = createTodo;
+        // todoTaskSection.innerHTML += `
+        //     <section id="todo_section">
+        //         <p class="empty_data_hint">
+        //             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--textTransparent)" viewBox="0 0 16 16">
+        //                 <path d="M4.98 4a.5.5 0 0 0-.39.188L1.54 8H6a.5.5 0 0 1 .5.5 1.5 1.5 0 1 0 3 0A.5.5 0 0 1 10 8h4.46l-3.05-3.812A.5.5 0 0 0 11.02 4H4.98zm9.954 5H10.45a2.5 2.5 0 0 1-4.9 0H1.066l.32 2.562a.5.5 0 0 0 .497.438h12.234a.5.5 0 0 0 .496-.438L14.933 9zM3.809 3.563A1.5 1.5 0 0 1 4.981 3h6.038a1.5 1.5 0 0 1 1.172.563l3.7 4.625a.5.5 0 0 1 .105.374l-.39 3.124A1.5 1.5 0 0 1 14.117 13H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .106-.374l3.7-4.625z"/>
+        //             </svg> No data found in local storage.
+        //             <button id="add_todo_btn">Add a to-do</button>
+        //         </p>
+        //     </section>
+        // `;
+        // document.getElementById("add_todo_btn").onclick = createTodo;
     } else {
         todoTaskSection.innerHTML += `<ul id="todo_container"></ul>`;
         var todos = Array.from(JSON.parse(localStorage.getItem(localStorage.getItem("list-selected")))),
-            todoContainer = document.getElementById("todo_container");
+            todoContainer = document.getElementById("todo_container"),
+            deleteBtn = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="svg_btns" viewBox="0 0 16 16">
+                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                        </svg>`;
         todos.forEach(todo => {
             todoContainer.innerHTML += `
             <li>
                 <input type="checkbox" />
-                <input type="text" value="${todo.name}" />
+                <input type="text" id="todo_input" value="${todo.name}" />
+                ${deleteBtn}
             </li>`;
         })
-        // tasks.forEach(task => {
-        //   const list = document.querySelector("ul");
-        //   const li = document.createElement("li");
-        //   li.innerHTML = `<input type="checkbox" onclick="taskComplete(this)" class="check" ${task.completed ? 'checked' : ''}>
-        //         <input type="text" value="${task.task}" class="task ${task.completed ? 'completed' : ''}" onfocus="getCurrentTask(this)" onblur="editTask(this)">
-        //         <i class="fa fa-trash" onclick="removeTask(this)"></i>`;
-        //   list.insertBefore(li, list.children[0]);
-        // });
+        const todoInput = todoContainer.querySelector("#todo_input");
+        todoInput.onblur = (event) => {
+            console.log(event.target.value)
+        }
     }
 }
 for (let i = 0; i < listsContainer.length; i++) {

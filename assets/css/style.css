@@ -28,7 +28,7 @@
     width: 1024px;
     max-width: 95%;
     height: calc(100vh - 314px);
-    background: var(--background);
+    background: var(--background2);
     border: 1px solid var(--border);
     border-radius: 6px;
     display: flex;
@@ -119,6 +119,7 @@
     border-radius: 4px;
     cursor: pointer;
     position: relative;
+    height: 32px;
 }
 
 .list_container:hover {
@@ -403,6 +404,22 @@
     font-weight: normal;
 }
 
+#add_task_btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--background2);
+    margin: 8px 18px;
+    padding: 0 18px;
+    flex-shrink: 0;
+    height: 42px;
+    color: var(--accentColor);
+}
+
+#add_task_btn i {
+    color: var(--accentColor);
+}
+
 #todo_container {
     display: flex;
     flex-direction: column;
@@ -410,4 +427,30 @@
     height: 100%;
     padding: 18px;
     overflow-y: auto;
+    list-style-type: none;
 }
+
+#todo_container li {
+    display: flex;
+    gap: 4px;
+}
+
+#todo_container input[type="checkbox"] {
+    flex-shrink: 0;
+    width: 32px;
+}
+
+#todo_container input[type="text"] {
+    flex-grow: 1;
+    padding: 0 8px;
+    background: none;
+}
+
+#todo_container li:hover input[type="text"] {
+    background: var(--transparent);
+}
+
+#todo_container svg {
+    flex-shrink: 0;
+}
+
