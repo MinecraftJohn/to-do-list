@@ -411,12 +411,29 @@
     align-items: center;
     gap: 14px;
     background: var(--background);
-    border: 1px solid var(--accentColor);
     margin: 18px;
     padding: 0 18px;
     flex-shrink: 0;
     height: 42px;
     color: var(--accentColor);
+    position: relative;
+}
+
+#add_task_btn:hover {
+    background: none;
+    filter: none;
+}
+
+#add_task_btn:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 42px;
+    background: var(--accentColor);
+    filter: opacity(0.08);
+    border-radius: inherit;
 }
 
 #add_task_btn i {

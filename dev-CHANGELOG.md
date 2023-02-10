@@ -2,6 +2,11 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.2.10a
+> February 10, 2023
+- Remove empty list icon and changed with text only.
+- Small changes to `add_task_btn`style properties.
+
 ### v23.2.9a
 > February 9, 2023
 - Changed default font family to `Segoe UI Variable Text`.

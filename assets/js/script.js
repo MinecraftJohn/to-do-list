@@ -126,20 +126,7 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
         <div class="line_dividerX"></div>
         <button id="add_task_btn"><i>&#xe710;</i>Add a task</button>
     `;
-    document.getElementById("add_task_btn").onclick = createTodo;
-    if (localStorage.getItem(todoSelected) == "[]") {
-        // todoTaskSection.innerHTML += `
-        //     <section id="todo_section">
-        //         <p class="empty_data_hint">
-        //             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--textTransparent)" viewBox="0 0 16 16">
-        //                 <path d="M4.98 4a.5.5 0 0 0-.39.188L1.54 8H6a.5.5 0 0 1 .5.5 1.5 1.5 0 1 0 3 0A.5.5 0 0 1 10 8h4.46l-3.05-3.812A.5.5 0 0 0 11.02 4H4.98zm9.954 5H10.45a2.5 2.5 0 0 1-4.9 0H1.066l.32 2.562a.5.5 0 0 0 .497.438h12.234a.5.5 0 0 0 .496-.438L14.933 9zM3.809 3.563A1.5 1.5 0 0 1 4.981 3h6.038a1.5 1.5 0 0 1 1.172.563l3.7 4.625a.5.5 0 0 1 .105.374l-.39 3.124A1.5 1.5 0 0 1 14.117 13H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .106-.374l3.7-4.625z"/>
-        //             </svg> No data found in local storage.
-        //             <button id="add_todo_btn">Add a to-do</button>
-        //         </p>
-        //     </section>
-        // `;
-        // document.getElementById("add_todo_btn").onclick = createTodo;
-    } else {
+    if (localStorage.getItem(todoSelected) !== "[]") {
         todoTaskSection.innerHTML += `<ul id="todo_container"></ul>`;
         var todos = Array.from(JSON.parse(localStorage.getItem(localStorage.getItem("list-selected")))),
             todoContainer = document.getElementById("todo_container");
@@ -156,6 +143,7 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
             console.log(event.target.value)
         }
     }
+    document.getElementById("add_task_btn").onclick = createTodo;
 }
 for (let i = 0; i < listsContainer.length; i++) {
     const list = listsContainer[i];
@@ -712,17 +700,15 @@ addListBtn.onclick = createList;
 addListBtn2.onclick = createList;
 
 function createTodo() {
-    var createTodoSection = document.createElement("div"),
-        createTodoBtn = document.getElementById("add_todo_btn");
+    var createTodoSection = document.createElement("div");
     addListBtn.setAttribute("disabled", "");
-    createTodoBtn.setAttribute("disabled", "");
     pageBody[0].appendChild(createTodoSection);
     createTodoSection.setAttribute("id", "create_list_section");
     createTodoSection.setAttribute("class", "modal_bg");
     createTodoSection.innerHTML = `
         <form class="modal_container" autocomplete="off">
             <header class="modal_header">
-                <b>Add a to-do</b>
+                <b>Add a task</b>
                 <i class="close_btn">&#xe8bb;</i>
             </header>
             <div class="line_dividerX"></div>
@@ -751,7 +737,7 @@ function createTodo() {
             JSON.stringify([...JSON.parse(localStorage.getItem(localStorage.getItem("list-selected")) || "[]"),
             { name: inputField.value.trim().replace(/^\S/, (c) => c.toUpperCase()), completed: false }])
         );
-        // location.reload();
+        location.reload();
     }
     inputField.oninput = () => {
         if (inputField.value == "" || inputField.value.match(/^\s*$/)) {
