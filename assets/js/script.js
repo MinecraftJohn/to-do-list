@@ -120,15 +120,7 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
         <section class="todo_header_container">
             <h1 class="todo_header_title">${todoSelected.substring(5)}</h1>
             <div class="list_footer_group">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="svg_btns" viewBox="0 0 16 16">
-                    <title>Sort A-Z</title>
-                    <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
-                    <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/>
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="svg_btns" viewBox="0 0 16 16">
-                    <title>Options</title>
-                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                </svg>
+            	<i class="icon_btns">&#xe712;</i>
             </div>
         </section>
         <div class="line_dividerX"></div>
@@ -150,16 +142,13 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
     } else {
         todoTaskSection.innerHTML += `<ul id="todo_container"></ul>`;
         var todos = Array.from(JSON.parse(localStorage.getItem(localStorage.getItem("list-selected")))),
-            todoContainer = document.getElementById("todo_container"),
-            deleteBtn = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="svg_btns" viewBox="0 0 16 16">
-                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                        </svg>`;
+            todoContainer = document.getElementById("todo_container");
         todos.forEach(todo => {
             todoContainer.innerHTML += `
             <li>
                 <input type="checkbox" />
                 <input type="text" id="todo_input" value="${todo.name}" />
-                ${deleteBtn}
+                <i class="icon_btns">&#xe8bb;</i>
             </li>`;
         })
         const todoInput = todoContainer.querySelector("#todo_input");
@@ -189,9 +178,7 @@ editUserBtn[0].onclick = () => {
         <form class="modal_container" autocomplete="off">
             <header class="modal_header">
                 <b>Edit profile</b>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
+                <i class="close_btn">&#xe8bb;</i>
             </header>
             <div class="line_dividerX"></div>
             <main class="form_body">
@@ -262,9 +249,7 @@ settings.onclick = () => {
         <form class="modal_container" autocomplete="off">
             <header class="modal_header">
                 <b>Settings</b>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
+                <i class="close_btn">&#xe8bb;</i>
             </header>
             <div class="line_dividerX"></div>
             <main class="modal_body settings_body">
@@ -573,9 +558,7 @@ aboutProject.onclick = () => {
         <div class="modal_container">
             <header class="modal_header">
                 <b>About project</b>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
+                <i class="close_btn">&#xe8bb;</i>
             </header>
             <div class="line_dividerX"></div>
             <main class="modal_body">
@@ -676,10 +659,8 @@ function createList() {
     createListSection.innerHTML = `
         <form class="modal_container" autocomplete="off">
             <header class="modal_header">
-                <b>Add list</b>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
+                <b>Add a list</b>
+                <i class="close_btn">&#xe8bb;</i>
             </header>
             <div class="line_dividerX"></div>
             <main class="form_body add_list_body">
@@ -742,9 +723,7 @@ function createTodo() {
         <form class="modal_container" autocomplete="off">
             <header class="modal_header">
                 <b>Add a to-do</b>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="close_btn" viewBox="0 0 16 16">
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
+                <i class="close_btn">&#xe8bb;</i>
             </header>
             <div class="line_dividerX"></div>
             <main class="form_body add_list_body">

@@ -28,7 +28,7 @@
     width: 1024px;
     max-width: 95%;
     height: calc(100vh - 314px);
-    background: var(--background2);
+    background: var(--background);
     border: 1px solid var(--border);
     border-radius: 6px;
     display: flex;
@@ -90,6 +90,8 @@
     padding: 6px;
     cursor: pointer;
     box-sizing: content-box;
+    font-size: 10px;
+    line-height: normal;
 }
 
 .setting_edit_user_btn:hover {
@@ -408,8 +410,9 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    background: var(--background2);
-    margin: 8px 18px;
+    background: var(--background);
+    border: 1px solid var(--accentColor);
+    margin: 18px;
     padding: 0 18px;
     flex-shrink: 0;
     height: 42px;

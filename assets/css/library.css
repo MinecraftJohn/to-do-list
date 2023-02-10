@@ -52,10 +52,26 @@ html[darkmode='true'],
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: "Segoe UI Variable Text";
+    font-style: normal;
+    font-weight: 400;
     font-size: 14px;
-    font-family: 'Segoe UI';
     color: var(--text);
     -webkit-tap-highlight-color: transparent;
+}
+
+i {
+    font-family: "Segoe Fluent Icons";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+b {
+	font-weight: bold;
 }
 
 body {
@@ -87,13 +103,13 @@ button[disabled] {
     user-select: none;
 }
 
-.svg_btns {
+.icon_btns {
     box-sizing: content-box;
     padding: 8px;
     border-radius: 4px;
 }
 
-.svg_btns:hover {
+.icon_btns:hover {
     cursor: pointer;
     background: var(--transparent);
 }
@@ -204,14 +220,16 @@ a:hover {
 }
 
 .close_btn {
+    font-size: 8px;
+    line-height: 8px;
     border-radius: 4px;
-    padding: 2px;
+    padding: 6px;
     box-sizing: content-box;
 }
 
 .close_btn:hover {
     background: var(--error);
-    fill: #fff;
+    color: #fff;
 }
 
 .switch_outline {
@@ -259,12 +277,4 @@ a:hover {
 
 .modal_input_label:hover {
     background: var(--transparent);
-}
-
-i {
-    font-family: "Segoe Fluent Icons";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 16px;
 }

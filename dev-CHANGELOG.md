@@ -2,6 +2,14 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.2.9a
+> February 9, 2023
+- Changed default font family to `Segoe UI Variable Text`.
+- Small changes to `add_task_btn`style properties.
+- Changed the class name `svg_btns` to `icon_btns`.
+- Converted SVG buttons to `Segoe Fluent Icon` icons.
+- Changed `New list` button text and modal title to `Add a list`.
+
 ### v23.2.8a
 > February 8, 2023
 - Changed `.list_container` height to `32px`.
