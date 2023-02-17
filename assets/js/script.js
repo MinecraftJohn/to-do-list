@@ -132,18 +132,18 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
             todoContainer = document.getElementById("todo_container");
         todos.forEach(todo => {
             todoContainer.innerHTML += `
-            <li>
-                <input type="checkbox" />
-                <input type="text" id="todo_input" value="${todo.name}" />
-                <i class="icon_btns">&#xe8bb;</i>
+            <li class="task_list">
+                <input type="checkbox" class="task_checkbox"/>
+                <input type="text"  class="task_input" id="todo_input" value="${todo.name}" oninput="editTask()" />
+                <i class="task_delete">&#xe8bb;</i>
             </li>`;
         })
-        const todoInput = todoContainer.querySelector("#todo_input");
-        todoInput.onblur = (event) => {
-            console.log(event.target.value)
+        function editTask(event) {
+            console.log(todo.name);
         }
     }
-    document.getElementById("add_task_btn").onclick = createTodo;
+    var addTaskBtn = document.getElementById("add_task_btn");
+    addTaskBtn.onclick = createTodo;
 }
 for (let i = 0; i < listsContainer.length; i++) {
     const list = listsContainer[i];
@@ -702,6 +702,7 @@ addListBtn2.onclick = createList;
 function createTodo() {
     var createTodoSection = document.createElement("div");
     addListBtn.setAttribute("disabled", "");
+    addTaskBtn.setAttribute("disabled", "");
     pageBody[0].appendChild(createTodoSection);
     createTodoSection.setAttribute("id", "create_list_section");
     createTodoSection.setAttribute("class", "modal_bg");
@@ -723,7 +724,7 @@ function createTodo() {
     document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("create_list_section").remove();
         addListBtn.removeAttribute("disabled");
-        createTodoBtn.removeAttribute("disabled");
+        addTaskBtn.removeAttribute("disabled");
     };
     setTimeout(() => {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");

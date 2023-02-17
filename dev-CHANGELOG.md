@@ -2,6 +2,12 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.2.17a
+> February 17, 2023
+- Declaired class name to each element of `todoContainer`.
+- Added styles to `todoContainer` list.
+- Changed task delete button to show only when the task is being hovered.
+
 ### v23.2.10a
 > February 10, 2023
 - Remove empty list icon and changed with text only.
