@@ -129,17 +129,34 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
     if (localStorage.getItem(todoSelected) !== "[]") {
         todoTaskSection.innerHTML += `<ul id="todo_container"></ul>`;
         var todos = Array.from(JSON.parse(localStorage.getItem(localStorage.getItem("list-selected")))),
+            taskID = 0,
             todoContainer = document.getElementById("todo_container");
         todos.forEach(todo => {
             todoContainer.innerHTML += `
             <li class="task_list">
-                <input type="checkbox" class="task_checkbox"/>
-                <input type="text"  class="task_input" id="todo_input" value="${todo.name}" oninput="editTask()" />
-                <i class="task_delete">&#xe8bb;</i>
+                <input type="checkbox" class="task_checkbox" id="task_checkbox_${taskID}" onclick="checkTask(${taskID})" ${todo.completed == true ? "checked" : ""}/>
+                <input type="text" class="task_input" id="task_input_${taskID}" value="${todo.name}" oninput="editTask(${taskID})" />
+                <i class="task_delete" id="task_delete_${taskID}" onclick="deleteTask(${taskID})">&#xe8bb;</i>
             </li>`;
+            taskID++;
         })
-        function editTask(event) {
-            console.log(todo.name);
+        function checkTask(n) {
+            if (document.getElementById("task_checkbox_" + n).checked) {
+                todos[n].completed = true;
+                localStorage.setItem(localStorage.getItem("list-selected"), JSON.stringify(todos));
+            } else {
+                todos[n].completed = false;
+                localStorage.setItem(localStorage.getItem("list-selected"), JSON.stringify(todos));
+            }
+        }
+        function editTask(n) {
+            todos[n].name = document.getElementById("task_input_" + n).value;
+            localStorage.setItem(localStorage.getItem("list-selected"), JSON.stringify(todos));
+        }
+        function deleteTask(n) {
+            todos.splice(n, 1);
+            localStorage.setItem(localStorage.getItem("list-selected"), JSON.stringify(todos));
+            location.reload();
         }
     }
     var addTaskBtn = document.getElementById("add_task_btn");

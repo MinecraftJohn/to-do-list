@@ -2,6 +2,14 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+
+### v23.2.19a
+> February 19, 2023
+- Removed transition animation on task delete button.
+- Added the ability to rename a task instantly.
+- Added the ability to mark a task as completed.
+- Added the ability to delete a task.
+
 ### v23.2.17a
 > February 17, 2023
 - Declaired class name to each element of `todoContainer`.
