@@ -1,5 +1,7 @@
-html[darkmode='0'] {
+html[darkmode='false'] {
     --accentColor: #1a73e8;
+    --accentDisabled: rgba(0, 0, 0, 0.2169);
+    --accentText: #fff;
     --background: #F8F9FC;
     --background2: #F1F3F9;
     --text: #1A1A1B;
@@ -8,11 +10,15 @@ html[darkmode='0'] {
     --transparent: rgba(26, 26, 27, 0.06);
     --scrollbar: rgba(26, 26, 27, 0.12);
     --error: #fe3159;
+    --success: #4CAF50;
     --switch: rgba(35, 39, 51, 0.33);
 }
 
-html[darkmode='1'] {
+html[darkmode='true'],
+:root {
     --accentColor: #1a73e8;
+    --accentDisabled: rgba(255, 255, 255, 0.1581);
+    --accentText: #fff;
     --background: #232733;
     --background2: #1A2030;
     --text: #fff;
@@ -21,6 +27,7 @@ html[darkmode='1'] {
     --transparent: rgba(248, 249, 252, 0.06);
     --scrollbar: rgba(248, 249, 252, 0.12);
     --error: #fe3159;
+    --success: #00C851;
     --switch: rgba(248, 249, 252, 0.06);
 }
 
@@ -45,10 +52,26 @@ html[darkmode='1'] {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: "Segoe UI Variable Text";
+    font-style: normal;
+    font-weight: 400;
     font-size: 14px;
-    font-family: 'Segoe UI';
     color: var(--text);
     -webkit-tap-highlight-color: transparent;
+}
+
+i {
+    font-family: "Segoe Fluent Icons";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+b {
+	font-weight: bold;
 }
 
 body {
@@ -58,23 +81,35 @@ body {
 
 button {
     background: var(--accentColor);
+    height: 32px;
+    padding: 0 22px;
     border: none;
-    color: #fff;
+    color: var(--accentText);
     border-radius: 4px;
     cursor: pointer;
 }
 
 button:hover {
-    filter: brightness(.9);
+    filter: brightness(.86);
 }
 
-.svg_btns {
+button:active {
+    filter: brightness(.66);
+}
+
+button[disabled] {
+    background: var(--accentDisabled);
+    pointer-events: none;
+    user-select: none;
+}
+
+.icon_btns {
     box-sizing: content-box;
     padding: 8px;
     border-radius: 4px;
 }
 
-.svg_btns:hover {
+.icon_btns:hover {
     cursor: pointer;
     background: var(--transparent);
 }
@@ -156,11 +191,13 @@ a:hover {
     gap: 32px;
 }
 
-.form_body_list {
-    padding: 18px;
+.input_section {
     display: flex;
-    flex-direction: row;
     gap: 8px;
+}
+
+.form_error {
+    color: var(--error);
 }
 
 .modal_body {
@@ -183,14 +220,16 @@ a:hover {
 }
 
 .close_btn {
+    font-size: 8px;
+    line-height: 8px;
     border-radius: 4px;
-    padding: 2px;
+    padding: 6px;
     box-sizing: content-box;
 }
 
 .close_btn:hover {
     background: var(--error);
-    fill: #fff;
+    color: #fff;
 }
 
 .switch_outline {
@@ -213,7 +252,7 @@ a:hover {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--accentText);
     box-shadow: 0 0 0 1px rgba(35, 39, 51, 0.0578);
     transition: all .2s;
     position: absolute;
