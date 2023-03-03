@@ -2,6 +2,18 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.3a
+> March 3, 2023
+- Converted `innerHTML` that used string only into `innerText` to avoid bug exploit.
+- Added the ability to delete a todo group.
+- Disabled button text user selection.
+- Added styles to todo menu in todo header.
+- Todo menu now open and close when click outside the menu.
+
+### v23.2.24a
+> February 24, 2023
+- Change main element width to `896px`.
+- Added a menu for todo selected in todo header.
 
 ### v23.2.19a
 > February 19, 2023

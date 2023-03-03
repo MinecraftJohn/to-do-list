@@ -51,26 +51,26 @@ function clock() {
         dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     if (JSON.parse(localStorage.getItem("24hour")) === true) {
-        headerTime.innerHTML = hours + ":" + minutes;
+        headerTime.innerText = hours + ":" + minutes;
     } else {
-        headerTime.innerHTML = hours12Format[hours] + ":" + minutes;
+        headerTime.innerText = hours12Format[hours] + ":" + minutes;
     }
-    headerDate.innerHTML = dayArray[day] + ", " + monthArray[month] + " " + date;
+    headerDate.innerText = dayArray[day] + ", " + monthArray[month] + " " + date;
     if (hours >= 6 && hours <= 11) {
-        greetings.innerHTML = "Good morning,";
+        greetings.innerText = "Good morning,";
     } else if (hours >= 12 && hours <= 17) {
-        greetings.innerHTML = "Good afternoon,";
+        greetings.innerText = "Good afternoon,";
     } else {
-        greetings.innerHTML = "Good evening,";
+        greetings.innerText = "Good evening,";
     }
 }
 bgImage(pageHeader);
 clock();
 setInterval(clock, 1000);
 if (lsUsername != null) {
-    username.innerHTML = lsUsername;
+    username.innerText = lsUsername;
 } else {
-    username.innerHTML = "Account Name";
+    username.innerText = "Account Name";
 }
 
 function defaultProfilePicture(elmnt, n, more) {
@@ -96,13 +96,15 @@ function checkThemeMode() {
 checkThemeMode();
 if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
     listContainer.innerHTML = "";
-    var keys = Object.keys(localStorage),
-        todoSelected = localStorage.getItem("list-selected");
+    var keys = Object.keys(localStorage);
     keys.sort();
     for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
         if (key.startsWith("#")) {
-            if (todoSelected == key) {
+            if (localStorage.getItem(localStorage.getItem("list-selected")) == null) {
+                localStorage.setItem("list-selected", key)
+            }
+            if (localStorage.getItem("list-selected") == key) {
                 listContainer.innerHTML += `
                 <div class="list_container list_active" id="${key.substring(0, 5)}">
                     <div class="list_color"></div>
@@ -118,15 +120,28 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
     }
     todoTaskSection.innerHTML = `
         <section class="todo_header_container">
-            <h1 class="todo_header_title">${todoSelected.substring(5)}</h1>
+            <h1 class="todo_header_title">${localStorage.getItem("list-selected").substring(5)}</h1>
             <div class="list_footer_group">
-            	<i class="icon_btns">&#xe712;</i>
+            	<i class="icon_btns" onclick="menuTodo('block', 'flex')">&#xe712;</i>
+                <div class="modal_bg_transparent" onclick="menuTodo('none', 'none')"></div>
+                <ul id="todo_menu_container">
+                    <li onclick=""><i>&#xe8ac;</i>Rename</li>
+                    <li onclick="deleteTodo()"><i>&#xe74d;</i>Delete</li>
+                </ul>
             </div>
         </section>
         <div class="line_dividerX"></div>
         <button id="add_task_btn"><i>&#xe710;</i>Add a task</button>
     `;
-    if (localStorage.getItem(todoSelected) !== "[]") {
+    function menuTodo(a, b) {
+        document.getElementsByClassName('modal_bg_transparent')[0].style.display = a;
+        document.getElementById('todo_menu_container').style.display = b;
+    }
+    function deleteTodo() {
+        localStorage.removeItem(localStorage.getItem('list-selected'));
+        location.reload();
+    }
+    if (localStorage.getItem(localStorage.getItem("list-selected")) !== "[]") {
         todoTaskSection.innerHTML += `<ul id="todo_container"></ul>`;
         var todos = Array.from(JSON.parse(localStorage.getItem(localStorage.getItem("list-selected")))),
             taskID = 0,
@@ -160,7 +175,7 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
         }
     }
     var addTaskBtn = document.getElementById("add_task_btn");
-    addTaskBtn.onclick = createTodo;
+    addTaskBtn.onclick = createTodo; 
 }
 for (let i = 0; i < listsContainer.length; i++) {
     const list = listsContainer[i];
@@ -237,7 +252,7 @@ editUserBtn[0].onclick = () => {
         } else {
             e.preventDefault();
             errorMsg[0].style.display = "block";
-            errorMsg[0].innerHTML = "Numbers are not allowed.";
+            errorMsg[0].innerText = "Numbers are not allowed.";
         }
     };
 
@@ -351,11 +366,11 @@ settings.onclick = () => {
             dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         if (JSON.parse(localStorage.getItem("24hour")) === true) {
-            previewTime.innerHTML = hours + ":" + minutes;
+            previewTime.innerText = hours + ":" + minutes;
         } else {
-            previewTime.innerHTML = hours12Format[hours] + ":" + minutes;
+            previewTime.innerText = hours12Format[hours] + ":" + minutes;
         }
-        previewDate.innerHTML = dayArray[day] + ", " + monthArray[month] + " " + date;
+        previewDate.innerText = dayArray[day] + ", " + monthArray[month] + " " + date;
     }
 
     function changeBGImage(a, b) {
@@ -496,11 +511,11 @@ settings.onclick = () => {
                 imgBlock[6].setAttribute("style", `background-image:url(${enterLink.value})`);
             } else {
                 errorMsg[0].removeAttribute("style");
-                errorMsg[0].innerHTML = "Your request was unsuccessful, try again later.";
+                errorMsg[0].innerText = "Your request was unsuccessful, try again later.";
             }
         }).catch(() => {
             errorMsg[0].removeAttribute("style");
-            errorMsg[0].innerHTML = "Please enter a valid image URL.";
+            errorMsg[0].innerText = "Please enter a valid image URL.";
         });
     };
     accentPicker.oninput = (e) => {
