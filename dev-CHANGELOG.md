@@ -2,6 +2,10 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.9a
+> March 8, 2023
+- Added the ability to rename a todo group.
+
 ### v23.3.3a
 > March 3, 2023
 - Converted `innerHTML` that used string only into `innerText` to avoid bug exploit.
