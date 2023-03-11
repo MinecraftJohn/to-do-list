@@ -48,6 +48,10 @@ html[darkmode='true'],
     background: var(--scrollbar);
 }
 
+html {
+    height: -webkit-fill-available;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -60,7 +64,7 @@ html[darkmode='true'],
     -webkit-tap-highlight-color: transparent;
 }
 
-i {
+i,.i {
     font-family: "Segoe Fluent Icons";
     font-style: normal;
     font-weight: 400;
@@ -75,7 +79,8 @@ b {
 }
 
 body {
-    height: 100vh;
+    min-height: -webkit-fill-available;
+    min-height: 100vh;
     background: var(--background);
 }
 

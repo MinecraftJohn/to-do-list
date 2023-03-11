@@ -14,12 +14,11 @@ var pageHeader = document.getElementById("header"),
     settings = document.getElementById("settings"),
     aboutProject = document.getElementById("about_project"),
     wallpaper = ["https://wallpaperaccess.com/full/1779187.jpg",
-        "https://wallpaperaccess.com/full/2027653.jpg",
-        "https://wallpaperaccess.com/full/1779176.jpg",
-        "https://wallpaperaccess.com/full/218253.jpg",
-        "https://wallpaperaccess.com/full/148421.jpg",
-        "https://wallpaperaccess.com/full/53106.jpg"
-    ],
+                "https://wallpaperaccess.com/full/2027653.jpg",
+                "https://wallpaperaccess.com/full/1779176.jpg",
+                "https://wallpaperaccess.com/full/218253.jpg",
+                "https://wallpaperaccess.com/full/148421.jpg",
+                "https://wallpaperaccess.com/full/53106.jpg"],
     lsUsername = localStorage.getItem("username"),
     lsProfile = localStorage.getItem("profile"),
     addListBtn = document.getElementById("add_list_btn"),
@@ -27,7 +26,9 @@ var pageHeader = document.getElementById("header"),
     todoTaskSection = document.getElementById("todo_section"),
     listContainer = document.getElementById("list_container"),
     listName = document.getElementsByClassName("list_name"),
-    listsContainer = document.getElementsByClassName("list_container");
+    listsContainer = document.getElementsByClassName("list_container"),
+    menuBtn = document.getElementById("menu_btn"),
+    mobileElmnt = document.getElementsByClassName("mobile_menu");
 
 // ############################################
 // #            Startup Section               #
@@ -256,7 +257,7 @@ editUserBtn[0].onclick = () => {
             <main class="form_body">
                 <div id="edit_user_account_profile"></div>
                 <input type="file" id="profile" accept=".png, .jpg, .jpeg" style="display: none"/>
-                <input type="text" class="input_text" id="change_username" placeholder="Enter a name">
+                <input type="text" class="input_text" id="change_username" placeholder="Enter a name" maxlength="30">
             </main>
             <div class="line_dividerX"></div>
             <footer class="form_footer">
@@ -295,7 +296,7 @@ editUserBtn[0].onclick = () => {
     };
     saveBtn.onclick = (e) => {
         const inputValue = input.value.trim().toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
-        if (inputValue.match(/^[a-zA-ZÑñ]+(?: [a-zA-ZÑñ-]+)*$/)) {
+        if (inputValue.match(/^[a-zA-ZÑñ]+(?: [a-zA-ZÑñ-]+)*$/) && inputValue.length < 33) {
             localStorage.setItem("username", inputValue);
             const base64String = fileReader.result
                 .replace('data:', '')
@@ -304,7 +305,7 @@ editUserBtn[0].onclick = () => {
         } else {
             e.preventDefault();
             errorMsg[0].style.display = "block";
-            errorMsg[0].innerText = "Numbers are not allowed.";
+            errorMsg[0].innerText = "Number is not allowed";
         }
     };
 
@@ -832,4 +833,23 @@ function createTodo() {
         }
     };
     saveBtn.onclick = saveAddTodo;
+}
+
+// ############################################
+// #           Mobile View Section            #
+// ############################################
+menuBtn.onclick = () => {
+    if (document.getElementById("menu_btn_checkbox").checked) {
+        menuBtn.innerHTML = `&#xe700;<input type="checkbox" id="menu_btn_checkbox" name="menu_btn_checkbox">`;
+        todoTaskSection.style.display = "flex";
+        for (let i = 0; i < mobileElmnt.length; i++) {
+            mobileElmnt[i].removeAttribute("style")
+        }
+    } else {
+        menuBtn.innerHTML = `&#xe711;<input type="checkbox" id="menu_btn_checkbox" name="menu_btn_checkbox" checked>`;
+        todoTaskSection.style.display = "none";
+        for (let i = 0; i < mobileElmnt.length; i++) {
+            mobileElmnt[i].setAttribute("style", "display: flex !important;");
+        }
+    }
 }

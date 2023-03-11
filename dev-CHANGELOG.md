@@ -2,8 +2,14 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.10a
+> March 10, 2023
+- Added media query for mobile view support.
+- Added a burger menu when client is on mobile view.
+- Fixed line divider being shrink on a flex parent.
+
 ### v23.3.9a
-> March 8, 2023
+> March 9, 2023
 - Added the ability to rename a todo group.
 
 ### v23.3.3a
