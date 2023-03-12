@@ -2,6 +2,14 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.12a
+> March 12, 2023
+- Removed drop shadows on element section when client is on mobile view.
+- Disabled user select on list button at `list_container`.
+- Changed from scroll to element only to full page when on mobile view.
+- Changed `.list_container` height to `32px`.
+- Fixed a bug where rename a list do not show the origin name of list in the input element.
+
 ### v23.3.10a
 > March 10, 2023
 - Added media query for mobile view support.

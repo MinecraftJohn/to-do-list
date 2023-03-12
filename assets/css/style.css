@@ -133,7 +133,7 @@
     border-radius: 4px;
     cursor: pointer;
     position: relative;
-    height: 32px;
+    height: 42px;
 }
 
 .list_container:hover {
@@ -160,6 +160,8 @@
 
 .list_name {
     margin-left: 16px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 #list_footer_container {

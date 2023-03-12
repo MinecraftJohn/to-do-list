@@ -48,10 +48,6 @@ html[darkmode='true'],
     background: var(--scrollbar);
 }
 
-html {
-    height: -webkit-fill-available;
-}
-
 * {
     padding: 0;
     margin: 0;
@@ -79,8 +75,6 @@ b {
 }
 
 body {
-    min-height: -webkit-fill-available;
-    min-height: 100vh;
     background: var(--background);
 }
 

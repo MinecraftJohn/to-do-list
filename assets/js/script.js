@@ -155,7 +155,7 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
                 <div class="line_dividerX"></div>
                 <main class="form_body add_list_body">
                     <div class="input_section">
-                        <input autofocus type="text" id="name_list" class="input_text" placeholder="Enter a name" >
+                        <input autofocus type="text" id="name_list" class="input_text" placeholder="Enter a name" value="${localStorage.getItem("list-selected").substring(5)}">
                         <button id="save_btn" disabled>Save</button>
                     </div>
                         <p class="form_error" style="display: none">There is an error creating your todo.</p>
