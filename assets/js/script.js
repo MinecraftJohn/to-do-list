@@ -14,12 +14,11 @@ var pageHeader = document.getElementById("header"),
     settings = document.getElementById("settings"),
     aboutProject = document.getElementById("about_project"),
     wallpaper = ["https://wallpaperaccess.com/full/1779187.jpg",
-        "https://wallpaperaccess.com/full/2027653.jpg",
-        "https://wallpaperaccess.com/full/1779176.jpg",
-        "https://wallpaperaccess.com/full/218253.jpg",
-        "https://wallpaperaccess.com/full/148421.jpg",
-        "https://wallpaperaccess.com/full/53106.jpg"
-    ],
+                "https://wallpaperaccess.com/full/2027653.jpg",
+                "https://wallpaperaccess.com/full/1779176.jpg",
+                "https://wallpaperaccess.com/full/218253.jpg",
+                "https://wallpaperaccess.com/full/148421.jpg",
+                "https://wallpaperaccess.com/full/53106.jpg"],
     lsUsername = localStorage.getItem("username"),
     lsProfile = localStorage.getItem("profile"),
     addListBtn = document.getElementById("add_list_btn"),
@@ -27,7 +26,9 @@ var pageHeader = document.getElementById("header"),
     todoTaskSection = document.getElementById("todo_section"),
     listContainer = document.getElementById("list_container"),
     listName = document.getElementsByClassName("list_name"),
-    listsContainer = document.getElementsByClassName("list_container");
+    listsContainer = document.getElementsByClassName("list_container"),
+    menuBtn = document.getElementById("menu_btn"),
+    mobileElmnt = document.getElementsByClassName("mobile_menu");
 
 // ############################################
 // #            Startup Section               #
@@ -51,26 +52,26 @@ function clock() {
         dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     if (JSON.parse(localStorage.getItem("24hour")) === true) {
-        headerTime.innerHTML = hours + ":" + minutes;
+        headerTime.innerText = hours + ":" + minutes;
     } else {
-        headerTime.innerHTML = hours12Format[hours] + ":" + minutes;
+        headerTime.innerText = hours12Format[hours] + ":" + minutes;
     }
-    headerDate.innerHTML = dayArray[day] + ", " + monthArray[month] + " " + date;
+    headerDate.innerText = dayArray[day] + ", " + monthArray[month] + " " + date;
     if (hours >= 6 && hours <= 11) {
-        greetings.innerHTML = "Good morning,";
+        greetings.innerText = "Good morning,";
     } else if (hours >= 12 && hours <= 17) {
-        greetings.innerHTML = "Good afternoon,";
+        greetings.innerText = "Good afternoon,";
     } else {
-        greetings.innerHTML = "Good evening,";
+        greetings.innerText = "Good evening,";
     }
 }
 bgImage(pageHeader);
 clock();
 setInterval(clock, 1000);
 if (lsUsername != null) {
-    username.innerHTML = lsUsername;
+    username.innerText = lsUsername;
 } else {
-    username.innerHTML = "Account Name";
+    username.innerText = "Account Name";
 }
 
 function defaultProfilePicture(elmnt, n, more) {
@@ -96,13 +97,15 @@ function checkThemeMode() {
 checkThemeMode();
 if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
     listContainer.innerHTML = "";
-    var keys = Object.keys(localStorage),
-        todoSelected = localStorage.getItem("list-selected");
+    var keys = Object.keys(localStorage);
     keys.sort();
     for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
         if (key.startsWith("#")) {
-            if (todoSelected == key) {
+            if (localStorage.getItem(localStorage.getItem("list-selected")) == null) {
+                localStorage.setItem("list-selected", key)
+            }
+            if (localStorage.getItem("list-selected") == key) {
                 listContainer.innerHTML += `
                 <div class="list_container list_active" id="${key.substring(0, 5)}">
                     <div class="list_color"></div>
@@ -118,15 +121,80 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
     }
     todoTaskSection.innerHTML = `
         <section class="todo_header_container">
-            <h1 class="todo_header_title">${todoSelected.substring(5)}</h1>
+            <h1 class="todo_header_title">${localStorage.getItem("list-selected").substring(5)}</h1>
             <div class="list_footer_group">
-            	<i class="icon_btns">&#xe712;</i>
+            	<i class="icon_btns" onclick="menuTodo('block', 'flex')">&#xe712;</i>
+                <div class="modal_bg_transparent" onclick="menuTodo('none', 'none')"></div>
+                <ul id="todo_menu_container">
+                    <li onclick="renameTodo()"><i>&#xe8ac;</i>Rename</li>
+                    <li onclick="deleteTodo()"><i>&#xe74d;</i>Delete</li>
+                </ul>
             </div>
         </section>
         <div class="line_dividerX"></div>
         <button id="add_task_btn"><i>&#xe710;</i>Add a task</button>
     `;
-    if (localStorage.getItem(todoSelected) !== "[]") {
+    function menuTodo(a, b) {
+        document.getElementsByClassName('modal_bg_transparent')[0].style.display = a;
+        document.getElementById('todo_menu_container').style.display = b;
+    }
+    function renameTodo() {
+        menuTodo('none', 'none');
+        var renameTodoSection = document.createElement("div");
+        addListBtn.setAttribute("disabled", "");
+        addTaskBtn.setAttribute("disabled", "");
+        pageBody[0].appendChild(renameTodoSection);
+        renameTodoSection.setAttribute("id", "create_list_section");
+        renameTodoSection.setAttribute("class", "modal_bg");
+        renameTodoSection.innerHTML = `
+            <form class="modal_container" autocomplete="off">
+                <header class="modal_header">
+                    <b>Rename</b>
+                    <i class="close_btn">&#xe8bb;</i>
+                </header>
+                <div class="line_dividerX"></div>
+                <main class="form_body add_list_body">
+                    <div class="input_section">
+                        <input autofocus type="text" id="name_list" class="input_text" placeholder="Enter a name" value="${localStorage.getItem("list-selected").substring(5)}">
+                        <button id="save_btn" disabled>Save</button>
+                    </div>
+                        <p class="form_error" style="display: none">There is an error creating your todo.</p>
+                </main>
+            </form>`;
+        document.getElementsByClassName("close_btn")[0].onclick = () => {
+            document.getElementById("create_list_section").remove();
+            addListBtn.removeAttribute("disabled");
+            addTaskBtn.removeAttribute("disabled");
+        };
+        setTimeout(() => {
+            document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
+        }, 0);
+        var inputField = document.getElementById("name_list"),
+            saveBtn = document.getElementById("save_btn");
+        function saveRenameTodo(e) {
+            e.preventDefault();
+            let oldValue = localStorage.getItem(localStorage.getItem("list-selected")),
+                idKey = localStorage.getItem("list-selected").slice(0, 5) + inputField.value.charAt(0).toUpperCase() + inputField.value.slice(1);
+            localStorage.removeItem(localStorage.getItem("list-selected"));
+            localStorage.removeItem("list-selected");
+            localStorage.setItem("list-selected", idKey);
+            localStorage.setItem(idKey, oldValue);
+            location.reload();
+        }
+        inputField.oninput = () => {
+            if (inputField.value == "" || inputField.value.match(/^\s*$/)) {
+                saveBtn.setAttribute("disabled", "");
+            } else {
+                saveBtn.removeAttribute("disabled");
+            }
+        };
+        saveBtn.onclick = saveRenameTodo;
+    }
+    function deleteTodo() {
+        localStorage.removeItem(localStorage.getItem("list-selected"));
+        location.reload();
+    }
+    if (localStorage.getItem(localStorage.getItem("list-selected")) !== "[]") {
         todoTaskSection.innerHTML += `<ul id="todo_container"></ul>`;
         var todos = Array.from(JSON.parse(localStorage.getItem(localStorage.getItem("list-selected")))),
             taskID = 0,
@@ -160,7 +228,7 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
         }
     }
     var addTaskBtn = document.getElementById("add_task_btn");
-    addTaskBtn.onclick = createTodo;
+    addTaskBtn.onclick = createTodo; 
 }
 for (let i = 0; i < listsContainer.length; i++) {
     const list = listsContainer[i];
@@ -189,7 +257,7 @@ editUserBtn[0].onclick = () => {
             <main class="form_body">
                 <div id="edit_user_account_profile"></div>
                 <input type="file" id="profile" accept=".png, .jpg, .jpeg" style="display: none"/>
-                <input type="text" class="input_text" id="change_username" placeholder="Enter a name">
+                <input type="text" class="input_text" id="change_username" placeholder="Enter a name" maxlength="30">
             </main>
             <div class="line_dividerX"></div>
             <footer class="form_footer">
@@ -197,18 +265,22 @@ editUserBtn[0].onclick = () => {
                 <button id="save_btn">Save</button>
             </footer>
         </form>`;
-    document.getElementsByClassName("close_btn")[0].onclick = () => {
-        document.getElementById("edit_user_section").remove();
-    };
-    setTimeout(() => {
-        document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
-    }, 0);
     var userProfile = document.getElementById("edit_user_account_profile"),
         input = document.getElementById("change_username"),
         saveBtn = document.getElementById("save_btn"),
         errorMsg = document.getElementsByClassName("form_error"),
         profile = document.getElementById("profile"),
-        fileReader = new FileReader();
+        fileReader = new FileReader(),
+        modalContainer = document.getElementsByClassName("modal_container");
+    document.getElementsByClassName("close_btn")[0].onclick = () => {
+        setTimeout(() => {
+            document.getElementById("edit_user_section").remove();
+        }, 200);
+        modalContainer[0].removeAttribute("id");
+    };
+    setTimeout(() => {
+        modalContainer[0].setAttribute("id", "modal_container");
+    }, 0);
     if (lsProfile != null) {
         userProfile.innerHTML = profileImgDOM;
     } else {
@@ -228,7 +300,7 @@ editUserBtn[0].onclick = () => {
     };
     saveBtn.onclick = (e) => {
         const inputValue = input.value.trim().toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
-        if (inputValue.match(/^[a-zA-ZÑñ]+(?: [a-zA-ZÑñ-]+)*$/)) {
+        if (inputValue.match(/^[a-zA-ZÑñ]+(?: [a-zA-ZÑñ-]+)*$/) && inputValue.length < 33) {
             localStorage.setItem("username", inputValue);
             const base64String = fileReader.result
                 .replace('data:', '')
@@ -237,7 +309,7 @@ editUserBtn[0].onclick = () => {
         } else {
             e.preventDefault();
             errorMsg[0].style.display = "block";
-            errorMsg[0].innerHTML = "Numbers are not allowed.";
+            errorMsg[0].innerText = "Number is not allowed";
         }
     };
 
@@ -246,7 +318,7 @@ editUserBtn[0].onclick = () => {
 // #########################################
 settings.onclick = () => {
     var settingsSection = document.createElement("div"),
-        color = ["#ea3c78", "#fe8d18", "#ffba25", "#177d1f", "#1a73e8", "#b040bf"];
+        color = ["#ea3c78", "#fe8d18", "#ffba25", "#1a73e8", "#005366", "#b040bf"];
     pageBody[0].appendChild(settingsSection);
     settingsSection.setAttribute("id", "settings_section");
     settingsSection.setAttribute("class", "modal_bg");
@@ -292,7 +364,7 @@ settings.onclick = () => {
                     </div>
                     <div>
                         <label for="accent_picker" class="modal_input_label">Custom color</label>
-                        <input type="color" id="accent_picker" value="#1a73e8">
+                        <input type="color" id="accent_picker" value="#005366">
                     </div>
                 </div>
                 <div class="settings_block">
@@ -307,7 +379,7 @@ settings.onclick = () => {
                     <div class="settings_block settings_block_container">
                         <p>Dark mode</p>
                         <label class="switch_outline" for="darkmode">
-                            <input class="switch_input" type="checkbox" id="darkmode" checked/>
+                            <input class="switch_input" type="checkbox" id="darkmode"/>
                             <div class="switch_base"></div>
                             <div class="switch_thumb"></div>
                         </label>
@@ -351,11 +423,11 @@ settings.onclick = () => {
             dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         if (JSON.parse(localStorage.getItem("24hour")) === true) {
-            previewTime.innerHTML = hours + ":" + minutes;
+            previewTime.innerText = hours + ":" + minutes;
         } else {
-            previewTime.innerHTML = hours12Format[hours] + ":" + minutes;
+            previewTime.innerText = hours12Format[hours] + ":" + minutes;
         }
-        previewDate.innerHTML = dayArray[day] + ", " + monthArray[month] + " " + date;
+        previewDate.innerText = dayArray[day] + ", " + monthArray[month] + " " + date;
     }
 
     function changeBGImage(a, b) {
@@ -496,11 +568,11 @@ settings.onclick = () => {
                 imgBlock[6].setAttribute("style", `background-image:url(${enterLink.value})`);
             } else {
                 errorMsg[0].removeAttribute("style");
-                errorMsg[0].innerHTML = "Your request was unsuccessful, try again later.";
+                errorMsg[0].innerText = "Your request was unsuccessful, try again later.";
             }
         }).catch(() => {
             errorMsg[0].removeAttribute("style");
-            errorMsg[0].innerHTML = "Please enter a valid image URL.";
+            errorMsg[0].innerText = "Please enter a valid image URL.";
         });
     };
     accentPicker.oninput = (e) => {
@@ -639,8 +711,8 @@ aboutProject.onclick = () => {
             32.2266C210.969 32.2266 211.766 31.9609 212.438 31.4297V35.7422Z" fill="${color}"/>
             <defs>
                 <linearGradient id="paint0_linear_179_2" x1="59.4688" y1="4.38281" x2="62.7124" y2="37.6935" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#1A73E8"/>
-                    <stop offset="1" stop-color="#0035FF"/>
+                    <stop stop-color="#006880"/>
+                    <stop offset="1" stop-color="#005366"/>
                 </linearGradient>
             </defs>`;
     }
@@ -738,6 +810,8 @@ function createTodo() {
                     <p class="form_error" style="display: none">There is an error creating your todo.</p>
             </main>
         </form>`;
+    var inputField = document.getElementById("name_list"),
+        saveBtn = document.getElementById("save_btn");
     document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("create_list_section").remove();
         addListBtn.removeAttribute("disabled");
@@ -746,8 +820,6 @@ function createTodo() {
     setTimeout(() => {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
     }, 0);
-    var inputField = document.getElementById("name_list"),
-        saveBtn = document.getElementById("save_btn");
     function saveAddTodo(e) {
         e.preventDefault();
         localStorage.setItem(
@@ -765,4 +837,27 @@ function createTodo() {
         }
     };
     saveBtn.onclick = saveAddTodo;
+}
+
+// ############################################
+// #           Mobile View Section            #
+// ############################################
+menuBtn.onclick = () => {
+    if (document.getElementById("menu_btn_checkbox").checked) {
+        menuBtn.innerHTML = `&#xe700;<input type="checkbox" id="menu_btn_checkbox" name="menu_btn_checkbox">`;
+        todoTaskSection.style.display = "flex";
+        for (let i = 0; i < mobileElmnt.length; i++) {
+            mobileElmnt[i].removeAttribute("style")
+        }
+    } else {
+        menuBtn.innerHTML = `&#xe711;<input type="checkbox" id="menu_btn_checkbox" name="menu_btn_checkbox" checked>`;
+        todoTaskSection.style.display = "none";
+        // todoTaskSection.classList.add("out_animation")
+        // setTimeout(() => {
+        //     todoTaskSection.style.display = "none";
+        // }, 100);
+        for (let i = 0; i < mobileElmnt.length; i++) {
+            mobileElmnt[i].setAttribute("style", "display: flex !important;");
+        }
+    }
 }

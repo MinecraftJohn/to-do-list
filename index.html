@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" darkmode="true">
+<html lang="en" darkmode="false">
 
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="assets/css/library.css">
     <link rel="stylesheet" href="assets/css/fonts.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/mobile.css">
     <script defer src="assets/js/script.js"></script>
 </head>
 
@@ -24,18 +25,19 @@
         <section id="list_section">
             <div id="account_container">
                 <div id="account_profile"></div>
-                <i class="setting_edit_user_btn" title="Edit profile">&#xe70f;</i>
+                <i class="setting_edit_user_btn" title="Edit profile"></i>
                 <div id="user_container">
                     <p id="greetings">Greetings</p>
                     <b id="username">Username</b>
                 </div>
+                <label for="menu_btn_checkbox" id="menu_btn" class="i icon_btns" title="Menu">&#xe700;<input type="checkbox" id="menu_btn_checkbox" name="menu_btn_checkbox"></label>
             </div>
-            <div class="line_dividerX"></div>
-            <div id="list_container">
+            <div class="line_dividerX mobile_menu_line"></div>
+            <div id="list_container" class="mobile_menu">
                 <div class="empty_data_hint">List display here</div>
             </div>
-            <div class="line_dividerX"></div>
-            <div id="list_footer_container">
+            <div class="line_dividerX mobile_menu_line"></div>
+            <div id="list_footer_container" class="mobile_menu">
                 <div class="list_footer_group">
                     <i id="settings" class="icon_btns" title="Settings">&#xe713;</i>
                     <i id="about_project" class="icon_btns" title="About project">&#xe946;</i>

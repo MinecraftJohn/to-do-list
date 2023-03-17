@@ -2,6 +2,46 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.17a
+> March 17, 2023
+- Changed the default theme and accent to `Light Mode` & `#005366`.
+- Replaced green accent `#177d1f` to dark blue green `#005366`.
+- Added padding `64px 0` to `.empty_data_hint`.
+
+### v23.3.13a
+> March 13, 2023
+- Added a closing animation to account modal form.
+
+### v23.3.12a
+> March 12, 2023
+- Removed drop shadows on element section when client is on mobile view.
+- Disabled user select on list button at `list_container`.
+- Changed from scroll to element only to full page when on mobile view.
+- Changed `.list_container` height to `32px`.
+- Fixed a bug where rename a list do not show the origin name of list in the input element.
+
+### v23.3.10a
+> March 10, 2023
+- Added media query for mobile view support.
+- Added a burger menu when client is on mobile view.
+- Fixed line divider being shrink on a flex parent.
+
+### v23.3.9a
+> March 9, 2023
+- Added the ability to rename a todo group.
+
+### v23.3.3a
+> March 3, 2023
+- Converted `innerHTML` that used string only into `innerText` to avoid bug exploit.
+- Added the ability to delete a todo group.
+- Disabled button text user selection.
+- Added styles to todo menu in todo header.
+- Todo menu now open and close when click outside the menu.
+
+### v23.2.24a
+> February 24, 2023
+- Change main element width to `896px`.
+- Added a menu for todo selected in todo header.
 
 ### v23.2.19a
 > February 19, 2023

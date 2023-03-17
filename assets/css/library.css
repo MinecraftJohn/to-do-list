@@ -1,5 +1,5 @@
 html[darkmode='false'] {
-    --accentColor: #1a73e8;
+    --accentColor: #005366;
     --accentDisabled: rgba(0, 0, 0, 0.2169);
     --accentText: #fff;
     --background: #F8F9FC;
@@ -16,7 +16,7 @@ html[darkmode='false'] {
 
 html[darkmode='true'],
 :root {
-    --accentColor: #1a73e8;
+    --accentColor: #005366;
     --accentDisabled: rgba(255, 255, 255, 0.1581);
     --accentText: #fff;
     --background: #232733;
@@ -60,7 +60,7 @@ html[darkmode='true'],
     -webkit-tap-highlight-color: transparent;
 }
 
-i {
+i,.i {
     font-family: "Segoe Fluent Icons";
     font-style: normal;
     font-weight: 400;
@@ -75,7 +75,6 @@ b {
 }
 
 body {
-    height: 100vh;
     background: var(--background);
 }
 
@@ -87,6 +86,8 @@ button {
     color: var(--accentText);
     border-radius: 4px;
     cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 button:hover {
