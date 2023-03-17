@@ -2,6 +2,26 @@
 All notable changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v1.3.0
+> March 17, 2023
+- Added the ability to delete a todo group.
+- Added the ability to rename a todo group.
+- Changed the default theme and accent to `Light Mode` & `#005366`.
+- The new default accent color was came from Bing Chat precise mode that also match most of the default wallpaper color that's why I chose it :).
+- Replaced green accent `#177d1f` to dark blue green `#005366`.
+- Added a closing animation to account modal form.
+- Added media query for mobile view support.
+- Added a burger menu when client is on mobile view.
+- Fixed line divider being shrink on a flex parent.
+- Disabled user select on list button at `list_container`.
+- Changed `.list_container` height to `32px`.
+- Converted `innerHTML` that used string only into `innerText` to avoid bug exploit.
+- Disabled button text user selection.
+- Added a menu for todo selected in todo header.
+- Change main element width to `896px`.
+
+> The new default accent color was came from Bing Chat precise mode that also match most of the default wallpaper color that's why I chose it :).
+
 ### v1.2.0
 > February 19, 2023
 - Added the ability to rename a task instantly.

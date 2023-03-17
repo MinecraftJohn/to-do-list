@@ -265,18 +265,22 @@ editUserBtn[0].onclick = () => {
                 <button id="save_btn">Save</button>
             </footer>
         </form>`;
-    document.getElementsByClassName("close_btn")[0].onclick = () => {
-        document.getElementById("edit_user_section").remove();
-    };
-    setTimeout(() => {
-        document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
-    }, 0);
     var userProfile = document.getElementById("edit_user_account_profile"),
         input = document.getElementById("change_username"),
         saveBtn = document.getElementById("save_btn"),
         errorMsg = document.getElementsByClassName("form_error"),
         profile = document.getElementById("profile"),
-        fileReader = new FileReader();
+        fileReader = new FileReader(),
+        modalContainer = document.getElementsByClassName("modal_container");
+    document.getElementsByClassName("close_btn")[0].onclick = () => {
+        setTimeout(() => {
+            document.getElementById("edit_user_section").remove();
+        }, 200);
+        modalContainer[0].removeAttribute("id");
+    };
+    setTimeout(() => {
+        modalContainer[0].setAttribute("id", "modal_container");
+    }, 0);
     if (lsProfile != null) {
         userProfile.innerHTML = profileImgDOM;
     } else {
@@ -314,7 +318,7 @@ editUserBtn[0].onclick = () => {
 // #########################################
 settings.onclick = () => {
     var settingsSection = document.createElement("div"),
-        color = ["#ea3c78", "#fe8d18", "#ffba25", "#177d1f", "#1a73e8", "#b040bf"];
+        color = ["#ea3c78", "#fe8d18", "#ffba25", "#1a73e8", "#005366", "#b040bf"];
     pageBody[0].appendChild(settingsSection);
     settingsSection.setAttribute("id", "settings_section");
     settingsSection.setAttribute("class", "modal_bg");
@@ -360,7 +364,7 @@ settings.onclick = () => {
                     </div>
                     <div>
                         <label for="accent_picker" class="modal_input_label">Custom color</label>
-                        <input type="color" id="accent_picker" value="#1a73e8">
+                        <input type="color" id="accent_picker" value="#005366">
                     </div>
                 </div>
                 <div class="settings_block">
@@ -375,7 +379,7 @@ settings.onclick = () => {
                     <div class="settings_block settings_block_container">
                         <p>Dark mode</p>
                         <label class="switch_outline" for="darkmode">
-                            <input class="switch_input" type="checkbox" id="darkmode" checked/>
+                            <input class="switch_input" type="checkbox" id="darkmode"/>
                             <div class="switch_base"></div>
                             <div class="switch_thumb"></div>
                         </label>
@@ -707,8 +711,8 @@ aboutProject.onclick = () => {
             32.2266C210.969 32.2266 211.766 31.9609 212.438 31.4297V35.7422Z" fill="${color}"/>
             <defs>
                 <linearGradient id="paint0_linear_179_2" x1="59.4688" y1="4.38281" x2="62.7124" y2="37.6935" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#1A73E8"/>
-                    <stop offset="1" stop-color="#0035FF"/>
+                    <stop stop-color="#006880"/>
+                    <stop offset="1" stop-color="#005366"/>
                 </linearGradient>
             </defs>`;
     }
@@ -806,6 +810,8 @@ function createTodo() {
                     <p class="form_error" style="display: none">There is an error creating your todo.</p>
             </main>
         </form>`;
+    var inputField = document.getElementById("name_list"),
+        saveBtn = document.getElementById("save_btn");
     document.getElementsByClassName("close_btn")[0].onclick = () => {
         document.getElementById("create_list_section").remove();
         addListBtn.removeAttribute("disabled");
@@ -814,8 +820,6 @@ function createTodo() {
     setTimeout(() => {
         document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
     }, 0);
-    var inputField = document.getElementById("name_list"),
-        saveBtn = document.getElementById("save_btn");
     function saveAddTodo(e) {
         e.preventDefault();
         localStorage.setItem(
@@ -848,6 +852,10 @@ menuBtn.onclick = () => {
     } else {
         menuBtn.innerHTML = `&#xe711;<input type="checkbox" id="menu_btn_checkbox" name="menu_btn_checkbox" checked>`;
         todoTaskSection.style.display = "none";
+        // todoTaskSection.classList.add("out_animation")
+        // setTimeout(() => {
+        //     todoTaskSection.style.display = "none";
+        // }, 100);
         for (let i = 0; i < mobileElmnt.length; i++) {
             mobileElmnt[i].setAttribute("style", "display: flex !important;");
         }

@@ -16,10 +16,12 @@
     }
 
     #main_container {
+        position: relative;
         flex-direction: column;
         background: none;
         border: none;
         box-shadow: none;
+        transition: all 0.1s;
     }
 
     #list_section {
@@ -68,13 +70,21 @@
         margin-top: 18px;
         border: 1px solid var(--border);
         border-radius: 6px;
+        transition: all 0.2s;
     }
+
     #todo_section::after {
         content: "";
         position: absolute;
         top: 100%;
         width: 1px;
         height: 18px;
+    }
+
+    #todo_section.out_animation {
+        position: absolute;
+        opacity: .2;
+        top: 98px;
     }
 
     .task_delete {
@@ -86,6 +96,7 @@
         background: var(--background2);
         border: 1px solid var(--border);
         border-radius: 0 0 6px 6px;
+        transition: all 0.2s;
     }
 
     #list_footer_container {
@@ -95,6 +106,7 @@
         background: var(--background2);
         border: 1px solid var(--border);
         border-radius: 6px 6px 0 0;
+        transition: all 0.2s;
     }
 
     #todo_container {

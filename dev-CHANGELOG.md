@@ -2,6 +2,16 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.17a
+> March 17, 2023
+- Changed the default theme and accent to `Light Mode` & `#005366`.
+- Replaced green accent `#177d1f` to dark blue green `#005366`.
+- Added padding `64px 0` to `.empty_data_hint`.
+
+### v23.3.13a
+> March 13, 2023
+- Added a closing animation to account modal form.
+
 ### v23.3.12a
 > March 12, 2023
 - Removed drop shadows on element section when client is on mobile view.
