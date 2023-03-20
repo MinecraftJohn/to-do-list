@@ -68,11 +68,6 @@ function clock() {
 bgImage(pageHeader);
 clock();
 setInterval(clock, 1000);
-if (lsUsername != null) {
-    username.innerText = lsUsername;
-} else {
-    username.innerText = "Account Name";
-}
 
 function defaultProfilePicture(elmnt, n, more) {
     elmnt.innerHTML = `
@@ -81,11 +76,19 @@ function defaultProfilePicture(elmnt, n, more) {
         <path fill-rule="evenodd" clip-rule="evenodd" d="M175.137 192.15C174.831 166.14 153.651 145.15 127.569 145.15C101.486 145.15 80.3067 166.14 80.0005 192.15H71C71.3066 161.17 96.5158 136.15 127.569 136.15C158.621 136.15 183.831 161.17 184.137 192.15H175.137Z" fill="currentColor"/>
     </svg>${more}`;
 }
-if (lsProfile != null) {
-    accountProfile.innerHTML = `<img id="account_picture" src="data:image/png;base64,${lsProfile}" alt="User Profile">`;
-} else {
-    defaultProfilePicture(accountProfile, 42, "");
+function updateUser() {
+    if (lsProfile != null) {
+        accountProfile.innerHTML = `<img id="account_picture" src="data:image/png;base64,${lsProfile}" alt="User Profile">`;
+    } else {
+        defaultProfilePicture(accountProfile, 42, "");
+    }
+    if (lsUsername != null) {
+        username.innerText = lsUsername;
+    } else {
+        username.innerText = "Account Name";
+    }
 }
+updateUser();
 
 function checkThemeMode() {
     if (localStorage.getItem("darkmode") != null) {
@@ -147,7 +150,7 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
         renameTodoSection.setAttribute("id", "create_list_section");
         renameTodoSection.setAttribute("class", "modal_bg");
         renameTodoSection.innerHTML = `
-            <form class="modal_container" autocomplete="off">
+            <form class="modal_container form_input" autocomplete="off">
                 <header class="modal_header">
                     <b>Rename</b>
                     <i class="close_btn">&#xe8bb;</i>
@@ -240,82 +243,6 @@ for (let i = 0; i < listsContainer.length; i++) {
 // ############################################
 // #        Event Listeners Section           #
 // ############################################
-editUserBtn[0].onclick = () => {
-    var editUserSection = document.createElement("div"),
-        fileInputDOM = `<div id="change_picture_btn"><label for="profile">Change</label></div>`,
-        profileImgDOM = `<img id="edit_user_account_picture" alt="User Profile" src="data:image/png;base64,${lsProfile}">${fileInputDOM}`;
-    pageBody[0].appendChild(editUserSection);
-    editUserSection.setAttribute("id", "edit_user_section");
-    editUserSection.setAttribute("class", "modal_bg");
-    editUserSection.innerHTML = `
-        <form class="modal_container" autocomplete="off">
-            <header class="modal_header">
-                <b>Edit profile</b>
-                <i class="close_btn">&#xe8bb;</i>
-            </header>
-            <div class="line_dividerX"></div>
-            <main class="form_body">
-                <div id="edit_user_account_profile"></div>
-                <input type="file" id="profile" accept=".png, .jpg, .jpeg" style="display: none"/>
-                <input type="text" class="input_text" id="change_username" placeholder="Enter a name" maxlength="30">
-            </main>
-            <div class="line_dividerX"></div>
-            <footer class="form_footer">
-                <p class="form_error" style="display: none"></p>
-                <button id="save_btn">Save</button>
-            </footer>
-        </form>`;
-    var userProfile = document.getElementById("edit_user_account_profile"),
-        input = document.getElementById("change_username"),
-        saveBtn = document.getElementById("save_btn"),
-        errorMsg = document.getElementsByClassName("form_error"),
-        profile = document.getElementById("profile"),
-        fileReader = new FileReader(),
-        modalContainer = document.getElementsByClassName("modal_container");
-    document.getElementsByClassName("close_btn")[0].onclick = () => {
-        setTimeout(() => {
-            document.getElementById("edit_user_section").remove();
-        }, 200);
-        modalContainer[0].removeAttribute("id");
-    };
-    setTimeout(() => {
-        modalContainer[0].setAttribute("id", "modal_container");
-    }, 0);
-    if (lsProfile != null) {
-        userProfile.innerHTML = profileImgDOM;
-    } else {
-        defaultProfilePicture(userProfile, 98, fileInputDOM);
-    }
-    if (lsUsername != null) {
-        input.value = lsUsername;
-    }
-    profile.onchange = () => {
-        userProfile.innerHTML = profileImgDOM;
-        fileReader.onload = function() {
-            document.getElementById("edit_user_account_picture").src = fileReader.result;
-        };
-        if (profile.files[0]) {
-            fileReader.readAsDataURL(profile.files[0]);
-        };
-    };
-    saveBtn.onclick = (e) => {
-        const inputValue = input.value.trim().toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
-        if (inputValue.match(/^[a-zA-ZÑñ]+(?: [a-zA-ZÑñ-]+)*$/) && inputValue.length < 33) {
-            localStorage.setItem("username", inputValue);
-            const base64String = fileReader.result
-                .replace('data:', '')
-                .replace(/^.+,/, '');
-            localStorage.setItem("profile", base64String);
-        } else {
-            e.preventDefault();
-            errorMsg[0].style.display = "block";
-            errorMsg[0].innerText = "Number is not allowed";
-        }
-    };
-
-};
-
-// #########################################
 settings.onclick = () => {
     var settingsSection = document.createElement("div"),
         color = ["#ea3c78", "#fe8d18", "#ffba25", "#1a73e8", "#005366", "#b040bf"];
@@ -734,7 +661,7 @@ function createList() {
     createListSection.setAttribute("id", "create_list_section");
     createListSection.setAttribute("class", "modal_bg");
     createListSection.innerHTML = `
-        <form class="modal_container" autocomplete="off">
+        <form class="modal_container form_input" autocomplete="off">
             <header class="modal_header">
                 <b>Add a list</b>
                 <i class="close_btn">&#xe8bb;</i>
@@ -796,7 +723,7 @@ function createTodo() {
     createTodoSection.setAttribute("id", "create_list_section");
     createTodoSection.setAttribute("class", "modal_bg");
     createTodoSection.innerHTML = `
-        <form class="modal_container" autocomplete="off">
+        <form class="modal_container form_input" autocomplete="off">
             <header class="modal_header">
                 <b>Add a task</b>
                 <i class="close_btn">&#xe8bb;</i>

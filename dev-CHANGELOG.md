@@ -2,6 +2,19 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.19a
+> March 19, 2023
+- Added small screen sizes for menus and forms.
+
+### v23.3.18a
+> March 18, 2023
+- Added small screen height support below `664px`.
+- Fixed buttons shrinking on small height screen.
+- Added auto update account section without reloading the page.
+- Fixed fileReader.replace error.
+- Separated account section script to a different file `username.js`.
+- Optimized codes and made it reusable.
+
 ### v23.3.17a
 > March 17, 2023
 - Changed the default theme and accent to `Light Mode` & `#005366`.
