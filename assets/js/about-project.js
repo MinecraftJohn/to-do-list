@@ -26,18 +26,17 @@ aboutProject.onclick = () => {
         </div>
     `;
     
-    fetch("https://api.github.com/repos/MinecraftJohn/to-do-list/commits?branch=main")
+    fetch("https://api.github.com/repos/MinecraftJohn/to-do-list/branches/release")
         .then((response) => response.json())
-        .then((commits) => {
-            const latestCommit = commits[0];
-            const date = new Date(latestCommit.commit.author.date);
+        .then((data) => {
+            const date = new Date(data.commit.commit.author.date);
             const formattedDate = date.toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
+            month: "long",
+            day: "2-digit",
+            year: "numeric",
             });
             document.querySelector("#last_update").innerHTML = formattedDate;
-    });
+        });
 
     var logo = document.getElementById("logo");
 

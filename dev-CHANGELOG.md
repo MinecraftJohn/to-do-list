@@ -2,6 +2,13 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.24b
+> March 24, 2023
+- Seprated `settings`, `create-list`, `create-task`, and `load-todolist` event to a different JS-file.
+- Removed button being disabled when client open the `create-list menu`.
+- Fixed disabled button not working on setting menu `change-btn`.
+- Fixed last update date not showing the exact result on about menu. 
+
 ### v23.3.24a
 > March 24, 2023
 - Fixed modal and setting body not occupied on it's parent form element.
