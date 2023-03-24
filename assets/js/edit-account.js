@@ -23,31 +23,26 @@ editUserBtn[0].onclick = () => {
                 <button id="save_btn">Save</button>
             </footer>
         </form>`;
+    
     var userProfile = document.getElementById("edit_user_account_profile"),
         input = document.getElementById("change_username"),
         saveBtn = document.getElementById("save_btn"),
         errorMsg = document.getElementsByClassName("form_error"),
         profile = document.getElementById("profile"),
-        fileReader = new FileReader(),
-        modalContainer = document.getElementsByClassName("modal_container");
-    function closeAnimation() {
-        setTimeout(() => {
-            document.getElementById("edit_user_section").remove();
-        }, 200);
-        modalContainer[0].removeAttribute("id");
-    }
-    document.getElementsByClassName("close_btn")[0].onclick = closeAnimation;
-    setTimeout(() => {
-        modalContainer[0].setAttribute("id", "modal_container");
-    }, 0);
+        fileReader = new FileReader();
+
+    closeMenu("edit_user_section");
+    
     if (lsProfile != null) {
         userProfile.innerHTML = profileImgDOM;
     } else {
         defaultProfilePicture(userProfile, 98, fileInputDOM);
     }
+
     if (lsUsername != null) {
         input.value = lsUsername;
     }
+
     profile.onchange = () => {
         userProfile.innerHTML = profileImgDOM;
         fileReader.onload = function() {
@@ -57,6 +52,7 @@ editUserBtn[0].onclick = () => {
             fileReader.readAsDataURL(profile.files[0]);
         };
     };
+
     saveBtn.onclick = (e) => {
         const inputValue = input.value.trim().toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
         function errorInput(msg) {
@@ -83,5 +79,4 @@ editUserBtn[0].onclick = () => {
             errorInput("Number is not allowed");
         }
     };
-
 };

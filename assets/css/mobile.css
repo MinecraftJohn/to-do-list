@@ -44,7 +44,6 @@
 
     .modal_container {
         border-radius: 12px 12px 0 0;
-        width: 100%;
         max-width: 66%;
         transform: translate(-50%, 0%);
     }
@@ -185,12 +184,11 @@
     .modal_container {
         border-radius: 12px 12px 0 0;
         width: 100%;
-        max-width: 95%;
-        transform: translate(-50%, 30%);
+        transform: translate(-50%, 66%);
     }
 
     #modal_container {
-        transform: translate(-50%, 0%);
+        transform: translate(-50%, -3.4%);
     }
 
     #modal_container.form_input {
@@ -199,5 +197,22 @@
 
     #name_list {
         width: 100%;
+    }
+
+    .input_text {
+        width: 100%;
+    }
+
+    .input_section {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .modal_body {
+        width: auto;
+    }
+
+    #logo {
+        max-width: 95%;
     }
 }

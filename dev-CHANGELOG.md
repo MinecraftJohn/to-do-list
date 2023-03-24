@@ -2,6 +2,17 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.24a
+> March 24, 2023
+- Fixed modal and setting body not occupied on it's parent form element.
+- Fixed logo not resizing on small screen size.
+- Added feature where clicking outside the menu will now close the menu.
+- Optimized JS code by separating the about-project to a different file and convert some line of code into one reusable-function.
+
+### v23.3.22a
+> March 22, 2023
+- Made some small changes to `mobile.css`.
+
 ### v23.3.19a
 > March 19, 2023
 - Added small screen sizes for menus and forms.
