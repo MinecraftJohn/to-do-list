@@ -41,8 +41,8 @@ function createList() {
             saveBtn.setAttribute("disabled", "");
             localStorage.setItem("list-selected", todos);
             // updateTodoList();
-            // setTimeout(() => {closeMenu("create_list_section")}, 0);
             
+            document.getElementsByClassName("close_btn")[0].click();
         } else {
             document.getElementsByClassName("form_error")[0].setAttribute("style", "display: block");
         }

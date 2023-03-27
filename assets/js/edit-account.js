@@ -72,7 +72,7 @@ editUserBtn[0].onclick = () => {
             }
             lsUsername = localStorage.getItem("username");
             updateUser();
-            closeAnimation();
+            document.getElementsByClassName("close_btn")[0].click();
         } else if (inputValue == "") {
             errorInput("Your input name is empty");
         } else {

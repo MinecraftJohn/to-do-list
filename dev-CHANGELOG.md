@@ -2,6 +2,10 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.27a
+> March 27, 2023
+- Fixed menu not closing and playing the close animation when client success edit the account.
+
 ### v23.3.24b
 > March 24, 2023
 - Seprated `settings`, `create-list`, `create-task`, and `load-todolist` event to a different JS-file.
