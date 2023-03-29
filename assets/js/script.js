@@ -14,11 +14,11 @@ var pageHeader = document.getElementById("header"),
     settings = document.getElementById("settings"),
     aboutProject = document.getElementById("about_project"),
     wallpaper = ["https://wallpaperaccess.com/full/1779187.jpg",
-                "https://wallpaperaccess.com/full/2027653.jpg",
-                "https://wallpaperaccess.com/full/1779176.jpg",
-                "https://wallpaperaccess.com/full/218253.jpg",
-                "https://wallpaperaccess.com/full/148421.jpg",
-                "https://wallpaperaccess.com/full/53106.jpg"],
+        "https://wallpaperaccess.com/full/2027653.jpg",
+        "https://wallpaperaccess.com/full/1779176.jpg",
+        "https://wallpaperaccess.com/full/218253.jpg",
+        "https://wallpaperaccess.com/full/148421.jpg",
+        "https://wallpaperaccess.com/full/53106.jpg"],
     lsUsername = localStorage.getItem("username"),
     lsProfile = localStorage.getItem("profile"),
     addListBtn = document.getElementById("add_list_btn"),
@@ -116,11 +116,16 @@ function closeMenu(elmnt) {
     function removeMenu(event) {
         var clickMenu = modalContainer[0].contains(event.target);
         var clickBG = modalBG[0].contains(event.target);
-        if (!clickMenu && clickBG) {closeAnimation()}
+        if (!clickMenu && clickBG) { closeAnimation() }
     }
     document.addEventListener('click', removeMenu);
     document.getElementsByClassName("close_btn")[0].onclick = closeAnimation;
-    setTimeout(() => {modalContainer[0].setAttribute("id", "modal_container")}, 0);
+    setTimeout(() => { modalContainer[0].setAttribute("id", "modal_container") }, 0);
+}
+
+function focusInput(elmnt) {
+    elmnt.focus();
+    elmnt.setSelectionRange(elmnt.value.length, elmnt.value.length);
 }
 
 // ############################################

@@ -12,17 +12,18 @@ function createList() {
             <div class="line_dividerX"></div>
             <main class="form_body add_list_body">
                 <div class="input_section">
-                    <input autofocus type="text" id="name_list" class="input_text" placeholder="Enter a name" >
+                    <input type="text" id="name_list" class="input_text" placeholder="Enter a name" >
                     <button id="save_btn" disabled>Save</button>
                 </div>
-                    <p class="form_error" style="display: none">There is an error creating your list.</p>
+                    <p class="form_error hidden">There is an error creating your list.</p>
             </main>
         </form>`;
 
-    closeMenu("create_list_section");
-    
     var inputField = document.getElementById("name_list"),
         saveBtn = document.getElementById("save_btn");
+
+    closeMenu("create_list_section");
+    inputField.focus();
 
     function saveAddList(e) {
         e.preventDefault();
@@ -34,14 +35,17 @@ function createList() {
         localStorage.setItem("list-last-id", parseInt(localStorage.getItem("list-last-id")) + 1);
 
         const padStartLastId = localStorage.getItem("list-last-id").toString().padStart(4, '0'),
-              todos = "#" + padStartLastId + inputField.value.trim().replace(/^\S/, (c) => c.toUpperCase());
+            todos = "#" + padStartLastId + inputField.value.trim().replace(/^\S/, (c) => c.toUpperCase());
 
         if (localStorage.getItem(todos) == null) {
             localStorage.setItem(todos, "[]");
             saveBtn.setAttribute("disabled", "");
             localStorage.setItem("list-selected", todos);
             // updateTodoList();
-            
+
+
+
+            //////
             document.getElementsByClassName("close_btn")[0].click();
         } else {
             document.getElementsByClassName("form_error")[0].setAttribute("style", "display: block");

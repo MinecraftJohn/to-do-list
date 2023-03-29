@@ -49,12 +49,10 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
         <div class="line_dividerX"></div>
         <button id="add_task_btn"><i>&#xe710;</i>Add a task</button>
     `;
-    
+
     function renameTodo() {
         menuTodo('none', 'none');
         var renameTodoSection = document.createElement("div");
-        addListBtn.setAttribute("disabled", "");
-        addTaskBtn.setAttribute("disabled", "");
         pageBody[0].appendChild(renameTodoSection);
         renameTodoSection.setAttribute("id", "create_list_section");
         renameTodoSection.setAttribute("class", "modal_bg");
@@ -67,22 +65,19 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
                 <div class="line_dividerX"></div>
                 <main class="form_body add_list_body">
                     <div class="input_section">
-                        <input autofocus type="text" id="name_list" class="input_text" placeholder="Enter a name" value="${localStorage.getItem("list-selected").substring(5)}">
+                        <input type="text" id="name_list" class="input_text" placeholder="Enter a name" value="${localStorage.getItem("list-selected").substring(5)}">
                         <button id="save_btn" disabled>Save</button>
                     </div>
-                        <p class="form_error" style="display: none">There is an error creating your todo.</p>
+                        <p class="form_error hidden">There is an error creating your todo.</p>
                 </main>
             </form>`;
-        document.getElementsByClassName("close_btn")[0].onclick = () => {
-            document.getElementById("create_list_section").remove();
-            addListBtn.removeAttribute("disabled");
-            addTaskBtn.removeAttribute("disabled");
-        };
-        setTimeout(() => {
-            document.getElementsByClassName("modal_container")[0].setAttribute("id", "modal_container");
-        }, 0);
+
         var inputField = document.getElementById("name_list"),
             saveBtn = document.getElementById("save_btn");
+
+        closeMenu("create_list_section");
+        focusInput(inputField);
+
         function saveRenameTodo(e) {
             e.preventDefault();
             let oldValue = localStorage.getItem(localStorage.getItem("list-selected")),
@@ -104,7 +99,7 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
     }
     function deleteTodo() {
         localStorage.removeItem(localStorage.getItem("list-selected"));
-        
+
         location.reload();
     }
     if (localStorage.getItem(localStorage.getItem("list-selected")) !== "[]") {
@@ -144,7 +139,7 @@ if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
     }
     var addTaskBtn = document.getElementById("add_task_btn");
 
-    addTaskBtn.onclick = createTodo; 
+    addTaskBtn.onclick = createTodo;
 }
 
 for (let i = 0; i < listsContainer.length; i++) {

@@ -2,6 +2,12 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.29a
+> March 29, 2023
+- Fixed autofocus on input element not working sometimes.
+- Fixed rename todo input cursor starts at beginning instead of at end.
+- Removed/Modified some codes that are not used.
+
 ### v23.3.27a
 > March 27, 2023
 - Fixed menu not closing and playing the close animation when client success edit the account.

@@ -1,7 +1,5 @@
 function createTodo() {
     var createTodoSection = document.createElement("div");
-    addListBtn.setAttribute("disabled", "");
-    addTaskBtn.setAttribute("disabled", "");
     pageBody[0].appendChild(createTodoSection);
     createTodoSection.setAttribute("id", "create_list_section");
     createTodoSection.setAttribute("class", "modal_bg");
@@ -14,10 +12,10 @@ function createTodo() {
             <div class="line_dividerX"></div>
             <main class="form_body add_list_body">
                 <div class="input_section">
-                    <input autofocus type="text" id="name_list" class="input_text" placeholder="Enter a name" >
+                    <input type="text" id="name_list" class="input_text" placeholder="Enter a name" >
                     <button id="save_btn" disabled>Save</button>
                 </div>
-                    <p class="form_error" style="display: none">There is an error creating your todo.</p>
+                    <p class="form_error hidden">There is an error creating your todo.</p>
             </main>
         </form>`;
 
@@ -25,6 +23,7 @@ function createTodo() {
         saveBtn = document.getElementById("save_btn");
 
     closeMenu("create_list_section");
+    inputField.focus();
 
     function saveAddTodo(e) {
         e.preventDefault();
