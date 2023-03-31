@@ -32,7 +32,12 @@ function createTodo() {
             JSON.stringify([...JSON.parse(localStorage.getItem(localStorage.getItem("list-selected")) || "[]"),
             { name: inputField.value.trim().replace(/^\S/, (c) => c.toUpperCase()), completed: false }])
         );
-        location.reload();
+        
+        // loadTasks();
+            // MY LAST ACTIVITY HERE
+        // document.getElementById("add_task_btn").onclick = createTodo;
+
+        document.getElementsByClassName("close_btn")[0].click();
     }
 
     inputField.oninput = () => {

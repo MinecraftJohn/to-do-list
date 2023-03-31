@@ -285,3 +285,11 @@ a:hover {
 .hidden {
     display: none;
 }
+
+.flex {
+    display: flex;
+}
+
+.block {
+    display: block;
+}

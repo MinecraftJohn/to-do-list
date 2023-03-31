@@ -2,6 +2,12 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.3.31a
+> March 31, 2023
+- Converted some of backticks value from load-todolist into function/variable.
+- Choosing and creating a list now auto update instead of reloading the page.
+- Adding a task now auto update instead of reloading the page.
+
 ### v23.3.29a
 > March 29, 2023
 - Fixed autofocus on input element not working sometimes.
