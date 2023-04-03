@@ -27,15 +27,20 @@ function createTodo() {
 
     function saveAddTodo(e) {
         e.preventDefault();
+
         localStorage.setItem(
             localStorage.getItem("list-selected"),
             JSON.stringify([...JSON.parse(localStorage.getItem(localStorage.getItem("list-selected")) || "[]"),
             { name: inputField.value.trim().replace(/^\S/, (c) => c.toUpperCase()), completed: false }])
         );
+
+        if (document.getElementById("todo_container") != null) {
+            document.getElementById("todo_container").remove();
+        }
+
+        loadTasks();
         
-        // loadTasks();
-            // MY LAST ACTIVITY HERE
-        // document.getElementById("add_task_btn").onclick = createTodo;
+        document.getElementById("add_task_btn").onclick = createTodo;
 
         document.getElementsByClassName("close_btn")[0].click();
     }

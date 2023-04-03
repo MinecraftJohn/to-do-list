@@ -216,3 +216,9 @@
         max-width: 95%;
     }
 }
+
+@media screen and (max-width: 364px) {
+    #about_project_footer {
+        flex-direction: column !important;
+    }
+}

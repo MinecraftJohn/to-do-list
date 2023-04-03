@@ -2,6 +2,11 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.4.3a
+> April 3, 2023
+- Fixed adding a task do not update the list automatically.
+- Fixed a bug on renaming a todo name renames the other list instead of the active list.
+
 ### v23.3.31a
 > March 31, 2023
 - Converted some of backticks value from load-todolist into function/variable.
