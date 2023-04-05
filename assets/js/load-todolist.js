@@ -4,6 +4,8 @@ function menuTodo(a, b) {
     document.getElementById('todo_menu_container').style.display = b;
 }
 
+const deleteMsg = `You'll lose all the task inside this list. This cannot be recover once deleted.<br><br>Are you sure you want to permanently delete this list?`;
+
 function updateTodoTaskSection() {
     todoTaskSection.innerHTML = `
         <section class="todo_header_container">
@@ -13,7 +15,7 @@ function updateTodoTaskSection() {
                 <div class="modal_bg_transparent" onclick="menuTodo('none', 'none')"></div>
                 <ul id="todo_menu_container">
                     <li onclick="renameTodo()"><i>&#xe8ac;</i>Rename</li>
-                    <li onclick="deleteTodo()"><i>&#xe74d;</i>Delete</li>
+                    <li onclick="deleteConfirm('Delete List', deleteMsg)"><i>&#xe74d;</i>Delete</li>
                 </ul>
             </div>
         </section>
@@ -58,7 +60,7 @@ function renameTodo() {
         localStorage.removeItem("list-selected");
         localStorage.setItem("list-selected", idKey);
         localStorage.setItem(idKey, oldValue);
-        document.getElementsByClassName("list_name")[idKey.substring(1, 5) - 1].innerText = idKey.substring(5);
+        document.querySelector(".list_container.list_active .list_name").innerText = idKey.substring(5);
         document.getElementsByClassName("todo_header_title")[0].innerText = idKey.substring(5);
         document.getElementsByClassName("close_btn")[0].click();
     }
@@ -70,6 +72,31 @@ function renameTodo() {
         }
     };
     saveBtn.onclick = saveRenameTodo;
+}
+
+function deleteConfirm(title, msg) {
+    menuTodo('none', 'none');
+    const deleteConfirmSection = document.createElement("div");
+    pageBody[0].appendChild(deleteConfirmSection);
+    deleteConfirmSection.setAttribute("id", "delete_confirm_section");
+    deleteConfirmSection.setAttribute("class", "modal_bg");
+    deleteConfirmSection.innerHTML = `
+        <form class="modal_container form_input">
+            <header class="modal_header">
+                <b>${title}</b>
+                <i class="close_btn">&#xe8bb;</i>
+            </header>
+            <div class="line_dividerX"></div>
+            <main class="form_body add_list_body">
+                <p>${msg}</p>
+            </main>
+            <div class="line_dividerX"></div>
+            <footer class="form_footer">
+                ada
+            </footer>
+        </form>`;
+    
+    closeMenu("delete_confirm_section");
 }
 
 function deleteTodo() {
