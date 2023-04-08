@@ -102,7 +102,22 @@ button:active {
 button[disabled] {
     background: var(--accentDisabled);
     pointer-events: none;
+    -webkit-user-select: none;
     user-select: none;
+}
+
+.secondary-btns {
+    background: none;
+    color: var(--text);
+}
+
+.secondary-btns:hover {
+    background: var(--transparent);
+}
+
+.error-btns {
+    background: var(--error);
+    color: #fff;
 }
 
 .icon_btns {
@@ -220,7 +235,6 @@ a:hover {
     align-items: center;
     gap: 8px;
     padding: 18px;
-    
 }
 
 .close_btn {
@@ -293,4 +307,8 @@ a:hover {
 
 .block {
     display: block;
+}
+
+.flex-row {
+    flex-direction: row;
 }

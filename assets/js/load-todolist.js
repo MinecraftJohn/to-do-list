@@ -4,7 +4,42 @@ function menuTodo(a, b) {
     document.getElementById('todo_menu_container').style.display = b;
 }
 
-const deleteMsg = `You'll lose all the task inside this list. This cannot be recover once deleted.<br><br>Are you sure you want to permanently delete this list?`;
+function updateActiveTodo() {
+    const activeTodo = document.querySelector(".list_container.list_active"),
+          listSelected = localStorage.getItem("list-selected"),
+          listID = localStorage.getItem("list-last-id"),
+          currentSelected = document.getElementById(listSelected.substring(0, 5)),
+          activeElmnts = `<div class="list_color"></div><p class="list_name">${listSelected.substring(5)}</p>`;
+
+    if (listID == 1) {
+        currentSelected.innerHTML = activeElmnts;
+    } else {
+        activeTodo.classList.remove("list_active");
+        document.getElementsByClassName("list_color")[0].remove();
+        currentSelected.classList.add("list_active");
+        currentSelected.innerHTML = activeElmnts;
+    }
+    
+    updateTodoTaskSection();
+    
+    loadTasks();
+
+    document.getElementById("add_task_btn").onclick = createTask;
+}
+
+function eventListContainer() {
+    for (let i = 0; i < listsContainer.length; i++) {
+        const list = listsContainer[i];
+    
+        list.onclick = () => {
+            localStorage.setItem("list-selected", listsContainer[i].getAttribute("id") + listName[i].innerText);
+            updateActiveTodo();
+        }
+    }
+}
+
+const deleteListMsg = `You'll lose all the task inside this list. This cannot be recover once deleted.<br><br>Are you sure you want to permanently delete this list?`,
+      deleteTaskMsg = `Are you sure you want to delete this task?`;
 
 function updateTodoTaskSection() {
     todoTaskSection.innerHTML = `
@@ -15,12 +50,12 @@ function updateTodoTaskSection() {
                 <div class="modal_bg_transparent" onclick="menuTodo('none', 'none')"></div>
                 <ul id="todo_menu_container">
                     <li onclick="renameTodo()"><i>&#xe8ac;</i>Rename</li>
-                    <li onclick="deleteConfirm('Delete List', deleteMsg)"><i>&#xe74d;</i>Delete</li>
+                    <li onclick="deleteConfirm('Delete List?', deleteListMsg, deleteTodo)"><i>&#xe74d;</i>Delete</li>
                 </ul>
             </div>
         </section>
         <div class="line_dividerX"></div>
-        <button id="add_task_btn"><i>&#xe710;</i>Add a task</button>
+        <button type="button" id="add_task_btn"><i>&#xe710;</i>Add a task</button>
     `;
 }
 
@@ -62,7 +97,7 @@ function renameTodo() {
         localStorage.setItem(idKey, oldValue);
         document.querySelector(".list_container.list_active .list_name").innerText = idKey.substring(5);
         document.getElementsByClassName("todo_header_title")[0].innerText = idKey.substring(5);
-        document.getElementsByClassName("close_btn")[0].click();
+        document.querySelector(".close_btn").click();
     }
     inputField.oninput = () => {
         if (inputField.value == "" || inputField.value.match(/^\s*$/)) {
@@ -74,7 +109,7 @@ function renameTodo() {
     saveBtn.onclick = saveRenameTodo;
 }
 
-function deleteConfirm(title, msg) {
+function deleteConfirm(title, msg, func) {
     menuTodo('none', 'none');
     const deleteConfirmSection = document.createElement("div");
     pageBody[0].appendChild(deleteConfirmSection);
@@ -91,18 +126,17 @@ function deleteConfirm(title, msg) {
                 <p>${msg}</p>
             </main>
             <div class="line_dividerX"></div>
-            <footer class="form_footer">
-                ada
+            <footer class="form_footer flex-row">
+                <button type="button" id="cancel-btn" class="secondary-btns">Cancel</button>
+                <button type="button" id="delete-btn" class="error-btns">Delete</button>
             </footer>
         </form>`;
     
     closeMenu("delete_confirm_section");
-}
 
-function deleteTodo() {
-    localStorage.removeItem(localStorage.getItem("list-selected"));
+    document.getElementById("cancel-btn").onclick = () => {document.querySelector(".close_btn").click()}
 
-    location.reload();
+    document.getElementById("delete-btn").onclick = () => {func()}
 }
 
 function loadTasks() {
@@ -118,7 +152,7 @@ function loadTasks() {
                 <li class="task_list">
                     <input type="checkbox" class="task_checkbox" id="task_checkbox_${taskID}" onclick="checkTask(${taskID})" ${todo.completed == true ? "checked" : ""}/>
                     <input type="text" class="task_input" id="task_input_${taskID}" value="${todo.name}" oninput="editTask(${taskID})" />
-                    <i class="task_delete" id="task_delete_${taskID}" onclick="deleteTask(${taskID})">&#xe8bb;</i>
+                    <i class="task_delete" id="task_delete_${taskID}" onclick="deleteConfirm('Delete Task?', deleteTaskMsg, function() {deleteTask(${taskID})})">&#xe8bb;</i>
                 </li>`;
             taskID++;
         })
@@ -149,78 +183,66 @@ function deleteTask(n) {
           todos = Array.from(JSON.parse(localStorage.getItem(selected)));
     todos.splice(n, 1);
     localStorage.setItem(selected, JSON.stringify(todos));
-    location.reload();
+
+    loadTodoList();
+    eventListContainer();
+
+    document.querySelector(".close_btn").click();
 }
 
-function updateActiveTodo() {
-    const activeTodo = document.querySelector(".list_container.list_active"),
-          listSelected = localStorage.getItem("list-selected"),
-          listID = localStorage.getItem("list-last-id"),
-          currentSelected = document.getElementById(listSelected.substring(0, 5)),
-          activeElmnts = `<div class="list_color"></div><p class="list_name">${listSelected.substring(5)}</p>`;
-
-    if (listID == 1) {
-        currentSelected.innerHTML = activeElmnts;
-    } else {
-        activeTodo.classList.remove("list_active");
-        document.getElementsByClassName("list_color")[0].remove();
-        currentSelected.classList.add("list_active");
-        currentSelected.innerHTML = activeElmnts;
-    }
+function loadTodoList() {
+    if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
+        listContainer.innerHTML = "";
     
-    updateTodoTaskSection();
+        const keys = Object.keys(localStorage);
     
-    loadTasks();
-
-    document.getElementById("add_task_btn").onclick = createTodo;
-}
-
-if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
-    listContainer.innerHTML = "";
-
-    var keys = Object.keys(localStorage);
-
-    keys.sort();
-
-    for (var i = 0; i < keys.length; i++) {
-        var key = keys[i];
-
-        if (key.startsWith("#")) {
-            if (localStorage.getItem(localStorage.getItem("list-selected")) == null) {
-                localStorage.setItem("list-selected", key);
-            }
-
-            if (localStorage.getItem("list-selected") == key) {
-                listContainer.innerHTML += `
-                <div class="list_container list_active" id="${key.substring(0, 5)}">
-                    <div class="list_color"></div>
-                    <p class="list_name">${key.substring(5)}</p>
-                </div>`;
-            } else {
-                listContainer.innerHTML += `
-                <div class="list_container" id="${key.substring(0, 5)}">
-                    <p class="list_name">${key.substring(5)}</p>
-                </div>`;
+        keys.sort();
+    
+        for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+    
+            if (key.startsWith("#")) {
+                if (localStorage.getItem(localStorage.getItem("list-selected")) == null) {
+                    localStorage.setItem("list-selected", key);
+                }
+    
+                if (localStorage.getItem("list-selected") == key) {
+                    listContainer.innerHTML += `
+                    <div class="list_container list_active" id="${key.substring(0, 5)}">
+                        <div class="list_color"></div>
+                        <p class="list_name">${key.substring(5)}</p>
+                    </div>`;
+                } else {
+                    listContainer.innerHTML += `
+                    <div class="list_container" id="${key.substring(0, 5)}">
+                        <p class="list_name">${key.substring(5)}</p>
+                    </div>`;
+                }
             }
         }
-    }
-
-    updateTodoTaskSection();
     
-    loadTasks();
-
-    document.getElementById("add_task_btn").onclick = createTodo;
-}
-
-function eventListContainer() {
-    for (let i = 0; i < listsContainer.length; i++) {
-        const list = listsContainer[i];
+        updateTodoTaskSection();
+        
+        loadTasks();
     
-        list.onclick = () => {
-            localStorage.setItem("list-selected", listsContainer[i].getAttribute("id") + listName[i].innerText);
-            updateActiveTodo();
-        }
+        document.getElementById("add_task_btn").onclick = createTask;
     }
 }
 
+loadTodoList();
 eventListContainer();
+
+function deleteTodo() {
+    localStorage.removeItem(localStorage.getItem("list-selected"));
+
+    if (Object.keys(localStorage).some(key => key.startsWith("#"))) {
+        const keys = Object.keys(localStorage).filter(key => key.startsWith("#"));
+        keys.sort();
+        localStorage.setItem("list-selected", keys[keys.length - 1]);
+    }
+
+    loadTodoList();
+    eventListContainer();
+
+    document.querySelector(".close_btn").click();
+}

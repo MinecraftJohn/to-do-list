@@ -2,6 +2,18 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.4.8a
+> April 8, 2023
+- Added `flex-row` class on `library.css`.
+- Fixed an error on compatibility issue. Missing `-webkit-user-select` before `user-select: none;` at `library.css`.
+- Fixed an issue on buttons no type attribute declared.
+- Added error and secondary button styles with element style state ready.
+- Used query selector for close button to reduced code length on menus.
+- Added delete message menu/confirmation dialogue when deleting a list or task.
+- Turn the main execution of `load-todolist.js` into function, so I can reuse it again on creating a list/task.
+- Changed the form error message from inline CSS to an already declared CSS property.
+- The last list will automatically be selected when deleting a list.
+
 ### v23.4.3a
 > April 3, 2023
 - Fixed adding a task do not update the list automatically.

@@ -119,7 +119,7 @@ function closeMenu(elmnt) {
         if (!clickMenu && clickBG) { closeAnimation() }
     }
     document.addEventListener('click', removeMenu);
-    document.getElementsByClassName("close_btn")[0].onclick = closeAnimation;
+    document.querySelector(".close_btn").onclick = closeAnimation;
     setTimeout(() => { modalContainer[0].setAttribute("id", "modal_container") }, 0);
 }
 

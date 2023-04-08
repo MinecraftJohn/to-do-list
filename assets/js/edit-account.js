@@ -27,7 +27,7 @@ editUserBtn[0].onclick = () => {
     var userProfile = document.getElementById("edit_user_account_profile"),
         input = document.getElementById("change_username"),
         saveBtn = document.getElementById("save_btn"),
-        errorMsg = document.getElementsByClassName("form_error"),
+        errorMsg = document.querySelector(".form_error"),
         profile = document.getElementById("profile"),
         fileReader = new FileReader();
 
@@ -57,8 +57,8 @@ editUserBtn[0].onclick = () => {
         const inputValue = input.value.trim().toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
         function errorInput(msg) {
             e.preventDefault();
-            errorMsg[0].style.display = "block";
-            errorMsg[0].innerText = msg;
+            errorMsg[0].classList.remove("hidden");
+            errorMsg.innerText = msg;
         }
         if (inputValue.match(/^[a-zA-ZÑñ]+(?: [a-zA-ZÑñ-]+)*$/) && inputValue.length < 33) {
             e.preventDefault();
@@ -72,7 +72,7 @@ editUserBtn[0].onclick = () => {
             }
             lsUsername = localStorage.getItem("username");
             updateUser();
-            document.getElementsByClassName("close_btn")[0].click();
+            document.querySelector(".close_btn").click();
         } else if (inputValue == "") {
             errorInput("Your input name is empty");
         } else {

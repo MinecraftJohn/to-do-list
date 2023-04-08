@@ -1,9 +1,9 @@
-function createTodo() {
-    var createTodoSection = document.createElement("div");
-    pageBody[0].appendChild(createTodoSection);
-    createTodoSection.setAttribute("id", "create_list_section");
-    createTodoSection.setAttribute("class", "modal_bg");
-    createTodoSection.innerHTML = `
+function createTask() {
+    var createTaskSection = document.createElement("div");
+    pageBody[0].appendChild(createTaskSection);
+    createTaskSection.setAttribute("id", "create_list_section");
+    createTaskSection.setAttribute("class", "modal_bg");
+    createTaskSection.innerHTML = `
         <form class="modal_container form_input" autocomplete="off">
             <header class="modal_header">
                 <b>Add a task</b>
@@ -40,9 +40,9 @@ function createTodo() {
 
         loadTasks();
         
-        document.getElementById("add_task_btn").onclick = createTodo;
+        document.getElementById("add_task_btn").onclick = createTask;
 
-        document.getElementsByClassName("close_btn")[0].click();
+        document.querySelector(".close_btn").click();
     }
 
     inputField.oninput = () => {

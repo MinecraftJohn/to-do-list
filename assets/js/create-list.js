@@ -43,22 +43,14 @@ function createList() {
             saveBtn.setAttribute("disabled", "");
 
             localStorage.setItem("list-selected", todos);
-            
-            const activeElmnts = `<div class="list_container list_active" id="${todos.substring(0, 5)}"></div>`
-            if (localStorage.getItem("list-last-id") == 1) {
-                listContainer.innerHTML = activeElmnts;
-            } else {
-                listContainer.innerHTML += activeElmnts;
-            }
-            updateActiveTodo();
+
+            loadTodoList();
             
             eventListContainer();
-
-            document.getElementById("add_task_btn").onclick = createTodo;
             
-            document.getElementsByClassName("close_btn")[0].click();
+            document.querySelector(".close_btn").click();
         } else {
-            document.getElementsByClassName("form_error")[0].setAttribute("style", "display: block");
+            document.querySelector(".form_error").classList.remove("hidden");
         }
     }
 
