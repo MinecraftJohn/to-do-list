@@ -24,11 +24,11 @@ editUserBtn[0].onclick = () => {
             </footer>
         </form>`;
     
-    var userProfile = document.getElementById("edit_user_account_profile"),
-        input = document.getElementById("change_username"),
-        saveBtn = document.getElementById("save_btn"),
+    var userProfile = document.querySelector("#edit_user_account_profile"),
+        input = document.querySelector("#change_username"),
+        saveBtn = document.querySelector("#save_btn"),
         errorMsg = document.querySelector(".form_error"),
-        profile = document.getElementById("profile"),
+        profile = document.querySelector("#profile"),
         fileReader = new FileReader();
 
     closeMenu("edit_user_section");
@@ -46,7 +46,7 @@ editUserBtn[0].onclick = () => {
     profile.onchange = () => {
         userProfile.innerHTML = profileImgDOM;
         fileReader.onload = function() {
-            document.getElementById("edit_user_account_picture").src = fileReader.result;
+            document.querySelector("#edit_user_account_picture").src = fileReader.result;
         };
         if (profile.files[0]) {
             fileReader.readAsDataURL(profile.files[0]);
@@ -57,7 +57,7 @@ editUserBtn[0].onclick = () => {
         const inputValue = input.value.trim().toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
         function errorInput(msg) {
             e.preventDefault();
-            errorMsg[0].classList.remove("hidden");
+            errorMsg.classList.remove("hidden");
             errorMsg.innerText = msg;
         }
         if (inputValue.match(/^[a-zA-ZÑñ]+(?: [a-zA-ZÑñ-]+)*$/) && inputValue.length < 33) {

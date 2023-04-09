@@ -1,6 +1,14 @@
 # To Do List Development Changelog
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
+`Note: Planning to change some things on <head> tag, specifically on TAB thingy.`
+
+### v23.4.9a
+> April 9, 2023
+- Converted some of the `.getElementsBy` to `querySelector` to improve future maintenance ease.
+- Overhaul on-click codes for the menu button on mobile view.
+- Selecting a list while on mobile view will now automatically navigate you to task section.
+- Fixed task section disapear when the menu button on mobile view is on open list state.
 
 ### v23.4.8a
 > April 8, 2023

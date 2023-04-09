@@ -1,18 +1,18 @@
 // ############################################
 // #           Variables Section              #
 // ############################################
-var pageHeader = document.getElementById("header"),
-    headerTime = document.getElementById("time"),
-    headerDate = document.getElementById("date"),
-    greetings = document.getElementById("greetings"),
-    accountProfile = document.getElementById("account_profile"),
-    accountPicture = document.getElementById("account_picture"),
-    username = document.getElementById("username"),
+var pageHeader = document.querySelector("#header"),
+    headerTime = document.querySelector("#time"),
+    headerDate = document.querySelector("#date"),
+    greetings = document.querySelector("#greetings"),
+    accountProfile = document.querySelector("#account_profile"),
+    accountPicture = document.querySelector("#account_picture"),
+    username = document.querySelector("#username"),
     pageBody = document.getElementsByTagName("body"),
     pageHtml = document.getElementsByTagName("html"),
-    editUserBtn = document.getElementsByClassName("setting_edit_user_btn"),
-    settings = document.getElementById("settings"),
-    aboutProject = document.getElementById("about_project"),
+    editUserBtn = document.querySelectorAll(".setting_edit_user_btn"),
+    settings = document.querySelector("#settings"),
+    aboutProject = document.querySelector("#about_project"),
     wallpaper = ["https://wallpaperaccess.com/full/1779187.jpg",
         "https://wallpaperaccess.com/full/2027653.jpg",
         "https://wallpaperaccess.com/full/1779176.jpg",
@@ -21,14 +21,14 @@ var pageHeader = document.getElementById("header"),
         "https://wallpaperaccess.com/full/53106.jpg"],
     lsUsername = localStorage.getItem("username"),
     lsProfile = localStorage.getItem("profile"),
-    addListBtn = document.getElementById("add_list_btn"),
-    addListBtn2 = document.getElementById("add_list_btn2"),
-    todoTaskSection = document.getElementById("todo_section"),
-    listContainer = document.getElementById("list_container"),
+    addListBtn = document.querySelector("#add_list_btn"),
+    addListBtn2 = document.querySelector("#add_list_btn2"),
+    todoTaskSection = document.querySelector("#todo_section"),
+    listContainer = document.querySelector("#list_container"),
+    listFooterContainer = document.querySelector("#list_footer_container"),
     listName = document.getElementsByClassName("list_name"),
     listsContainer = document.getElementsByClassName("list_container"),
-    menuBtn = document.getElementById("menu_btn"),
-    mobileElmnt = document.getElementsByClassName("mobile_menu");
+    menuBtn = document.querySelector("#menu_btn");
 
 // ############################################
 // #            Startup Section               #
@@ -104,8 +104,8 @@ function checkThemeMode() {
 checkThemeMode();
 
 function closeMenu(elmnt) {
-    var modalContainer = document.getElementsByClassName("modal_container"),
-        modalBG = document.getElementsByClassName("modal_bg");
+    var modalContainer = document.querySelectorAll(".modal_container"),
+        modalBG = document.querySelectorAll(".modal_bg");
     function closeAnimation() {
         setTimeout(() => {
             document.getElementById(elmnt).remove();
@@ -132,21 +132,27 @@ function focusInput(elmnt) {
 // #           Mobile View Section            #
 // ############################################
 menuBtn.onclick = () => {
-    if (document.getElementById("menu_btn_checkbox").checked) {
+    if (document.querySelector("#menu_btn_checkbox").checked) {
         menuBtn.innerHTML = `&#xe700;<input type="checkbox" id="menu_btn_checkbox" name="menu_btn_checkbox">`;
-        todoTaskSection.style.display = "flex";
-        for (let i = 0; i < mobileElmnt.length; i++) {
-            mobileElmnt[i].removeAttribute("style")
-        }
+        todoTaskSection.classList.replace("hidden", "flex");
+        listContainer.classList.add("mobile_menu");
+        listFooterContainer.classList.add("mobile_menu");
     } else {
         menuBtn.innerHTML = `&#xe711;<input type="checkbox" id="menu_btn_checkbox" name="menu_btn_checkbox" checked>`;
-        todoTaskSection.style.display = "none";
-        // todoTaskSection.classList.add("out_animation")
-        // setTimeout(() => {
-        //     todoTaskSection.style.display = "none";
-        // }, 100);
-        for (let i = 0; i < mobileElmnt.length; i++) {
-            mobileElmnt[i].setAttribute("style", "display: flex !important;");
+        todoTaskSection.classList.replace("flex", "hidden");
+        listContainer.classList.remove("mobile_menu");
+        listFooterContainer.classList.remove("mobile_menu");
+    }
+}
+
+window.matchMedia('(max-width: 700px)').onchange = () => {
+    if (window.matchMedia("(max-width: 700px)").matches) {
+        if (document.querySelector("#menu_btn_checkbox").checked) {
+            todoTaskSection.classList.replace("flex", "hidden");
+        }
+    } else {
+        if (document.querySelector("#menu_btn_checkbox").checked) {
+            todoTaskSection.classList.replace("hidden", "flex");
         }
     }
 }

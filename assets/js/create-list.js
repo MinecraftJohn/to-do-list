@@ -19,8 +19,8 @@ function createList() {
             </main>
         </form>`;
 
-    var inputField = document.getElementById("name_list"),
-        saveBtn = document.getElementById("save_btn");
+    var inputField = document.querySelector("#name_list"),
+        saveBtn = document.querySelector("#save_btn");
 
     closeMenu("create_list_section");
     inputField.focus();

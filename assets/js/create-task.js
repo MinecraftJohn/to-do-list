@@ -19,8 +19,8 @@ function createTask() {
             </main>
         </form>`;
 
-    var inputField = document.getElementById("name_list"),
-        saveBtn = document.getElementById("save_btn");
+    var inputField = document.querySelector("#name_list"),
+        saveBtn = document.querySelector("#save_btn");
 
     closeMenu("create_list_section");
     inputField.focus();
@@ -34,13 +34,13 @@ function createTask() {
             { name: inputField.value.trim().replace(/^\S/, (c) => c.toUpperCase()), completed: false }])
         );
 
-        if (document.getElementById("todo_container") != null) {
-            document.getElementById("todo_container").remove();
+        if (document.querySelector("#todo_container") != null) {
+            document.querySelector("#todo_container").remove();
         }
 
         loadTasks();
         
-        document.getElementById("add_task_btn").onclick = createTask;
+        document.querySelector("#add_task_btn").onclick = createTask;
 
         document.querySelector(".close_btn").click();
     }

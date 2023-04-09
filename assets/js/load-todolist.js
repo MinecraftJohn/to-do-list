@@ -1,7 +1,7 @@
 
 function menuTodo(a, b) {
-    document.getElementsByClassName('modal_bg_transparent')[0].style.display = a;
-    document.getElementById('todo_menu_container').style.display = b;
+    document.querySelector('.modal_bg_transparent').style.display = a;
+    document.querySelector('#todo_menu_container').style.display = b;
 }
 
 function updateActiveTodo() {
@@ -15,7 +15,7 @@ function updateActiveTodo() {
         currentSelected.innerHTML = activeElmnts;
     } else {
         activeTodo.classList.remove("list_active");
-        document.getElementsByClassName("list_color")[0].remove();
+        document.querySelector(".list_color").remove();
         currentSelected.classList.add("list_active");
         currentSelected.innerHTML = activeElmnts;
     }
@@ -24,16 +24,19 @@ function updateActiveTodo() {
     
     loadTasks();
 
-    document.getElementById("add_task_btn").onclick = createTask;
+    document.querySelector("#add_task_btn").onclick = createTask;
 }
 
 function eventListContainer() {
     for (let i = 0; i < listsContainer.length; i++) {
         const list = listsContainer[i];
-    
+
         list.onclick = () => {
             localStorage.setItem("list-selected", listsContainer[i].getAttribute("id") + listName[i].innerText);
             updateActiveTodo();
+            if (window.matchMedia("(max-width: 700px)").matches) {
+                setTimeout(() => {menuBtn.click()}, 200);
+            }
         }
     }
 }
@@ -81,8 +84,8 @@ function renameTodo() {
             </main>
         </form>`;
 
-    var inputField = document.getElementById("name_list"),
-        saveBtn = document.getElementById("save_btn");
+    var inputField = document.querySelector("#name_list"),
+        saveBtn = document.querySelector("#save_btn");
 
     closeMenu("create_list_section");
     focusInput(inputField);
@@ -96,7 +99,7 @@ function renameTodo() {
         localStorage.setItem("list-selected", idKey);
         localStorage.setItem(idKey, oldValue);
         document.querySelector(".list_container.list_active .list_name").innerText = idKey.substring(5);
-        document.getElementsByClassName("todo_header_title")[0].innerText = idKey.substring(5);
+        document.querySelector(".todo_header_title").innerText = idKey.substring(5);
         document.querySelector(".close_btn").click();
     }
     inputField.oninput = () => {
@@ -134,9 +137,9 @@ function deleteConfirm(title, msg, func) {
     
     closeMenu("delete_confirm_section");
 
-    document.getElementById("cancel-btn").onclick = () => {document.querySelector(".close_btn").click()}
+    document.querySelector("#cancel-btn").onclick = () => {document.querySelector(".close_btn").click()}
 
-    document.getElementById("delete-btn").onclick = () => {func()}
+    document.querySelector("#delete-btn").onclick = () => {func()}
 }
 
 function loadTasks() {
@@ -145,7 +148,7 @@ function loadTasks() {
 
         var todos = Array.from(JSON.parse(localStorage.getItem(localStorage.getItem("list-selected")))),
             taskID = 0,
-            todoContainer = document.getElementById("todo_container");
+            todoContainer = document.querySelector("#todo_container");
 
         todos.forEach(todo => {
             todoContainer.innerHTML += `
@@ -162,7 +165,7 @@ function loadTasks() {
 function checkTask(n) {
     const selected = localStorage.getItem("list-selected"),
           todos = Array.from(JSON.parse(localStorage.getItem(selected)));
-    if (document.getElementById("task_checkbox_" + n).checked) {
+    if (document.querySelector("#task_checkbox_" + n).checked) {
         todos[n].completed = true;
         localStorage.setItem(selected, JSON.stringify(todos));
     } else {
@@ -174,7 +177,7 @@ function checkTask(n) {
 function editTask(n) {
     const selected = localStorage.getItem("list-selected"),
           todos = Array.from(JSON.parse(localStorage.getItem(selected)));
-    todos[n].name = document.getElementById("task_input_" + n).value;
+    todos[n].name = document.querySelector("#task_input_" + n).value;
     localStorage.setItem(selected, JSON.stringify(todos));
 }
 
@@ -225,7 +228,7 @@ function loadTodoList() {
         
         loadTasks();
     
-        document.getElementById("add_task_btn").onclick = createTask;
+        document.querySelector("#add_task_btn").onclick = createTask;
     }
 }
 

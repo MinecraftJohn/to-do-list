@@ -76,19 +76,19 @@ settings.onclick = () => {
     // ######################################
     // #      Variables and Functions       #
     // ######################################
-    var bgImagePreview = document.getElementById("background_image_preview"),
-        previewTime = document.getElementById("setting_time"),
-        previewDate = document.getElementById("setting_date"),
+    var bgImagePreview = document.querySelector("#background_image_preview"),
+        previewTime = document.querySelector("#setting_time"),
+        previewDate = document.querySelector("#setting_date"),
         lsBGImage = localStorage.getItem("backgroundImage"),
-        imgBlock = document.getElementsByClassName("img_block"),
-        darkmodeInput = document.getElementById("darkmode"),
-        accentPicker = document.getElementById("accent_picker"),
-        acColors = document.getElementsByClassName("ac_colors"),
+        imgBlock = document.querySelectorAll(".img_block"),
+        darkmodeInput = document.querySelector("#darkmode"),
+        accentPicker = document.querySelector("#accent_picker"),
+        acColors = document.querySelectorAll(".ac_colors"),
         hourFormatInput = document.getElementById("24hour"),
         lsAcColor = localStorage.getItem("accentColor"),
-        enterLink = document.getElementById("img_internet_input"),
-        enterLinkBtn = document.getElementById("img_internet_save_btn"),
-        errorMsg = document.getElementsByClassName("form_error");
+        enterLink = document.querySelector("#img_internet_input"),
+        enterLinkBtn = document.querySelector("#img_internet_save_btn"),
+        errorMsg = document.querySelectorAll(".form_error");
 
     function updateWallpaper(n) {
         changeBGImage(n, wallpaper[n]);
