@@ -129,6 +129,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-shrink: 0;
     padding: 6px 12px 6px 0;
     border-radius: 4px;
     cursor: pointer;
@@ -177,7 +178,6 @@
 }
 
 #todo_section {
-    display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
@@ -193,6 +193,13 @@
     align-items: center;
     gap: 16px;
     padding: 64px 0;
+}
+
+.empty_data_hint svg {
+    width: 48px;
+    height: 48px;
+    fill: none;
+    flex-shrink: 0;
 }
 
 #task_header_container {
@@ -298,6 +305,7 @@
 
 #save_btn {
     width: 100%;
+    flex-shrink: 1;
 }
 
 #about_project_footer {
@@ -590,4 +598,8 @@
 
 #todo_menu_container li:hover {
     background: var(--transparent);
+}
+
+.form_input {
+    border-radius: 6px !important;
 }

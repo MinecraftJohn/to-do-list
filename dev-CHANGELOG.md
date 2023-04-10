@@ -2,6 +2,82 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.4.10a
+> April 10, 2023
+- Updated the logo color to the new default accent color. `assets/svg/favicon.svg`.
+- Tab title now show the current selected list.
+
+### v23.4.9a
+> April 9, 2023
+- Converted some of the `.getElementsBy` to `querySelector` to improve future maintenance ease.
+- Overhaul on-click codes for the menu button on mobile view.
+- Selecting a list while on mobile view will now automatically navigate you to task section.
+- Fixed task section disapear when the menu button on mobile view is on open list state.
+
+### v23.4.8a
+> April 8, 2023
+- Added `flex-row` class on `library.css`.
+- Fixed an error on compatibility issue. Missing `-webkit-user-select` before `user-select: none;` at `library.css`.
+- Fixed an issue on buttons no type attribute declared.
+- Added error and secondary button styles with element style state ready.
+- Used query selector for close button to reduced code length on menus.
+- Added delete message menu/confirmation dialogue when deleting a list or task.
+- Turn the main execution of `load-todolist.js` into function, so I can reuse it again on creating a list/task.
+- Changed the form error message from inline CSS to an already declared CSS property.
+- The last list will automatically be selected when deleting a list.
+
+### v23.4.3a
+> April 3, 2023
+- Fixed adding a task do not update the list automatically.
+- Fixed a bug on renaming a todo name renames the other list instead of the active list.
+
+### v23.3.31a
+> March 31, 2023
+- Converted some of backticks value from load-todolist into function/variable.
+- Choosing and creating a list now auto update instead of reloading the page.
+- Adding a task now auto update instead of reloading the page.
+
+### v23.3.29a
+> March 29, 2023
+- Fixed autofocus on input element not working sometimes.
+- Fixed rename todo input cursor starts at beginning instead of at end.
+- Removed/Modified some codes that are not used.
+
+### v23.3.27a
+> March 27, 2023
+- Fixed menu not closing and playing the close animation when client success edit the account.
+
+### v23.3.24b
+> March 24, 2023
+- Seprated `settings`, `create-list`, `create-task`, and `load-todolist` event to a different JS-file.
+- Removed button being disabled when client open the `create-list menu`.
+- Fixed disabled button not working on setting menu `change-btn`.
+- Fixed last update date not showing the exact result on about menu. 
+
+### v23.3.24a
+> March 24, 2023
+- Fixed modal and setting body not occupied on it's parent form element.
+- Fixed logo not resizing on small screen size.
+- Added feature where clicking outside the menu will now close the menu.
+- Optimized JS code by separating the about-project to a different file and convert some line of code into one reusable-function.
+
+### v23.3.22a
+> March 22, 2023
+- Made some small changes to `mobile.css`.
+
+### v23.3.19a
+> March 19, 2023
+- Added small screen sizes for menus and forms.
+
+### v23.3.18a
+> March 18, 2023
+- Added small screen height support below `664px`.
+- Fixed buttons shrinking on small height screen.
+- Added auto update account section without reloading the page.
+- Fixed fileReader.replace error.
+- Separated account section script to a different file `username.js`.
+- Optimized codes and made it reusable.
+
 ### v23.3.17a
 > March 17, 2023
 - Changed the default theme and accent to `Light Mode` & `#005366`.

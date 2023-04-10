@@ -88,6 +88,7 @@ button {
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
+    flex-shrink: 0;
 }
 
 button:hover {
@@ -101,7 +102,22 @@ button:active {
 button[disabled] {
     background: var(--accentDisabled);
     pointer-events: none;
+    -webkit-user-select: none;
     user-select: none;
+}
+
+.secondary-btns {
+    background: none;
+    color: var(--text);
+}
+
+.secondary-btns:hover {
+    background: var(--transparent);
+}
+
+.error-btns {
+    background: var(--error);
+    color: #fff;
 }
 
 .icon_btns {
@@ -155,6 +171,7 @@ a:hover {
     background: rgba(26, 26, 27, 0.66);
     width: 100%;
     height: 100vh;
+    max-height: -webkit-fill-available;
 }
 
 .modal_container {
@@ -278,4 +295,20 @@ a:hover {
 
 .modal_input_label:hover {
     background: var(--transparent);
+}
+
+.hidden {
+    display: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.block {
+    display: block;
+}
+
+.flex-row {
+    flex-direction: row;
 }

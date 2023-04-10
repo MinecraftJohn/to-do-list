@@ -1,3 +1,66 @@
+@media screen and (max-height: 664px) {
+    #header_gradient {
+        padding: 32px 0 114px 0;
+    }
+
+    #time {
+        font-size: 64px;
+    }
+
+    #date {
+        font-size: 18px;
+    }
+
+    .time_stats {
+        text-shadow: 0px 0px 3px rgb(26 26 27 / 94%);
+    }
+
+    #main_container {
+        height: calc(100vh - 214px);
+    }
+}
+
+@media screen and (max-height: 500px) {
+    #header_gradient {
+        padding: 16px 2.5% 92px;
+    }
+
+    #time {
+        display: none;
+    }
+
+    #date {
+        font-size: 24px;
+    }
+
+    #main_container {
+        height: calc(100vh - 92px);
+    }
+
+    .modal_bg {
+        position: fixed;
+        overflow:auto
+    }
+
+    .modal_container {
+        border-radius: 12px 12px 0 0;
+        max-width: 66%;
+        transform: translate(-50%, 0%);
+    }
+    
+    #modal_container {
+        transform: translate(-50%, -30%);
+    }
+
+    .modal_body {
+        width: auto;
+    }
+
+    #modal_container.form_input {
+        top: 40%;
+    }
+}
+
 @media screen and (max-width: 700px) {
     #header_gradient {
         padding: 32px 0 114px 0;
@@ -73,7 +136,7 @@
         transition: all 0.2s;
     }
 
-    #todo_section::after {
+    #todo_section::after,#list_section::after {
         content: "";
         position: absolute;
         top: 100%;
@@ -111,5 +174,51 @@
 
     #todo_container {
         overflow-y: unset;
+    }
+
+    .modal_bg {
+        position: fixed;
+        overflow:auto
+    }
+
+    .modal_container {
+        border-radius: 12px 12px 0 0;
+        width: 100%;
+        transform: translate(-50%, 66%);
+    }
+
+    #modal_container {
+        transform: translate(-50%, -3.4%);
+    }
+
+    #modal_container.form_input {
+        top: 40%;
+    }
+
+    #name_list {
+        width: 100%;
+    }
+
+    .input_text {
+        width: 100%;
+    }
+
+    .input_section {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .modal_body {
+        width: auto;
+    }
+
+    #logo {
+        max-width: 95%;
+    }
+}
+
+@media screen and (max-width: 364px) {
+    #about_project_footer {
+        flex-direction: column !important;
     }
 }
