@@ -156,3 +156,15 @@ window.matchMedia('(max-width: 700px)').onchange = () => {
         }
     }
 }
+
+// ############################################
+// #            Header TAB Section            #
+// ############################################
+function updateTAB() {
+    const storage = localStorage.getItem("list-selected"),
+          title = document.querySelector("title");
+
+    if (storage) {
+        title.innerText = `To Do - ${storage.substring(5)}`;
+    }
+}

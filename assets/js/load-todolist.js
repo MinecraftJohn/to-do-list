@@ -34,6 +34,7 @@ function eventListContainer() {
         list.onclick = () => {
             localStorage.setItem("list-selected", listsContainer[i].getAttribute("id") + listName[i].innerText);
             updateActiveTodo();
+            updateTAB();
             if (window.matchMedia("(max-width: 700px)").matches) {
                 setTimeout(() => {menuBtn.click()}, 200);
             }
@@ -92,8 +93,10 @@ function renameTodo() {
 
     function saveRenameTodo(e) {
         e.preventDefault();
+
         let oldValue = localStorage.getItem(localStorage.getItem("list-selected")),
             idKey = localStorage.getItem("list-selected").slice(0, 5) + inputField.value.charAt(0).toUpperCase() + inputField.value.slice(1);
+        
         localStorage.removeItem(localStorage.getItem("list-selected"));
         localStorage.removeItem("list-selected");
         localStorage.setItem("list-selected", idKey);
@@ -101,7 +104,10 @@ function renameTodo() {
         document.querySelector(".list_container.list_active .list_name").innerText = idKey.substring(5);
         document.querySelector(".todo_header_title").innerText = idKey.substring(5);
         document.querySelector(".close_btn").click();
+
+        updateTAB();
     }
+
     inputField.oninput = () => {
         if (inputField.value == "" || inputField.value.match(/^\s*$/)) {
             saveBtn.setAttribute("disabled", "");
@@ -109,6 +115,7 @@ function renameTodo() {
             saveBtn.removeAttribute("disabled");
         }
     };
+    
     saveBtn.onclick = saveRenameTodo;
 }
 
@@ -227,6 +234,8 @@ function loadTodoList() {
         updateTodoTaskSection();
         
         loadTasks();
+
+        updateTAB();
     
         document.querySelector("#add_task_btn").onclick = createTask;
     }

@@ -1,7 +1,11 @@
 # To Do List Development Changelog
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
-`Note: Planning to change some things on <head> tag, specifically on TAB thingy.`
+
+### v23.4.10a
+> April 10, 2023
+- Updated the logo color to the new default accent color. `assets/svg/favicon.svg`.
+- Tab title now show the current selected list.
 
 ### v23.4.9a
 > April 9, 2023

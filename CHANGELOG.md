@@ -2,6 +2,26 @@
 All notable changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v1.4.0
+> April 10, 2023
+- Separated the script files to organize and reduce line of codes.
+- Page now auto update content, instead of force reload the page.
+- Added more screen sizes support for better user experience.
+- Fixed bugs on button including on mobile view.
+- Removed button being disabled when client opens a menu.
+- Added feature where clicking outside of menu closes the menu.
+- Added closing animation to all menu.
+- Menus now look different on mobile view to support small screen height.
+- Fixed logo not resizing on small screen size.
+- Fixed last update date not showing the exact result on about menu.
+- Fixed autofocus on input element not working sometimes.
+- The last list will automatically be selected when deleting a list.
+- Added delete message menu/confirmation dialogue when deleting a list or task.
+- Selecting a list while on mobile view will now automatically navigate you to task section.
+- Updated the logo color to the new default accent color. `assets/svg/favicon.svg`.
+- Tab title now show the current selected list.
+- Fixed error and issues, optimized codes.
+
 ### v1.3.0
 > March 17, 2023
 - Added the ability to delete a todo group.
