@@ -190,7 +190,7 @@ settings.onclick = () => {
 
     if (JSON.parse(localStorage.getItem("24hour")) === true) {hourFormatInput.setAttribute("checked", "")}
 
-    if (JSON.parse(localStorage.getItem("darkmode")) === false) {darkmodeInput.removeAttribute("checked")}
+    if (JSON.parse(localStorage.getItem("darkmode")) === true) {darkmodeInput.setAttribute("checked", "")}
 
     if (lsAcColor == color[0]) {
         attPicked(color[0]);
