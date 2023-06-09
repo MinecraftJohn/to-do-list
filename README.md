@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/MinecraftJohn/MinecraftJohn/4c1cd5981014d0ccbda1be9e7d5b57c6f1e08d58/assets/other-repository/to-do-list/To%20Do%20List%20Logo.svg" alt="To Do List">
-  <h1>Using JavaScript (localStorage)</h1>
+  <img src="https://raw.githubusercontent.com/MinecraftJohn/MinecraftJohn/4c1cd5981014d0ccbda1be9e7d5b57c6f1e08d58/assets/other-repository/to-do-list/To%20Do%20List%20Logo.svg" alt="To Do List" height="72">
+  <h1>Vanilla JavaScript (localStorage)</h1>
 </div>
 
 ### What is this?
