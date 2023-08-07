@@ -2,6 +2,12 @@
 All notable development changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v23.8.7a
+> August 7, 2023
+- Fixed deleting the last list do not update elements.
+- Added `.vscode` folder and `.prettierignore` file.
+- Updated `readme.md`.
+
 ### v23.6.9a
 > June 9, 2023
 - Fixed darkmode switch button not working properly.

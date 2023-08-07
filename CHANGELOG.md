@@ -2,10 +2,13 @@
 All notable changes to this project will be documented in this file. Dates are displayed in UTC +8.
 
 
+### v1.4.2
+> August 7, 2023
+- Fixed deleting the last list do not update elements.
+
 ### v1.4.1
 > June 9, 2023
 - Fixed darkmode switch button not working properly.
-- Updated `readme.md`.
 
 ### v1.4.0
 > April 10, 2023
