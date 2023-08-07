@@ -1,9 +1,9 @@
 function createList() {
-    var createListSection = document.createElement("div");
-    pageBody[0].appendChild(createListSection);
-    createListSection.setAttribute("id", "create_list_section");
-    createListSection.setAttribute("class", "modal_bg");
-    createListSection.innerHTML = `
+  var createListSection = document.createElement("div");
+  pageBody[0].appendChild(createListSection);
+  createListSection.setAttribute("id", "create_list_section");
+  createListSection.setAttribute("class", "modal_bg");
+  createListSection.innerHTML = `
         <form class="modal_container form_input" autocomplete="off">
             <header class="modal_header">
                 <b>Add a list</b>
@@ -19,50 +19,50 @@ function createList() {
             </main>
         </form>`;
 
-    var inputField = document.querySelector("#name_list"),
-        saveBtn = document.querySelector("#save_btn");
+  var inputField = document.querySelector("#name_list"),
+    saveBtn = document.querySelector("#save_btn");
 
-    closeMenu("create_list_section");
-    inputField.focus();
+  closeMenu("create_list_section");
+  inputField.focus();
 
-    function saveAddList(e) {
-        e.preventDefault();
+  function saveAddList(e) {
+    e.preventDefault();
 
-        if (localStorage.getItem("list-last-id") == null) {
-            localStorage.setItem("list-last-id", 0);
-        }
-
-        localStorage.setItem("list-last-id", parseInt(localStorage.getItem("list-last-id")) + 1);
-
-        const padStartLastId = localStorage.getItem("list-last-id").toString().padStart(4, '0'),
-            todos = "#" + padStartLastId + inputField.value.trim().replace(/^\S/, (c) => c.toUpperCase());
-
-        if (localStorage.getItem(todos) == null) {
-            localStorage.setItem(todos, "[]");
-
-            saveBtn.setAttribute("disabled", "");
-
-            localStorage.setItem("list-selected", todos);
-
-            loadTodoList();
-            
-            eventListContainer();
-            
-            document.querySelector(".close_btn").click();
-        } else {
-            document.querySelector(".form_error").classList.remove("hidden");
-        }
+    if (localStorage.getItem("list-last-id") == null) {
+      localStorage.setItem("list-last-id", 0);
     }
 
-    inputField.oninput = () => {
-        if (inputField.value == "" || inputField.value.match(/^\s*$/) || inputField.value.length > 32) {
-            saveBtn.setAttribute("disabled", "");
-        } else {
-            saveBtn.removeAttribute("disabled");
-        }
-    };
+    localStorage.setItem("list-last-id", parseInt(localStorage.getItem("list-last-id")) + 1);
 
-    saveBtn.onclick = saveAddList;
+    const padStartLastId = localStorage.getItem("list-last-id").toString().padStart(4, "0"),
+      todos = "#" + padStartLastId + inputField.value.trim().replace(/^\S/, (c) => c.toUpperCase());
+
+    if (localStorage.getItem(todos) == null) {
+      localStorage.setItem(todos, "[]");
+
+      saveBtn.setAttribute("disabled", "");
+
+      localStorage.setItem("list-selected", todos);
+
+      loadTodoList();
+
+      eventListContainer();
+
+      document.querySelector(".close_btn").click();
+    } else {
+      document.querySelector(".form_error").classList.remove("hidden");
+    }
+  }
+
+  inputField.oninput = () => {
+    if (inputField.value == "" || inputField.value.match(/^\s*$/) || inputField.value.length > 32) {
+      saveBtn.setAttribute("disabled", "");
+    } else {
+      saveBtn.removeAttribute("disabled");
+    }
+  };
+
+  saveBtn.onclick = saveAddList;
 }
 
 addListBtn.onclick = createList;
