@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="https://i.imgur.com/Wnousjf.png" alt="To Do List - Vanilla JavaScript (localStorage)">
-  <h1>Vanilla JavaScript (localStorage)</h1>
+  <img src="https://i.imgur.com/rIPQRxz.png" alt="To Do List - Vanilla JavaScript (localStorage)">
+  <h1>JavaScript (localStorage)</h1>
 </div>
 
 ### What is this?
